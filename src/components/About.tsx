@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { Reveal } from "./Reveal";
+
 export function About() {
   const experience = [
     ["2024 — 2026", "Founder · Brand Strategy", "Nexa Studio"],
@@ -16,7 +19,7 @@ export function About() {
   return (
     <section id="about" className="px-6 lg:px-12 py-24 lg:py-32 bg-foreground text-background">
       <div className="max-w-[1400px] mx-auto grid lg:grid-cols-12 gap-12">
-        <div className="lg:col-span-5">
+        <Reveal className="lg:col-span-5">
           <div className="text-xs font-mono uppercase tracking-[0.25em] opacity-60 mb-4">
             ✦ About
           </div>
@@ -33,33 +36,33 @@ export function About() {
           <p className="mt-6 leading-relaxed opacity-60">
             Open to remote opportunities, freelance projects and international collaborations.
           </p>
-        </div>
+        </Reveal>
 
         <div className="lg:col-span-7 lg:pl-12 grid sm:grid-cols-2 gap-12">
-          <div>
-            <h3 className="font-mono text-xs uppercase tracking-[0.25em] opacity-60 mb-6">Experience</h3>
-            <ul className="space-y-6">
-              {experience.map(([year, role, place]) => (
-                <li key={role} className="border-t border-background/15 pt-4">
-                  <div className="text-xs font-mono opacity-60">{year}</div>
-                  <div className="font-display text-xl mt-1">{role}</div>
-                  <div className="text-sm opacity-70 italic">{place}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-mono text-xs uppercase tracking-[0.25em] opacity-60 mb-6">Education</h3>
-            <ul className="space-y-6">
-              {education.map(([year, role, place]) => (
-                <li key={role} className="border-t border-background/15 pt-4">
-                  <div className="text-xs font-mono opacity-60">{year}</div>
-                  <div className="font-display text-xl mt-1">{role}</div>
-                  <div className="text-sm opacity-70 italic">{place}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {[
+            { title: "Experience", items: experience },
+            { title: "Education", items: education },
+          ].map((col, ci) => (
+            <div key={col.title}>
+              <h3 className="font-mono text-xs uppercase tracking-[0.25em] opacity-60 mb-6">{col.title}</h3>
+              <ul className="space-y-6">
+                {col.items.map(([year, role, place], i) => (
+                  <motion.li
+                    key={role}
+                    initial={{ opacity: 0, x: ci === 0 ? -20 : 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                    className="border-t border-background/15 pt-4"
+                  >
+                    <div className="text-xs font-mono opacity-60">{year}</div>
+                    <div className="font-display text-xl mt-1">{role}</div>
+                    <div className="text-sm opacity-70 italic">{place}</div>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>

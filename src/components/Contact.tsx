@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { Reveal } from "./Reveal";
+
 export function Contact() {
   const links = [
     ["LinkedIn", "mahdiehdesign", "https://linkedin.com/in/mahdiehdesign"],
@@ -8,34 +11,69 @@ export function Contact() {
   return (
     <section id="contact" className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden">
       <div className="relative max-w-[1400px] mx-auto">
-        <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-6">
-          ✦ Let's collaborate
-        </div>
-        <h2 className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.9] tracking-tight">
-          Have a brand
-          <br />
-          worth <em className="text-accent not-italic">building</em>?
+        <Reveal>
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-6">
+            ✦ Let's collaborate
+          </div>
+        </Reveal>
+        <h2 className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.9] tracking-tight overflow-hidden">
+          <motion.span
+            className="block"
+            initial={{ y: "110%" }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Have a brand
+          </motion.span>
+          <motion.span
+            className="block"
+            initial={{ y: "110%" }}
+            whileInView={{ y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            worth <em className="text-accent not-italic">building</em>?
+          </motion.span>
         </h2>
 
-        <div className="mt-16 flex flex-wrap items-center gap-6">
-          <a
+        <Reveal delay={0.2} className="mt-16 flex flex-wrap items-center gap-6">
+          <motion.a
             href="mailto:hello@nexainc.co"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-3 bg-foreground text-background rounded-full px-8 py-5 font-display text-xl hover:bg-accent transition-colors"
           >
             hello@nexainc.co
-            <span aria-hidden>→</span>
-          </a>
+            <motion.span
+              aria-hidden
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              →
+            </motion.span>
+          </motion.a>
           <span className="text-muted-foreground font-mono text-xs uppercase tracking-[0.25em]">
             Avg. reply within 24h
           </span>
-        </div>
+        </Reveal>
 
         <div className="mt-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-border pt-10">
-          {links.map(([label, handle, href]) => (
-            <a key={label} href={href} target="_blank" rel="noreferrer" className="group">
+          {links.map(([label, handle, href], i) => (
+            <motion.a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="group"
+            >
               <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">{label}</div>
               <div className="font-display text-2xl mt-2 group-hover:text-accent transition-colors">@{handle} ↗</div>
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>

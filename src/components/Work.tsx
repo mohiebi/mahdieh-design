@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { Reveal } from "./Reveal";
 import arianet from "@/assets/work-arianet.jpg";
 import pooyesh from "@/assets/work-pooyesh.jpg";
 import arex from "@/assets/work-arex.jpg";
@@ -35,7 +37,7 @@ export function Work() {
   return (
     <section id="work" className="px-6 lg:px-12 py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto">
-        <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
+        <Reveal className="flex items-end justify-between flex-wrap gap-6 mb-16">
           <div>
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
               ✦ Selected Work — 2022 / 2026
@@ -46,20 +48,29 @@ export function Work() {
             A curated archive of identities, campaigns and product work.
             From early concept and naming through to systems and rollout.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20">
           {projects.map((p, i) => (
-            <article
+            <motion.article
               key={p.title}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.8, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
               className={`group ${p.size === "lg" && i % 4 === 0 ? "md:col-span-2" : ""}`}
             >
               <div className="overflow-hidden bg-muted aspect-[4/3] mb-5">
-                <img
+                <motion.img
                   src={p.image}
                   alt={`${p.title} — ${p.category}`}
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  initial={{ scale: 1.08 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ scale: 1.04 }}
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="flex items-baseline justify-between gap-4">
@@ -72,7 +83,7 @@ export function Work() {
               <div className="mt-1 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
                 {p.category}
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
