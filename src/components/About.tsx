@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
+import portrait from "@/assets/portrait.png";
 
 export function About() {
   const experience = [
@@ -26,7 +27,31 @@ export function About() {
           <h2 className="font-display text-5xl md:text-6xl leading-[1.05]">
             Strategy meets <em className="text-accent not-italic">aesthetics</em>, in service of growth.
           </h2>
-          <p className="mt-8 text-lg leading-relaxed opacity-80">
+
+          <motion.figure
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 relative"
+          >
+            <div className="overflow-hidden aspect-[4/5] max-w-sm">
+              <motion.img
+                src={portrait}
+                alt="Mahdieh Baghoolizadeh"
+                initial={{ scale: 1.1 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full h-full object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-700"
+              />
+            </div>
+            <figcaption className="mt-3 text-xs font-mono uppercase tracking-[0.25em] opacity-60">
+              ✦ Mahdieh B. — Founder, Nexa Studio
+            </figcaption>
+          </motion.figure>
+
+          <p className="mt-10 text-lg leading-relaxed opacity-80">
             With academic foundations in graphic design and advanced art studies — and over seven
             years across agencies, studios and independent practice — I bring both creativity and
             structure to every collaboration. My work pairs strategic thinking with user-centered
