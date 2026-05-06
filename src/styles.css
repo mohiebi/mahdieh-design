@@ -62,33 +62,33 @@
 }
 
 @theme inline {
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "Optima", "Optima Nova", "Linux Biolinum", "URW Classico", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
 :root {
   --radius: 0.25rem;
-  --background: oklch(0.975 0.008 85);
-  --foreground: oklch(0.18 0.015 60);
-  --card: oklch(0.975 0.008 85);
-  --card-foreground: oklch(0.18 0.015 60);
-  --popover: oklch(0.98 0.008 85);
-  --popover-foreground: oklch(0.18 0.015 60);
-  --primary: oklch(0.18 0.015 60);
-  --primary-foreground: oklch(0.975 0.008 85);
-  --secondary: oklch(0.93 0.012 80);
-  --secondary-foreground: oklch(0.18 0.015 60);
-  --muted: oklch(0.93 0.012 80);
-  --muted-foreground: oklch(0.45 0.018 60);
-  --accent: oklch(0.62 0.18 35);
-  --accent-foreground: oklch(0.975 0.008 85);
+  --background: oklch(0.965 0.006 85);
+  --foreground: oklch(0.235 0 0);
+  --card: oklch(0.965 0.006 85);
+  --card-foreground: oklch(0.235 0 0);
+  --popover: oklch(0.98 0.006 85);
+  --popover-foreground: oklch(0.235 0 0);
+  --primary: oklch(0.235 0 0);
+  --primary-foreground: oklch(0.965 0.006 85);
+  --secondary: oklch(0.93 0.008 80);
+  --secondary-foreground: oklch(0.235 0 0);
+  --muted: oklch(0.93 0.008 80);
+  --muted-foreground: oklch(0.48 0.008 60);
+  --accent: oklch(0.635 0.155 30);
+  --accent-foreground: oklch(0.965 0.006 85);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.86 0.012 75);
-  --input: oklch(0.88 0.012 75);
-  --ring: oklch(0.62 0.18 35);
-  --chart-1: oklch(0.62 0.18 35);
+  --border: oklch(0.87 0.008 75);
+  --input: oklch(0.88 0.008 75);
+  --ring: oklch(0.635 0.155 30);
+  --chart-1: oklch(0.635 0.155 30);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
