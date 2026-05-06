@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { Reveal } from "./Reveal";
+
 export function Services() {
   const services = [
     { n: "01", t: "Brand Strategy", d: "Positioning, naming, narrative and verbal identity that gives a brand its compass." },
@@ -8,19 +11,28 @@ export function Services() {
   return (
     <section id="services" className="px-6 lg:px-12 py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto">
-        <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-          ✦ Services
-        </div>
-        <h2 className="font-display text-5xl md:text-7xl mb-16 max-w-3xl">
-          A practice for ambitious brands.
-        </h2>
+        <Reveal>
+          <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+            ✦ Services
+          </div>
+          <h2 className="font-display text-5xl md:text-7xl mb-16 max-w-3xl">
+            A practice for ambitious brands.
+          </h2>
+        </Reveal>
         <div className="grid md:grid-cols-2 gap-px bg-border">
-          {services.map((s) => (
-            <div key={s.n} className="bg-background p-10 lg:p-14 group hover:bg-accent hover:text-accent-foreground transition-colors">
+          {services.map((s, i) => (
+            <motion.div
+              key={s.n}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-background p-10 lg:p-14 group hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
               <div className="font-mono text-xs tracking-[0.25em] opacity-60">{s.n}</div>
               <h3 className="font-display text-3xl md:text-4xl mt-6">{s.t}</h3>
               <p className="mt-4 max-w-md leading-relaxed opacity-80">{s.d}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
