@@ -15,7 +15,7 @@ export function Nav() {
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-          <a href="#work" className="hover:text-foreground transition-colors">Work</a>
+          <a href="#projects" className="hover:text-foreground transition-colors">Projects</a>
           <a href="#about" className="hover:text-foreground transition-colors">About</a>
           <a href="#services" className="hover:text-foreground transition-colors">Services</a>
           <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
