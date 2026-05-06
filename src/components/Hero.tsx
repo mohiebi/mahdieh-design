@@ -1,7 +1,16 @@
+import wavesImg from "@/assets/asset-waves.jpg";
+import curveImg from "@/assets/asset-curve.png";
+
 export function Hero() {
   return (
-    <section className="relative pt-32 pb-20 lg:pt-44 lg:pb-32 px-6 lg:px-12 grain">
-      <div className="max-w-[1400px] mx-auto">
+    <section className="relative pt-32 pb-20 lg:pt-44 lg:pb-32 px-6 lg:px-12 grain overflow-hidden">
+      <img
+        src={curveImg}
+        alt=""
+        aria-hidden
+        className="hidden lg:block pointer-events-none select-none absolute -right-32 -top-10 w-[640px] opacity-90 mix-blend-multiply"
+      />
+      <div className="relative max-w-[1400px] mx-auto">
         <div className="flex items-center gap-3 mb-10 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
           <span className="h-px w-10 bg-foreground" />
           Available for select projects · 2026
@@ -14,6 +23,12 @@ export function Hero() {
         </h1>
 
         <div className="mt-16 grid lg:grid-cols-12 gap-10 items-end">
+          <div className="lg:col-span-5 relative aspect-[4/3] rounded-sm overflow-hidden border border-border">
+            <img src={wavesImg} alt="Sound wave abstraction" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute bottom-3 left-3 text-[10px] font-mono uppercase tracking-[0.25em] text-background/80">
+              Fig. 01 — Resonance
+            </div>
+          </div>
           <p className="lg:col-span-5 lg:col-start-7 text-lg lg:text-xl leading-relaxed text-muted-foreground">
             I'm <span className="text-foreground">Mahdieh Baghoolizadeh</span> — a brand strategist,
             visual identity designer and art director. Founder of{" "}
