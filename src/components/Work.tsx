@@ -35,12 +35,12 @@ const projects: Project[] = [
 
 export function Work() {
   return (
-    <section id="work" className="px-6 lg:px-12 py-24 lg:py-32">
+    <section id="projects" className="px-6 lg:px-12 py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto">
         <Reveal className="flex items-end justify-between flex-wrap gap-6 mb-16">
           <div>
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-              ✦ Selected Work — 2022 / 2026
+              ✦ Selected Projects — 2022 / 2026
             </div>
             <h2 className="font-display text-5xl md:text-7xl">Recent projects.</h2>
           </div>
