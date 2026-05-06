@@ -24,6 +24,6 @@ export function Nav() {
           Get in touch
         </a>
       </div>
-    </header>
+    </motion.header>
   );
 }
