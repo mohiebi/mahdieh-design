@@ -1,5 +1,3 @@
-import orbsImg from "@/assets/asset-orbs.jpg";
-
 export function Contact() {
   const links = [
     ["LinkedIn", "mahdiehdesign", "https://linkedin.com/in/mahdiehdesign"],
@@ -9,12 +7,6 @@ export function Contact() {
   ];
   return (
     <section id="contact" className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden">
-      <img
-        src={orbsImg}
-        alt=""
-        aria-hidden
-        className="pointer-events-none select-none absolute -right-40 -bottom-40 w-[720px] opacity-25 mix-blend-multiply"
-      />
       <div className="relative max-w-[1400px] mx-auto">
         <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-6">
           ✦ Let's collaborate
