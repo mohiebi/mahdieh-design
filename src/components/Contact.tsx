@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
+import contactBg from "@/assets/contact-bg.png";
 
 export function Contact() {
   const links = [
@@ -9,10 +10,25 @@ export function Contact() {
     ["Telegram", "artdirector_mah", "https://t.me/artdirector_mah"],
   ];
   return (
-    <section id="contact" className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden">
+    <section
+      id="contact"
+      className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden text-background isolate"
+    >
+      <motion.img
+        src={contactBg}
+        alt=""
+        aria-hidden
+        initial={{ scale: 1.15, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+      />
+      <div className="absolute inset-0 -z-10 bg-foreground/55" />
+
       <div className="relative max-w-[1400px] mx-auto">
         <Reveal>
-          <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-6">
+          <div className="text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6">
             ✦ Let's collaborate
           </div>
         </Reveal>
@@ -42,7 +58,7 @@ export function Contact() {
             href="mailto:hello@nexainc.co"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 bg-foreground text-background rounded-full px-8 py-5 font-display text-xl hover:bg-accent transition-colors"
+            className="inline-flex items-center gap-3 bg-background text-foreground rounded-full px-8 py-5 font-display text-xl hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             hello@nexainc.co
             <motion.span
@@ -53,12 +69,12 @@ export function Contact() {
               →
             </motion.span>
           </motion.a>
-          <span className="text-muted-foreground font-mono text-xs uppercase tracking-[0.25em]">
+          <span className="font-mono text-xs uppercase tracking-[0.25em] opacity-70">
             Avg. reply within 24h
           </span>
         </Reveal>
 
-        <div className="mt-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-border pt-10">
+        <div className="mt-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 border-t border-background/20 pt-10">
           {links.map(([label, handle, href], i) => (
             <motion.a
               key={label}
@@ -71,7 +87,7 @@ export function Contact() {
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">{label}</div>
+              <div className="text-xs font-mono uppercase tracking-[0.25em] opacity-60">{label}</div>
               <div className="font-display text-2xl mt-2 group-hover:text-accent transition-colors">@{handle} ↗</div>
             </motion.a>
           ))}
