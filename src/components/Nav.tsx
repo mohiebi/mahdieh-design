@@ -20,7 +20,7 @@ export function Nav() {
           <a href="#services" className="hover:text-foreground transition-colors">Services</a>
           <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
         </nav>
-        <a href="#contact" className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 hover:bg-foreground hover:text-background transition-colors">
+        <a href="#contact" className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all">
           Get in touch
         </a>
       </div>
