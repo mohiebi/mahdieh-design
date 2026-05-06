@@ -57,13 +57,13 @@ export function About() {
         {/* Main composition */}
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Portrait — sticky on desktop */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <motion.figure
               initial={{ opacity: 0, y: 40, scale: 0.98 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:sticky lg:top-24"
+              className="lg:sticky lg:top-24 max-w-[280px]"
             >
               <div className="relative overflow-hidden aspect-[4/5]">
                 <motion.img
@@ -75,20 +75,16 @@ export function About() {
                   transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
                   className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
                 />
-                <div className="absolute left-4 bottom-4 right-4 flex items-end justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.25em] text-background mix-blend-difference">
-                  <span>Fig. 02 — Portrait</span>
-                  <span>Isfahan / Toronto</span>
-                </div>
               </div>
-              <figcaption className="mt-4 flex items-center justify-between text-xs font-mono uppercase tracking-[0.25em] opacity-60">
+              <figcaption className="mt-4 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.25em] opacity-60">
                 <span>✦ Mahdieh B.</span>
-                <span>Founder, Nexa Studio</span>
+                <span>Nexa Studio</span>
               </figcaption>
             </motion.figure>
           </div>
 
           {/* Right column: Experience + Education + manifesto/capabilities */}
-          <div className="lg:col-span-7 lg:pl-8 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-14">
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-14">
             {[
               { title: "Experience", items: experience },
               { title: "Education", items: education },
