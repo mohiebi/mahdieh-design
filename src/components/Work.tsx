@@ -16,28 +16,48 @@ type Project = {
   client: string;
   year: string;
   category: string;
+  description: string;
   image: string;
-  size?: "lg" | "md";
 };
 
 const projects: Project[] = [
-  { title: "Arianet", client: "Internet Solutions", year: "2025", category: "Brand Strategy · Campaign", image: arianet, size: "lg" },
-  { title: "Pooyesh", client: "Royan Fertility Center", year: "2022", category: "Visual Identity · Environmental", image: pooyesh, size: "md" },
-  { title: "Arex", client: "Digital Transactions", year: "2024", category: "Brand Design · Wilma Studio", image: arex, size: "md" },
-  { title: "Seper", client: "AI Agents Explorer", year: "2026", category: "Personal Brand · Editorial", image: seper, size: "md" },
-  { title: "Xima", client: "Hospitality", year: "2024", category: "Visual Identity", image: xima, size: "md" },
-  { title: "Gilaneh", client: "Persian Grill House — Vancouver", year: "2023", category: "Brand · Packaging", image: gilaneh, size: "lg" },
-  { title: "Zeevash", client: "Health Tech", year: "2023", category: "Brand · Product", image: zeevash, size: "md" },
-  { title: "Phownix", client: "Mobile Equipment", year: "2022", category: "Packaging Design", image: phownix, size: "md" },
-  { title: "Palo Santo", client: "Classic Furniture, est. 2009", year: "2022", category: "Logo · Identity", image: palosanto, size: "md" },
-  { title: "Tabesh", client: "Brand Development Center", year: "2022", category: "Identity System", image: tabesh, size: "lg" },
+  { title: "Arianet", client: "Internet Solutions", year: "2025", category: "Brand Strategy · Telecom",
+    description: "End-to-end identity and campaign work for a next-generation internet provider. Confident type, calm color, infrastructure that feels human.",
+    image: arianet },
+  { title: "Pooyesh", client: "Royan Fertility Center", year: "2022", category: "Visual Identity · Healthcare",
+    description: "Environmental and visual identity for a leading fertility center. Soft geometry, optimistic palette, designed to reassure at every touchpoint.",
+    image: pooyesh },
+  { title: "Arex", client: "Digital Transactions", year: "2024", category: "Visual Identity · Fintech",
+    description: "Mark and system for a digital transaction facilitator. Quiet geometry, confident voice. With Wilma Studio.",
+    image: arex },
+  { title: "Seper", client: "AI Agents Explorer", year: "2026", category: "Personal Brand · Editorial",
+    description: "An editorial-led personal brand for an AI researcher. Long-form typography, generous whitespace, a system built to think out loud.",
+    image: seper },
+  { title: "Xima", client: "Hospitality", year: "2024", category: "Visual Identity · Hospitality",
+    description: "Identity for a boutique hospitality concept. Warm minimalism, tactile materials, a logotype that feels like an invitation.",
+    image: xima },
+  { title: "Gilaneh", client: "Persian Grill House — Vancouver", year: "2023", category: "Brand · Packaging",
+    description: "Brand and packaging for a Persian grill house in Vancouver. Heritage motifs, modern grid, an identity that travels well.",
+    image: gilaneh },
+  { title: "Zeevash", client: "Health Tech", year: "2023", category: "Brand · Product",
+    description: "Brand and product surface for a health-tech platform. Clinical clarity meets approachable color and a friendly, modular system.",
+    image: zeevash },
+  { title: "Phownix", client: "Mobile Equipment", year: "2022", category: "Packaging Design",
+    description: "Packaging system for a mobile equipment line. Bold marks, confident hierarchy, designed for shelf and street.",
+    image: phownix },
+  { title: "Palo Santo", client: "Classic Furniture, est. 2009", year: "2022", category: "Logo · Identity",
+    description: "Identity refresh for a classic furniture maker. A quieter mark, considered details, and a system rooted in craft.",
+    image: palosanto },
+  { title: "Tabesh", client: "Brand Development Center", year: "2022", category: "Identity System",
+    description: "A flexible identity system for a brand development center. Editorial layouts, modular components, designed to grow.",
+    image: tabesh },
 ];
 
 export function Work() {
   return (
     <section id="projects" className="px-6 lg:px-12 py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto">
-        <Reveal className="flex items-end justify-between flex-wrap gap-6 mb-16">
+        <Reveal className="flex items-end justify-between flex-wrap gap-6 mb-20 lg:mb-28">
           <div>
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
               ✦ Selected Projects — 2022 / 2026
@@ -50,41 +70,61 @@ export function Work() {
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20">
-          {projects.map((p, i) => (
-            <motion.article
-              key={p.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.8, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`group ${p.size === "lg" && i % 4 === 0 ? "md:col-span-2" : ""}`}
-            >
-              <div className="overflow-hidden bg-muted aspect-[4/3] mb-5">
-                <motion.img
-                  src={p.image}
-                  alt={`${p.title} — ${p.category}`}
-                  loading="lazy"
-                  initial={{ scale: 1.08 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ scale: 1.04 }}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-2xl md:text-3xl">
-                  {p.title}
-                  <span className="text-muted-foreground italic font-normal text-lg"> — {p.client}</span>
-                </h3>
-                <span className="font-mono text-xs text-muted-foreground shrink-0">{p.year}</span>
-              </div>
-              <div className="mt-1 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-                {p.category}
-              </div>
-            </motion.article>
-          ))}
+        <div className="flex flex-col gap-24 lg:gap-32">
+          {projects.map((p, i) => {
+            const reversed = i % 2 === 1;
+            return (
+              <motion.article
+                key={p.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+              >
+                {/* Text column */}
+                <div className={`lg:col-span-5 ${reversed ? "lg:order-2 lg:col-start-8" : "lg:order-1"}`}>
+                  <div className="flex items-center justify-between gap-6 text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-8">
+                    <span>{p.category}</span>
+                    <span>{p.year}</span>
+                  </div>
+
+                  <h3 className="font-display text-6xl md:text-7xl leading-[0.95] mb-8">
+                    {p.title}
+                    <span className="text-accent">.</span>
+                  </h3>
+
+                  <p className="text-base lg:text-lg leading-relaxed text-muted-foreground max-w-md mb-10">
+                    {p.description}
+                  </p>
+
+                  <div className="flex items-center gap-4">
+                    <span className="h-px w-10 bg-foreground/60" aria-hidden />
+                    <span className="text-[11px] font-mono uppercase tracking-[0.3em]">
+                      Case Study — Soon
+                    </span>
+                  </div>
+                </div>
+
+                {/* Image column */}
+                <div className={`lg:col-span-7 ${reversed ? "lg:order-1 lg:col-start-1 lg:row-start-1" : "lg:order-2"}`}>
+                  <div className="overflow-hidden bg-muted aspect-[16/10]">
+                    <motion.img
+                      src={p.image}
+                      alt={`${p.title} — ${p.category}`}
+                      loading="lazy"
+                      initial={{ scale: 1.08 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.04 }}
+                      className="w-full h-full object-cover transition-transform duration-[1200ms]"
+                    />
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
