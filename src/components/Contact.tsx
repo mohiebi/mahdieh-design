@@ -58,7 +58,7 @@ export function Contact() {
             href="mailto:hello@nexainc.co"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 bg-background text-foreground rounded-full px-8 py-5 font-display text-xl hover:bg-accent hover:text-accent-foreground transition-colors"
+            className="inline-flex items-center gap-3 bg-background text-foreground rounded-full px-8 py-5 font-display text-xl shadow-[0_18px_40px_-10px_rgba(0,0,0,0.9)] hover:shadow-[0_24px_50px_-10px_rgba(0,0,0,1)] hover:bg-accent hover:text-accent-foreground transition-all"
           >
             hello@nexainc.co
             <motion.span

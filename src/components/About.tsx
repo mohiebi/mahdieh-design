@@ -28,7 +28,7 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="px-6 lg:px-12 py-24 lg:py-32 bg-foreground text-background">
+    <section id="about" className="px-6 lg:px-12 py-24 lg:py-32 bg-background text-foreground">
       <div className="max-w-[1400px] mx-auto">
         {/* Top intro band */}
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 mb-20">
