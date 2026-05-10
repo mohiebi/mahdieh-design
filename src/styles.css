@@ -62,7 +62,7 @@
 }
 
 @theme inline {
-  --font-display: "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "Optima", "Optima Nova", "Palatino", "Palatino Linotype", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
