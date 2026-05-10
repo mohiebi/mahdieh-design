@@ -44,9 +44,9 @@ export function About() {
 
           <Reveal delay={0.15} className="lg:col-span-4 lg:col-start-9 self-end">
             <p className="text-base lg:text-lg leading-relaxed opacity-80">
-              With academic foundations in graphic design and advanced art studies —
-              and over seven years across agencies, studios and independent practice —
-              I bring both creativity and structure to every collaboration.
+              My approach combines strategic thinking, aesthetics and user-centered design —
+              to create identities and digital products that connect with audiences and
+              support real business growth.
             </p>
             <p className="mt-5 text-sm leading-relaxed opacity-55">
               Open to remote opportunities, freelance projects and international collaborations.
