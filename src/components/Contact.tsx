@@ -24,7 +24,7 @@ export function Contact() {
         transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
         className="absolute inset-0 w-full h-full object-cover -z-10"
       />
-      <div className="absolute inset-0 -z-10 bg-foreground/55" />
+      
 
       <div className="relative max-w-[1400px] mx-auto">
         <Reveal>
