@@ -105,7 +105,7 @@ export function About() {
                     >
                       <div className="text-xs font-mono opacity-60">{year}</div>
                       <div className="font-display text-xl mt-1">{role}</div>
-                      <div className="text-sm opacity-70 italic">{place}</div>
+                      <div className="text-sm opacity-70">{place}</div>
                     </motion.li>
                   ))}
                 </ul>
@@ -118,7 +118,7 @@ export function About() {
                 <div className="font-mono text-xs uppercase tracking-[0.25em] opacity-60 mb-4">
                   ✦ Philosophy
                 </div>
-                <blockquote className="font-display text-2xl md:text-3xl leading-[1.15] italic">
+                <blockquote className="font-display text-2xl md:text-3xl leading-[1.15]">
                   “Design is the quiet structure
                   <span className="text-accent not-italic"> behind every brand</span>
                   that lasts.”
