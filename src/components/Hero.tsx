@@ -71,10 +71,10 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 lg:col-start-7 text-lg lg:text-xl leading-relaxed text-muted-foreground"
           >
-            I'm <span className="text-foreground">Mahdieh Baghoolizadeh</span> — a brand strategist,
-            visual identity designer and art director. Founder of{" "}
-            <a href="https://nexainc.co" className="underline decoration-accent decoration-2 underline-offset-4 text-foreground">Nexa Studio</a>,
-            collaborating with clients across Canada, the UK and the Middle East.
+            I'm <span className="text-foreground">Mahdieh Baghoolizadeh</span> — a brand strategist
+            and visual identity designer working with international studios and clients across
+            Canada, the UK and the Middle East. I help ambitious teams turn ideas into clear,
+            memorable, and quietly powerful visual systems.
           </motion.p>
         </div>
 
