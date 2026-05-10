@@ -56,7 +56,7 @@ export function Hero() {
                 ) : (
                   <>
                     {line}
-                    <em className="italic">resonate</em>.
+                    <em className="not-italic">resonate</em>.
                   </>
                 )}
               </motion.span>
