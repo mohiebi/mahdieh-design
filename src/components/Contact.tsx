@@ -87,8 +87,8 @@ export function Contact() {
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="group"
             >
-              <div className="text-xs font-mono uppercase tracking-[0.25em] opacity-60">{label}</div>
-              <div className="font-display text-2xl mt-2 group-hover:text-accent transition-colors">@{handle} ↗</div>
+              <div className="text-xs font-mono uppercase tracking-[0.25em] text-white opacity-60">{label}</div>
+              <div className="font-display text-2xl mt-2 text-white group-hover:text-accent transition-colors">@{handle} ↗</div>
             </motion.a>
           ))}
         </div>
