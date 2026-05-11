@@ -37,32 +37,25 @@ export function Hero() {
         </motion.div>
 
         <h1 className="font-display text-[clamp(2.5rem,9vw,9rem)] leading-[0.95] tracking-tight">
-          {["Brands that ", "identities that "].map((line, idx) => (
+          <motion.span className="block overflow-hidden">
             <motion.span
-              key={idx}
-              className="block overflow-hidden"
+              className="block"
+              initial={{ y: "110%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.span
-                className="block"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1, delay: 0.15 + idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {idx === 0 ? (
-                  <>
-                    {line}
-                    <em className="text-accent not-italic font-normal">think</em>,
-                  </>
-                ) : (
-                  <>
-                    {line}
-                    <em className="not-italic">resonate</em>.
-                  </>
-                )}
-              </motion.span>
+              <em className="text-accent not-italic font-normal">Mahdieh</em>
             </motion.span>
-          ))}
+          </motion.span>
         </h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 font-display text-2xl lg:text-4xl leading-tight max-w-3xl"
+        >
+          Designing brands with clarity, character, and cultural depth
+        </motion.p>
 
         <div className="mt-16 grid lg:grid-cols-12 gap-10 items-end">
           <motion.p
