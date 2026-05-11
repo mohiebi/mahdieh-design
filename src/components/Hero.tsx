@@ -57,12 +57,12 @@ export function Hero() {
           Designing brands with clarity, character, and cultural depth
         </motion.p>
 
-        <div className="mt-16 grid lg:grid-cols-12 gap-10 items-end">
+        <div className="mt-16">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 lg:col-start-7 text-lg lg:text-xl leading-relaxed text-muted-foreground"
+            className="text-lg lg:text-xl leading-relaxed text-muted-foreground md:columns-2 md:gap-12 [&>span]:text-foreground"
           >
             I'm <span className="text-foreground">Mahdieh Baghoolizadeh</span> — a brand strategist
             and visual identity designer working with international studios and clients across
