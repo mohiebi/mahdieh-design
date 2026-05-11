@@ -37,14 +37,14 @@ export function Hero() {
         </motion.div>
 
         <h1 className="font-display text-[clamp(2.5rem,9vw,9rem)] leading-[0.95] tracking-tight">
-          <motion.span className="text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6 text-slate-50 block overflow-hidden">
+          <motion.span className="block overflow-hidden">
             <motion.span
               className="block"
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <em className="text-accent not-italic font-normal font-display">Mahdieh</em>
+              <em className="text-accent not-italic font-normal">Mahdieh</em>
             </motion.span>
           </motion.span>
         </h1>
@@ -54,7 +54,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 font-display text-2xl lg:text-4xl leading-tight max-w-3xl"
         >
-          Mahdieh<br />Designing brands with clarity, character, and cultural depth
+          Designing brands with clarity, character, and cultural depth
         </motion.p>
 
         <div className="mt-16">
