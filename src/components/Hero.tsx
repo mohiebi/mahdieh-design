@@ -54,7 +54,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 font-display text-2xl lg:text-4xl leading-tight max-w-3xl"
         >
-          Designing brands with clarity, character, and cultural depth
+          Mahdieh<br />Designing brands with clarity, character, and cultural depth
         </motion.p>
 
         <div className="mt-16">
