@@ -44,7 +44,7 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <em className="text-accent not-italic font-normal" style={{ fontFamily: "'Optima', 'Optima Nova', 'Palatino Linotype', 'URW Classico', Georgia, serif" }}>Mahdieh</em>
+              <em className="text-accent not-italic font-normal font-display">Mahdieh</em>
             </motion.span>
           </motion.span>
         </h1>
