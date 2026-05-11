@@ -37,7 +37,7 @@ export function Hero() {
         </motion.div>
 
         <h1 className="font-display text-[clamp(2.5rem,9vw,9rem)] leading-[0.95] tracking-tight">
-          <motion.span className="block overflow-hidden">
+          <motion.span className="text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6 text-slate-50 block overflow-hidden">
             <motion.span
               className="block"
               initial={{ y: "110%" }}
