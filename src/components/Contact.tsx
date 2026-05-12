@@ -12,7 +12,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden text-background isolate"
+      className="relative px-6 lg:px-12 py-24 lg:py-40 grain overflow-hidden text-white isolate"
     >
       <motion.img
         src={contactBg}
