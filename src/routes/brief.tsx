@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Contact";
 import { Brief } from "@/components/Brief";
+import { useSession } from "@/hooks/use-session";
 
 export const Route = createFileRoute("/brief")({
   head: () => ({
@@ -16,11 +18,28 @@ export const Route = createFileRoute("/brief")({
 });
 
 function BriefPage() {
+  const navigate = useNavigate();
+  const { session, loading } = useSession();
+
+  useEffect(() => {
+    if (!loading && !session) {
+      navigate({ to: "/signup", search: { redirect: "/brief" } });
+    }
+  }, [session, loading, navigate]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Nav />
       <main>
-        <Brief />
+        {loading || !session ? (
+          <div className="min-h-[60vh] flex items-center justify-center">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
+              Loading…
+            </span>
+          </div>
+        ) : (
+          <Brief />
+        )}
       </main>
       <Footer />
     </div>

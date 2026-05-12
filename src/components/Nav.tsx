@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import logo from "@/assets/logo.svg";
+import { useSession } from "@/hooks/use-session";
+import { supabase } from "@/integrations/supabase/client";
 
 export function Nav() {
+  const { session } = useSession();
+
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
@@ -21,9 +25,22 @@ export function Nav() {
           <Link to="/brief" className="hover:text-foreground transition-colors" activeProps={{ className: "text-foreground" }}>Brief</Link>
           <a href="/#contact" className="hover:text-foreground transition-colors">Contact</a>
         </nav>
-        <Link to="/brief" className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all">
-          Start a brief
-        </Link>
+        {session ? (
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all"
+          >
+            Sign out
+          </button>
+        ) : (
+          <Link
+            to="/signup"
+            search={{ redirect: "/brief" }}
+            className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all"
+          >
+            Start a brief
+          </Link>
+        )}
       </div>
     </motion.header>
   );
