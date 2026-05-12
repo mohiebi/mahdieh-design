@@ -15,14 +15,15 @@ export function Nav() {
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-          <a href="#projects" className="hover:text-foreground transition-colors">Projects</a>
-          <a href="#about" className="hover:text-foreground transition-colors">About</a>
-          <a href="#services" className="hover:text-foreground transition-colors">Services</a>
-          <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
+          <a href="/#projects" className="hover:text-foreground transition-colors">Projects</a>
+          <a href="/#about" className="hover:text-foreground transition-colors">About</a>
+          <a href="/#services" className="hover:text-foreground transition-colors">Services</a>
+          <Link to="/brief" className="hover:text-foreground transition-colors" activeProps={{ className: "text-foreground" }}>Brief</Link>
+          <a href="/#contact" className="hover:text-foreground transition-colors">Contact</a>
         </nav>
-        <a href="#contact" className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all">
-          Get in touch
-        </a>
+        <Link to="/brief" className="text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all">
+          Start a brief
+        </Link>
       </div>
     </motion.header>
   );
