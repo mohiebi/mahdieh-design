@@ -19,7 +19,7 @@ export function Nav() {
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-          <a href="/#projects" className="hover:text-foreground transition-colors">Projects</a>
+          <Link to="/projects" className="hover:text-foreground transition-colors" activeProps={{ className: "text-foreground" }}>Projects</Link>
           <a href="/#about" className="hover:text-foreground transition-colors">About</a>
           <a href="/#services" className="hover:text-foreground transition-colors">Services</a>
           <Link to="/brief" className="hover:text-foreground transition-colors" activeProps={{ className: "text-foreground" }}>Brief</Link>
