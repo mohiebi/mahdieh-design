@@ -183,9 +183,10 @@ export function Brief() {
 
             <motion.button
               onClick={next}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 bg-foreground text-background rounded-full px-8 py-5 font-display text-xl hover:bg-accent hover:text-accent-foreground transition-colors"
+              disabled={!canProceed}
+              whileHover={canProceed ? { scale: 1.04 } : {}}
+              whileTap={canProceed ? { scale: 0.97 } : {}}
+              className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {step === total - 1 ? "Submit brief" : "Next question"}
               <motion.span
@@ -197,6 +198,11 @@ export function Brief() {
               </motion.span>
             </motion.button>
           </div>
+        )}
+        {!submitted && !canProceed && (
+          <p className="mt-3 text-xs text-muted-foreground font-mono">
+            This question is required.
+          </p>
         )}
       </div>
     </section>
