@@ -108,7 +108,7 @@ export function AuthSubmit({ label, loading }: { label: string; loading?: boolea
       disabled={loading}
       whileHover={{ scale: loading ? 1 : 1.04 }}
       whileTap={{ scale: loading ? 1 : 0.97 }}
-      className="inline-flex items-center gap-3 bg-foreground text-background rounded-full px-8 py-5 font-display text-xl hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
+      className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
     >
       {loading ? "Please wait…" : label}
       <span aria-hidden>→</span>
