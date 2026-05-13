@@ -29,7 +29,12 @@ export function Brief() {
   const progress = useMemo(() => Math.round(((step + 1) / total) * 100), [step, total]);
   const value = answers[current?.id] ?? "";
 
+  const isShort = current?.type === "short" || current?.type === "email";
+  const isAnswered = value.trim().length > 0;
+  const canProceed = !isShort || isAnswered;
+
   const next = () => {
+    if (!canProceed) return;
     if (step < total - 1) setStep((s) => s + 1);
     else setSubmitted(true);
   };
