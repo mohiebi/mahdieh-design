@@ -105,7 +105,7 @@ function ProjectPage() {
                 </div>
               </div>
               <div className="lg:col-span-8 lg:col-start-5 space-y-6 text-lg lg:text-xl leading-relaxed text-foreground/90">
-                {project.content.map((p, i) => (
+                {project.content.map((p: string, i: number) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
