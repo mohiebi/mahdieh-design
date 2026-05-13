@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as BriefRouteImport } from './routes/brief'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const SignupRoute = SignupRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/brief': typeof BriefRoute
   '/login': typeof LoginRoute
+  '/projects': typeof ProjectsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/brief': typeof BriefRoute
   '/login': typeof LoginRoute
+  '/projects': typeof ProjectsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
@@ -60,21 +68,36 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/brief': typeof BriefRoute
   '/login': typeof LoginRoute
+  '/projects': typeof ProjectsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/brief' | '/login' | '/reset-password' | '/signup'
+  fullPaths:
+    | '/'
+    | '/brief'
+    | '/login'
+    | '/projects'
+    | '/reset-password'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/brief' | '/login' | '/reset-password' | '/signup'
-  id: '__root__' | '/' | '/brief' | '/login' | '/reset-password' | '/signup'
+  to: '/' | '/brief' | '/login' | '/projects' | '/reset-password' | '/signup'
+  id:
+    | '__root__'
+    | '/'
+    | '/brief'
+    | '/login'
+    | '/projects'
+    | '/reset-password'
+    | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BriefRoute: typeof BriefRoute
   LoginRoute: typeof LoginRoute
+  ProjectsRoute: typeof ProjectsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
 }
@@ -93,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -123,9 +153,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BriefRoute: BriefRoute,
   LoginRoute: LoginRoute,
+  ProjectsRoute: ProjectsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
