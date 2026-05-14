@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import logoIcon from "@/assets/logo.svg?url";
 
 function NotFoundComponent() {
   return (
@@ -30,22 +31,52 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Mahdieh Baghoolizadeh — Brand Strategist & Visual Identity Designer" },
-      { name: "description", content: "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio." },
+      {
+        name: "description",
+        content:
+          "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio.",
+      },
       { name: "author", content: "Mahdieh Baghoolizadeh" },
-      { property: "og:title", content: "Mahdieh Baghoolizadeh — Brand Strategist & Visual Identity Designer" },
-      { property: "og:description", content: "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio." },
+      {
+        property: "og:title",
+        content: "Mahdieh Baghoolizadeh — Brand Strategist & Visual Identity Designer",
+      },
+      {
+        property: "og:description",
+        content:
+          "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Mahdieh Baghoolizadeh — Brand Strategist & Visual Identity Designer" },
-      { name: "twitter:description", content: "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a71759a9-c92a-4de4-86a8-ecff1acd2137/id-preview-e3856912--93d332e5-2521-4172-b190-3c3b39384142.lovable.app-1778067498508.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a71759a9-c92a-4de4-86a8-ecff1acd2137/id-preview-e3856912--93d332e5-2521-4172-b190-3c3b39384142.lovable.app-1778067498508.png" },
+      {
+        name: "twitter:title",
+        content: "Mahdieh Baghoolizadeh — Brand Strategist & Visual Identity Designer",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Portfolio of Mahdieh Baghoolizadeh — brand strategy, visual identity, UI/UX and art direction. Founder of Nexa Studio.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a71759a9-c92a-4de4-86a8-ecff1acd2137/id-preview-e3856912--93d332e5-2521-4172-b190-3c3b39384142.lovable.app-1778067498508.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a71759a9-c92a-4de4-86a8-ecff1acd2137/id-preview-e3856912--93d332e5-2521-4172-b190-3c3b39384142.lovable.app-1778067498508.png",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/svg+xml", href: logoIcon },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Marcellus&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Marcellus&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,

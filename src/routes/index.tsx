@@ -18,9 +18,9 @@ function Index() {
       <main>
         <Hero />
         <Marquee />
-        <Work />
-        <Services />
         <About />
+        <Work limit={3} showMoreLink />
+        <Services />
         <Contact />
       </main>
       <Footer />

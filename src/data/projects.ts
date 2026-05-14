@@ -3,8 +3,10 @@ import pooyesh from "@/assets/work-pooyesh.jpg";
 import arex from "@/assets/work-arex.jpg";
 import seper from "@/assets/work-seper.jpg";
 import xima from "@/assets/work-xima.jpg";
+import ako from "@/assets/work-ako.jpg";
 import gilaneh from "@/assets/work-gilaneh.jpg";
 import zeevash from "@/assets/work-zeevash.jpg";
+import ayenehKhaneh from "@/assets/work-ayeneh-khaneh.jpg";
 import phownix from "@/assets/work-phownix.jpg";
 import palosanto from "@/assets/work-palosanto.jpg";
 import tabesh from "@/assets/work-tabesh.jpg";
@@ -17,82 +19,196 @@ export type Project = {
   category: string;
   description: string;
   image: string;
+  services: string[];
+  location?: string;
+  credit?: string;
   content: string[];
   videoUrl?: string;
 };
 
 export const projects: Project[] = [
-  { slug: "arianet", title: "Arianet", client: "Internet Solutions", year: "2025", category: "Brand Strategy · Telecom",
-    description: "End-to-end identity and campaign work for a next-generation internet provider. Confident type, calm color, infrastructure that feels human.",
+  {
+    slug: "arianet",
+    title: "Arianet",
+    client: "MCI",
+    year: "2025",
+    category: "Business Collaboration",
+    description:
+      "A telecom collaboration identity built around speed, trust, and a clear launch message.",
     image: arianet,
+    services: ["Brand strategy", "Campaign concept", "Visual identity"],
+    credit: "Portfolio source: Nexa Inc.",
     content: [
-      "Arianet asked us to translate a complex telecom infrastructure into a brand that feels calm, confident and human. We led naming refinement, voice, identity system and the launch campaign.",
-      "The wordmark pairs a wide geometric sans with a quiet stroke modulation — a subtle nod to signal flow. The system extends across product UI, retail signage and broadcast.",
+      "Arianet frames a business collaboration around the line Speed Is Life. The identity uses confident contrast, fast composition, and simple messaging to make telecom infrastructure feel direct and energetic.",
+      "The system is designed for a launch context: memorable enough for campaign use, but structured enough to support service communication across digital and presentation surfaces.",
     ],
   },
-  { slug: "pooyesh", title: "Pooyesh", client: "Royan Fertility Center", year: "2022", category: "Visual Identity · Healthcare",
-    description: "Environmental and visual identity for a leading fertility center. Soft geometry, optimistic palette, designed to reassure at every touchpoint.",
+  {
+    slug: "pooyesh",
+    title: "Pooyesh",
+    client: "Royan Fertility Center",
+    year: "2022",
+    category: "Branding Project",
+    description:
+      "A soft and reassuring healthcare identity for a fertility center, spanning logo, visual identity, and environmental graphics.",
     image: pooyesh,
+    services: ["Logo design", "Visual identity", "Environmental graphics"],
+    location: "Isfahan, Iran",
     content: [
-      "Pooyesh is the patient-facing identity for Royan Fertility Center. We designed a system that quietly reassures — soft geometry, warm color, generous whitespace.",
-      "From wayfinding to consultation rooms to take-home material, every surface was tuned for emotional clarity.",
+      "Pooyesh is the patient-facing brand for Royan Fertility Center. Its visual language is built to feel warm, careful, and emotionally steady for a sensitive healthcare journey.",
+      "The portfolio shows the identity moving from the mark into physical space, with environmental graphics and printed materials carrying the same calm visual rhythm.",
     ],
   },
-  { slug: "arex", title: "Arex", client: "Digital Transactions", year: "2024", category: "Visual Identity · Fintech",
-    description: "Mark and system for a digital transaction facilitator. Quiet geometry, confident voice. With Wilma Studio.",
+  {
+    slug: "arex",
+    title: "Arex",
+    client: "Arex",
+    year: "2024",
+    category: "Brand Design",
+    description: "A secure and efficient visual system for a digital transaction facilitator.",
     image: arex,
+    services: ["Brand design", "Logo system", "Visual identity"],
+    credit: "In collaboration with Wilma Studio.",
     content: [
-      "Arex is a digital transaction facilitator operating across borders. The mark is built from two interlocking forms — a quiet metaphor for trust and exchange.",
-      "Built in collaboration with Wilma Studio.",
+      "Arex is positioned as a digital transaction facilitator, so the brand needed to communicate security, movement, and operational clarity in a compact system.",
+      "The resulting identity uses strong geometry and a restrained visual language that can work across product, communication, and trust-building brand moments.",
     ],
   },
-  { slug: "seper", title: "Seper", client: "AI Agents Explorer", year: "2026", category: "Personal Brand · Editorial",
-    description: "An editorial-led personal brand for an AI researcher. Long-form typography, generous whitespace, a system built to think out loud.",
+  {
+    slug: "seper",
+    title: "Seper",
+    client: "Ai Explorer",
+    year: "2026",
+    category: "Personal Brand",
+    description:
+      "A personal brand for an AI explorer, built around independent thinking and an editorial visual voice.",
     image: seper,
+    services: ["Brand strategy", "Personal brand", "Editorial direction"],
+    location: "England",
     content: [
-      "Seper is the editorial-led personal brand for an AI researcher. The system is built around long-form thinking — generous measure, considered hierarchy, room to breathe.",
+      "Seper is a personal brand for an AI explorer, shaped around the idea of forging a path before the map exists. The identity gives that thought a quiet but distinctive visual presence.",
+      "The system favors clear hierarchy, editorial pacing, and a sense of exploration that can support articles, talks, digital profiles, and long-form thinking.",
     ],
   },
-  { slug: "xima", title: "Xima", client: "Hospitality", year: "2024", category: "Visual Identity · Hospitality",
-    description: "Identity for a boutique hospitality concept. Warm minimalism, tactile materials, a logotype that feels like an invitation.",
+  {
+    slug: "xima",
+    title: "Xima",
+    client: "Xima",
+    year: "2021",
+    category: "Branding Project",
+    description:
+      "A construction company identity balancing respect for the past with a forward-building perspective.",
     image: xima,
+    services: ["Logo design", "Visual identity"],
     content: [
-      "Xima is a boutique hospitality concept. The identity leans into warm minimalism — tactile materials, a hand-drawn quality in the wordmark, an invitation in every detail.",
+      "Xima is a construction company identity with a clear positioning idea: believing in the past while building the future. The brand uses that tension as its visual anchor.",
+      "The identity is direct and architectural, giving the company a system that can work across business stationery, signage, site material, and presentation use.",
     ],
   },
-  { slug: "gilaneh", title: "Gilaneh", client: "Persian Grill House — Vancouver", year: "2023", category: "Brand · Packaging",
-    description: "Brand and packaging for a Persian grill house in Vancouver. Heritage motifs, modern grid, an identity that travels well.",
+  {
+    slug: "ako",
+    title: "Ako",
+    client: "Mohammad Aghajari",
+    year: "2023",
+    category: "Real Estate Brand",
+    description:
+      "Naming and visual identity for Ako Real Estate Group, a Tehran-based real estate brand.",
+    image: ako,
+    services: ["Brand naming", "Visual identity", "Brand design"],
+    location: "Tehran, Iran",
+    content: [
+      "Ako is a real estate group identity developed from naming through visual language. The work gives the brand a polished, high-trust presence for a competitive property market.",
+      "The project focuses on a clean mark, refined layout behavior, and a visual system that can adapt from corporate communication to real estate listing and client-facing material.",
+    ],
+  },
+  {
+    slug: "gilaneh",
+    title: "Gilaneh",
+    client: "Gilaneh",
+    year: "2023",
+    category: "Branding Project",
+    description: "Brand and packaging design for an Iranian grill house in Vancouver.",
     image: gilaneh,
+    services: ["Logo design", "Visual identity", "Packaging design"],
+    location: "Vancouver, Canada",
     content: [
-      "Gilaneh brings a Persian grill house to Vancouver. We blended heritage motifs with a modern grid to create an identity that travels well across menu, packaging and storefront.",
+      "Gilaneh brings an Iranian grill house identity into a Vancouver restaurant context. The brand blends a hospitality voice with cultural memory and a strong packaging system.",
+      "The work extends from the core logo into menus, takeaway packaging, and brand surfaces that need to feel recognizable both in-store and in customers' hands.",
     ],
   },
-  { slug: "zeevash", title: "Zeevash", client: "Health Tech", year: "2023", category: "Brand · Product",
-    description: "Brand and product surface for a health-tech platform. Clinical clarity meets approachable color and a friendly, modular system.",
+  {
+    slug: "zeevash",
+    title: "Zeevash",
+    client: "Zeevash Pharmacy",
+    year: "2023",
+    category: "Brand Strategy",
+    description:
+      "A pharmacy identity and packaging system with clinical clarity and approachable retail behavior.",
     image: zeevash,
+    services: ["Brand strategy", "Visual identity", "Packaging design"],
+    location: "Tehran, Iran",
     content: [
-      "Zeevash is a health-tech platform. The brand and product surfaces share a single modular system — clinical clarity, approachable color, friendly motion.",
+      "Zeevash is a pharmacy brand system that needs to feel trustworthy, organized, and approachable. The visual direction keeps the experience clear without becoming cold.",
+      "The portfolio presents the identity across packaging and pharmacy touchpoints, giving the brand a flexible system for health, retail, and service communication.",
     ],
   },
-  { slug: "phownix", title: "Phownix", client: "Mobile Equipment", year: "2022", category: "Packaging Design",
-    description: "Packaging system for a mobile equipment line. Bold marks, confident hierarchy, designed for shelf and street.",
+  {
+    slug: "ayeneh-khaneh",
+    title: "Ayeneh Khaneh",
+    client: "Ayeneh Khaneh",
+    year: "2020",
+    category: "Branding Project",
+    description: "Logo, visual identity, and UI design for a design and construction company.",
+    image: ayenehKhaneh,
+    services: ["Logo design", "Visual identity", "UI design"],
+    content: [
+      "Ayeneh Khaneh is a design and construction company identity. The project connects architectural structure with a refined brand language that can live across print and digital touchpoints.",
+      "The system includes UI design alongside the core visual identity, so the brand can present its work with a consistent tone from portfolio material to web interfaces.",
+    ],
+  },
+  {
+    slug: "phownix",
+    title: "Phownix",
+    client: "Phownix Mobile Equipment",
+    year: "2023",
+    category: "Packaging Design",
+    description:
+      "A bold packaging system for mobile equipment products, designed for shelf impact and fast recognition.",
     image: phownix,
+    services: ["Packaging design", "Product line system"],
     content: [
-      "Phownix needed a packaging system that performed on shelf and street. Bold marks, confident hierarchy, an unmistakable family across SKUs.",
+      "Phownix needed packaging that could compete quickly in a mobile equipment category where recognition and hierarchy matter at a glance.",
+      "The design creates a strong product-family feel, using assertive typography and repeatable structure so each item can stand alone while still belonging to the same system.",
     ],
   },
-  { slug: "palo-santo", title: "Palo Santo", client: "Classic Furniture, est. 2009", year: "2022", category: "Logo · Identity",
-    description: "Identity refresh for a classic furniture maker. A quieter mark, considered details, and a system rooted in craft.",
+  {
+    slug: "palo-santo",
+    title: "Palo Santo",
+    client: "Palo Santo",
+    year: "2022",
+    category: "Branding Project",
+    description:
+      "A classic and neoclassical furniture identity rooted in craft, detail, and restraint.",
     image: palosanto,
+    services: ["Logo design", "Visual identity"],
     content: [
-      "An identity refresh for a classic furniture maker. We quieted the mark, sharpened the details and built a system rooted in craft.",
+      "Palo Santo is a furniture brand with a classic and neoclassical character. The identity needed to feel crafted, established, and attentive to detail.",
+      "The visual system keeps the mark and layouts restrained, letting materials, furniture forms, and brand tone carry the sense of quality.",
     ],
   },
-  { slug: "tabesh", title: "Tabesh", client: "Brand Development Center", year: "2022", category: "Identity System",
-    description: "A flexible identity system for a brand development center. Editorial layouts, modular components, designed to grow.",
+  {
+    slug: "tabesh",
+    title: "Tabesh",
+    client: "Tabesh Brand Center",
+    year: "2022",
+    category: "Branding Project",
+    description:
+      "A brand development center identity spanning logo, visual identity, and environmental graphics.",
     image: tabesh,
+    services: ["Logo design", "Visual identity", "Environmental graphics"],
     content: [
-      "Tabesh is a brand development center. The identity is a flexible editorial system — modular components, considered layouts, designed to grow with the work.",
+      "Tabesh is a brand development center, so its own identity needed to feel flexible, strategic, and capable of holding many kinds of brand work.",
+      "The portfolio shows a system that can move through printed matter, environmental graphics, and presentation contexts without losing its editorial discipline.",
     ],
   },
 ];
