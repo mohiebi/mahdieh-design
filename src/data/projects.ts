@@ -1,15 +1,9 @@
-import arianet from "@/assets/work-arianet.jpg";
 import pooyesh from "@/assets/work-pooyesh.jpg";
-import arex from "@/assets/work-arex.jpg";
-import seper from "@/assets/work-seper.jpg";
 import xima from "@/assets/work-xima.jpg";
-import ako from "@/assets/work-ako.jpg";
-import gilaneh from "@/assets/work-gilaneh.jpg";
-import zeevash from "@/assets/work-zeevash.jpg";
 import ayenehKhaneh from "@/assets/work-ayeneh-khaneh.jpg";
-import phownix from "@/assets/work-phownix.jpg";
 import palosanto from "@/assets/work-palosanto.jpg";
 import tabesh from "@/assets/work-tabesh.jpg";
+import { projectMedia } from "@/data/project-media";
 
 export type Project = {
   slug: string;
@@ -23,6 +17,8 @@ export type Project = {
   location?: string;
   credit?: string;
   content: string[];
+  videos?: string[];
+  galleryImages?: string[];
   videoUrl?: string;
 };
 
@@ -35,7 +31,9 @@ export const projects: Project[] = [
     category: "Business Collaboration",
     description:
       "A telecom collaboration identity built around speed, trust, and a clear launch message.",
-    image: arianet,
+    image: projectMedia.arianet.cover,
+    videos: projectMedia.arianet.videos,
+    galleryImages: projectMedia.arianet.images,
     services: ["Brand strategy", "Campaign concept", "Visual identity"],
     credit: "Portfolio source: Nexa Inc.",
     content: [
@@ -66,7 +64,9 @@ export const projects: Project[] = [
     year: "2024",
     category: "Brand Design",
     description: "A secure and efficient visual system for a digital transaction facilitator.",
-    image: arex,
+    image: projectMedia.arex.cover,
+    videos: projectMedia.arex.videos,
+    galleryImages: projectMedia.arex.images,
     services: ["Brand design", "Logo system", "Visual identity"],
     credit: "In collaboration with Wilma Studio.",
     content: [
@@ -76,13 +76,15 @@ export const projects: Project[] = [
   },
   {
     slug: "seper",
-    title: "Seper",
-    client: "Ai Explorer",
+    title: "Dr. Sep",
+    client: "Dr. Sep",
     year: "2026",
     category: "Personal Brand",
     description:
       "A personal brand for an AI explorer, built around independent thinking and an editorial visual voice.",
-    image: seper,
+    image: projectMedia.seper.cover,
+    videos: projectMedia.seper.videos,
+    galleryImages: projectMedia.seper.images,
     services: ["Brand strategy", "Personal brand", "Editorial direction"],
     location: "England",
     content: [
@@ -113,7 +115,9 @@ export const projects: Project[] = [
     category: "Real Estate Brand",
     description:
       "Naming and visual identity for Ako Real Estate Group, a Tehran-based real estate brand.",
-    image: ako,
+    image: projectMedia.ako.cover,
+    videos: projectMedia.ako.videos,
+    galleryImages: projectMedia.ako.images,
     services: ["Brand naming", "Visual identity", "Brand design"],
     location: "Tehran, Iran",
     content: [
@@ -128,7 +132,9 @@ export const projects: Project[] = [
     year: "2023",
     category: "Branding Project",
     description: "Brand and packaging design for an Iranian grill house in Vancouver.",
-    image: gilaneh,
+    image: projectMedia.gilaneh.cover,
+    videos: projectMedia.gilaneh.videos,
+    galleryImages: projectMedia.gilaneh.images,
     services: ["Logo design", "Visual identity", "Packaging design"],
     location: "Vancouver, Canada",
     content: [
@@ -144,12 +150,31 @@ export const projects: Project[] = [
     category: "Brand Strategy",
     description:
       "A pharmacy identity and packaging system with clinical clarity and approachable retail behavior.",
-    image: zeevash,
+    image: projectMedia.zeevash.cover,
+    videos: projectMedia.zeevash.videos,
+    galleryImages: projectMedia.zeevash.images,
     services: ["Brand strategy", "Visual identity", "Packaging design"],
     location: "Tehran, Iran",
     content: [
       "Zeevash is a pharmacy brand system that needs to feel trustworthy, organized, and approachable. The visual direction keeps the experience clear without becoming cold.",
       "The portfolio presents the identity across packaging and pharmacy touchpoints, giving the brand a flexible system for health, retail, and service communication.",
+    ],
+  },
+  {
+    slug: "milan",
+    title: "Milan",
+    client: "Milan",
+    year: "2024",
+    category: "Motion Design",
+    description:
+      "A motion-led project with a full video set and a dedicated cover image for the portfolio archive.",
+    image: projectMedia.milan.cover,
+    videos: projectMedia.milan.videos,
+    galleryImages: projectMedia.milan.images,
+    services: ["Motion design", "Video direction", "Campaign assets"],
+    content: [
+      "Milan is presented as a motion-focused portfolio project. The project page prioritizes the video set first, using the cover image for listings and the page hero.",
+      "The media package includes multiple motion exports for different campaign and story formats, giving the project page a more dynamic case-study rhythm.",
     ],
   },
   {
@@ -174,7 +199,9 @@ export const projects: Project[] = [
     category: "Packaging Design",
     description:
       "A bold packaging system for mobile equipment products, designed for shelf impact and fast recognition.",
-    image: phownix,
+    image: projectMedia.phownix.cover,
+    videos: projectMedia.phownix.videos,
+    galleryImages: projectMedia.phownix.images,
     services: ["Packaging design", "Product line system"],
     content: [
       "Phownix needed packaging that could compete quickly in a mobile equipment category where recognition and hierarchy matter at a glance.",

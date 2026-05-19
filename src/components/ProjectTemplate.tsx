@@ -9,6 +9,8 @@ type ProjectTemplateProps = {
 };
 
 export function ProjectTemplate({ project, previousProject, nextProject }: ProjectTemplateProps) {
+  const videos = [...(project.videoUrl ? [project.videoUrl] : []), ...(project.videos ?? [])];
+  const galleryImages = project.galleryImages ?? [];
   const details = [
     ["Client", project.client],
     ["Year", project.year],
@@ -68,12 +70,12 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden bg-muted aspect-[16/9] mb-16 lg:mb-24"
+            className="overflow-hidden bg-muted mb-16 lg:mb-24"
           >
             <img
               src={project.image}
               alt={`${project.title} - ${project.category}`}
-              className="w-full h-full object-cover"
+              className="w-full h-auto block"
             />
           </motion.div>
 
@@ -108,17 +110,42 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
             </div>
           </div>
 
-          {project.videoUrl && (
-            <div className="mb-16 lg:mb-24">
-              <div className="aspect-video overflow-hidden bg-muted">
-                <video
-                  src={project.videoUrl}
-                  controls
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
+          {(videos.length > 0 || galleryImages.length > 0) && (
+            <section className="mb-16 lg:mb-24">
+              <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-8">
+                Project media
               </div>
-            </div>
+
+              {videos.length > 0 && (
+                <div className="space-y-6 mb-6">
+                  {videos.map((video) => (
+                    <div key={video} className="aspect-video overflow-hidden bg-muted">
+                      <video
+                        src={video}
+                        controls
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {galleryImages.length > 0 && (
+                <div className="grid grid-cols-1 gap-6">
+                  {galleryImages.map((image, index) => (
+                    <div key={image} className="overflow-hidden bg-muted">
+                      <img
+                        src={image}
+                        alt={`${project.title} project image ${index + 1}`}
+                        className="w-full h-auto block"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
           )}
         </div>
       </article>
