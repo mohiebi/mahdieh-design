@@ -1,0 +1,96 @@
+import { Head, useForm } from '@inertiajs/react';
+import { FormEvent } from 'react';
+import { AdminLayout, adminInputClass } from '../AdminLayout';
+
+type QuestionFormData = {
+  label: string;
+  hint: string;
+  type: 'short' | 'long' | 'email';
+  placeholder: string;
+  is_required: boolean;
+  is_active: boolean;
+  sort_order: number;
+};
+
+type Props = {
+  question: (QuestionFormData & { id: number }) | null;
+};
+
+const blank: QuestionFormData = {
+  label: '',
+  hint: '',
+  type: 'long',
+  placeholder: 'Your answer...',
+  is_required: true,
+  is_active: true,
+  sort_order: 0,
+};
+
+export default function BriefQuestionForm({ question }: Props) {
+  const form = useForm<QuestionFormData>(question ?? blank);
+  const title = question ? 'Edit question' : 'New question';
+
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    if (question) form.put(`/admin/brief-questions/${question.id}`);
+    else form.post('/admin/brief-questions');
+  };
+
+  return (
+    <AdminLayout eyebrow="Brief editor" title={title}>
+      <Head title={title} />
+      <form onSubmit={submit} className="space-y-10 border-t border-border pt-10">
+        <label className="block">
+          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Question label</span>
+          <textarea
+            value={form.data.label}
+            onChange={(event) => form.setData('label', event.target.value)}
+            rows={3}
+            className={`${adminInputClass} resize-none`}
+          />
+          {form.errors.label && <span className="mt-2 block text-sm text-accent">{form.errors.label}</span>}
+        </label>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Hint</span>
+            <input value={form.data.hint} onChange={(event) => form.setData('hint', event.target.value)} className={adminInputClass} />
+          </label>
+          <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Placeholder</span>
+            <input value={form.data.placeholder} onChange={(event) => form.setData('placeholder', event.target.value)} className={adminInputClass} />
+          </label>
+          <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Type</span>
+            <select value={form.data.type} onChange={(event) => form.setData('type', event.target.value as QuestionFormData['type'])} className={adminInputClass}>
+              <option value="short">Short</option>
+              <option value="long">Long</option>
+              <option value="email">Email</option>
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Sort order</span>
+            <input type="number" value={form.data.sort_order} onChange={(event) => form.setData('sort_order', Number(event.target.value))} className={adminInputClass} />
+          </label>
+        </div>
+
+        <div className="flex flex-wrap gap-8">
+          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+            <input type="checkbox" checked={form.data.is_required} onChange={(event) => form.setData('is_required', event.target.checked)} />
+            Required
+          </label>
+          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+            <input type="checkbox" checked={form.data.is_active} onChange={(event) => form.setData('is_active', event.target.checked)} />
+            Active
+          </label>
+        </div>
+
+        <div className="flex justify-end border-t border-border pt-8">
+          <button disabled={form.processing} className="bg-foreground text-background rounded-full px-7 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+            Save question
+          </button>
+        </div>
+      </form>
+    </AdminLayout>
+  );
+}
