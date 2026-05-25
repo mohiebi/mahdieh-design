@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Project extends Model
+{
+    protected $fillable = [
+        'slug',
+        'title',
+        'client',
+        'year',
+        'category',
+        'description',
+        'location',
+        'credit',
+        'sort_order',
+        'is_published',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_published' => 'boolean',
+            'sort_order' => 'integer',
+        ];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function sections(): HasMany
+    {
+        return $this->hasMany(ProjectSection::class)->orderBy('sort_order');
+    }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(ProjectService::class)->orderBy('sort_order');
+    }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(ProjectMedia::class)->orderByDesc('is_cover')->orderBy('sort_order');
+    }
+}
