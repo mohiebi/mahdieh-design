@@ -7,6 +7,8 @@ use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -123,8 +125,20 @@ class ProjectController extends Controller
             'services' => ['array'],
             'services.*' => ['nullable', 'string', 'max:255'],
             'media' => ['array'],
-            'media.*.type' => ['required_with:media.*.url', Rule::in(['image', 'video'])],
-            'media.*.url' => ['required_with:media.*.type', 'string', 'max:2048'],
+            'media.*.type' => ['nullable', Rule::in(['image', 'video'])],
+            'media.*.url' => ['nullable', 'string', 'max:2048'],
+            'media.*.file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,mp4,webm', 'max:102400'],
+            'media.*.upload' => ['nullable', 'array'],
+            'media.*.upload.name' => ['required_with:media.*.upload', 'string', 'max:255'],
+            'media.*.upload.type' => ['required_with:media.*.upload', 'string', Rule::in([
+                'image/jpeg',
+                'image/png',
+                'image/webp',
+                'image/gif',
+                'video/mp4',
+                'video/webm',
+            ])],
+            'media.*.upload.data' => ['required_with:media.*.upload', 'string'],
             'media.*.alt_text' => ['nullable', 'string', 'max:255'],
             'media.*.is_cover' => ['boolean'],
         ]);
@@ -144,7 +158,14 @@ class ProjectController extends Controller
             ],
             'sections' => collect($validated['sections'] ?? [])->filter(fn ($value) => trim((string) $value) !== '')->values(),
             'services' => collect($validated['services'] ?? [])->filter(fn ($value) => trim((string) $value) !== '')->values(),
-            'media' => collect($validated['media'] ?? [])->filter(fn ($value) => filled($value['url'] ?? null))->values(),
+            'media' => collect($validated['media'] ?? [])
+                ->filter(fn ($value) => filled($value['url'] ?? null) || isset($value['file']) || isset($value['upload']))
+                ->map(function ($value) {
+                    $value['type'] = $this->mediaType($value);
+
+                    return $value;
+                })
+                ->values(),
         ];
     }
 
@@ -165,10 +186,11 @@ class ProjectController extends Controller
         foreach ($data['media'] as $index => $media) {
             $isCover = (bool) ($media['is_cover'] ?? false);
             $coverAssigned = $coverAssigned || $isCover;
+            $url = $this->storedMediaUrl($project, $media);
 
             $project->media()->create([
-                'type' => $media['type'],
-                'url' => $media['url'],
+                'type' => $this->mediaType($media),
+                'url' => $url,
                 'alt_text' => $media['alt_text'] ?? null,
                 'is_cover' => $isCover,
                 'sort_order' => $index,
@@ -178,5 +200,79 @@ class ProjectController extends Controller
         if (! $coverAssigned) {
             $project->media()->where('type', 'image')->orderBy('sort_order')->first()?->update(['is_cover' => true]);
         }
+    }
+
+    private function storedMediaUrl(Project $project, array $media): string
+    {
+        if (isset($media['upload'])) {
+            return $this->storedEncodedMediaUrl($project, $media['upload']);
+        }
+
+        if (! isset($media['file'])) {
+            return $media['url'];
+        }
+
+        $file = $media['file'];
+        $directory = public_path("img/project-media/{$project->slug}");
+        File::ensureDirectoryExists($directory);
+
+        $baseName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) ?: 'media';
+        $extension = $file->getClientOriginalExtension();
+        $fileName = "{$baseName}-".Str::lower(Str::random(8)).".{$extension}";
+
+        $file->move($directory, $fileName);
+
+        return "/img/project-media/{$project->slug}/".rawurlencode($fileName);
+    }
+
+    private function mediaType(array $media): string
+    {
+        $mime = $media['upload']['type'] ?? null;
+
+        if (! $mime && isset($media['file'])) {
+            $mime = $media['file']->getMimeType();
+        }
+
+        if (is_string($mime) && str_starts_with($mime, 'video/')) {
+            return 'video';
+        }
+
+        if (is_string($mime) && str_starts_with($mime, 'image/')) {
+            return 'image';
+        }
+
+        return $media['type'] ?? 'image';
+    }
+
+    private function storedEncodedMediaUrl(Project $project, array $upload): string
+    {
+        if (! preg_match('/^data:(?<mime>[-\w.\/]+);base64,(?<data>.+)$/', $upload['data'], $matches)) {
+            abort(422, 'The uploaded media data is invalid.');
+        }
+
+        $bytes = base64_decode($matches['data'], true);
+        if ($bytes === false) {
+            abort(422, 'The uploaded media data is invalid.');
+        }
+
+        $directory = public_path("img/project-media/{$project->slug}");
+        File::ensureDirectoryExists($directory);
+
+        $extension = match ($upload['type']) {
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp',
+            'image/gif' => 'gif',
+            'video/mp4' => 'mp4',
+            'video/webm' => 'webm',
+            default => pathinfo($upload['name'], PATHINFO_EXTENSION) ?: 'bin',
+        };
+
+        $baseName = Str::slug(pathinfo($upload['name'], PATHINFO_FILENAME)) ?: 'media';
+        $fileName = "{$baseName}-".Str::lower(Str::random(8)).".{$extension}";
+
+        File::put("{$directory}/{$fileName}", $bytes);
+
+        return "/img/project-media/{$project->slug}/".rawurlencode($fileName);
     }
 }

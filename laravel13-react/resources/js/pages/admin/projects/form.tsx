@@ -5,6 +5,11 @@ import { AdminLayout, adminInputClass, adminSmallInputClass } from '../AdminLayo
 type MediaInput = {
   type: 'image' | 'video';
   url: string;
+  upload?: {
+    name: string;
+    type: string;
+    data: string;
+  } | null;
   alt_text: string;
   is_cover: boolean;
 };
@@ -42,7 +47,7 @@ const blank: ProjectFormData = {
   is_published: true,
   sections: [''],
   services: [''],
-  media: [{ type: 'image', url: '', alt_text: '', is_cover: true }],
+  media: [{ type: 'image', url: '', upload: null, alt_text: '', is_cover: true }],
 };
 
 export default function ProjectForm({ project }: Props) {
@@ -51,8 +56,47 @@ export default function ProjectForm({ project }: Props) {
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (project) form.put(`/admin/projects/${project.slug}`);
-    else form.post('/admin/projects');
+    if (project) {
+      form.transform((data) => ({ ...data, _method: 'put' }));
+      form.post(`/admin/projects/${project.slug}`);
+    } else {
+      form.transform((data) => data);
+      form.post('/admin/projects');
+    }
+  };
+
+  const uploadMediaFiles = async (files: FileList | null) => {
+    if (!files?.length) return;
+
+    const uploadedMedia = await Promise.all(
+      Array.from(files).map(
+        (file) =>
+          new Promise<MediaInput>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const isVideo = file.type.startsWith('video/');
+
+              resolve({
+                type: isVideo ? 'video' : 'image',
+                url: '',
+                upload: {
+                  name: file.name,
+                  type: file.type,
+                  data: String(reader.result),
+                },
+                alt_text: '',
+                is_cover: !isVideo && !form.data.media.some((item) => item.is_cover),
+              });
+            };
+            reader.readAsDataURL(file);
+          }),
+      ),
+    );
+
+    form.setData((data) => ({
+      ...data,
+      media: [...data.media.filter((item) => item.url || item.upload), ...uploadedMedia],
+    }));
   };
 
   const setListItem = <K extends 'sections' | 'services'>(key: K, index: number, value: string) => {
@@ -115,15 +159,30 @@ export default function ProjectForm({ project }: Props) {
         <EditorList title="Services" items={form.data.services} onChange={(index, value) => setListItem('services', index, value)} onAdd={() => addListItem('services')} />
 
         <section className="border-t border-border pt-10">
-          <div className="flex items-center justify-between gap-5 mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
             <h2 className="font-display text-4xl">Media</h2>
-            <button
-              type="button"
-              onClick={() => form.setData('media', [...form.data.media, { type: 'image', url: '', alt_text: '', is_cover: false }])}
-              className="text-[11px] font-mono uppercase tracking-[0.22em] underline"
-            >
-              Add media
-            </button>
+            <div className="flex flex-wrap items-center gap-5">
+              <label className="cursor-pointer text-[11px] font-mono uppercase tracking-[0.22em] underline">
+                <input
+                  type="file"
+                  multiple
+                  accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm"
+                  className="sr-only"
+                  onChange={(event) => {
+                    void uploadMediaFiles(event.target.files);
+                    event.target.value = '';
+                  }}
+                />
+                Upload files
+              </label>
+              <button
+                type="button"
+                onClick={() => form.setData('media', [...form.data.media, { type: 'image', url: '', upload: null, alt_text: '', is_cover: false }])}
+                className="text-[11px] font-mono uppercase tracking-[0.22em] underline"
+              >
+                Add URL row
+              </button>
+            </div>
           </div>
           <div className="space-y-5">
             {form.data.media.map((media, index) => (
@@ -147,7 +206,7 @@ export default function ProjectForm({ project }: Props) {
                     next[index] = { ...media, url: event.target.value };
                     form.setData('media', next);
                   }}
-                  placeholder="/project-media/example/cover.webp"
+                  placeholder="/img/project-media/project-slug/image.webp or external media"
                   className={adminSmallInputClass}
                 />
                 <input
@@ -174,6 +233,21 @@ export default function ProjectForm({ project }: Props) {
                   />
                   Cover
                 </label>
+                {form.errors[`media.${index}.upload.data` as keyof typeof form.errors] && (
+                  <p className="lg:col-span-4 text-sm text-accent">
+                    {form.errors[`media.${index}.upload.data` as keyof typeof form.errors]}
+                  </p>
+                )}
+                {form.errors[`media.${index}.url` as keyof typeof form.errors] && (
+                  <p className="lg:col-span-4 text-sm text-accent">
+                    {form.errors[`media.${index}.url` as keyof typeof form.errors]}
+                  </p>
+                )}
+                {media.upload?.name && (
+                  <p className="lg:col-span-4 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
+                    Queued upload: {media.upload.name}
+                  </p>
+                )}
               </div>
             ))}
           </div>

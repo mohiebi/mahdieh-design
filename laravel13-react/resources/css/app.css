@@ -152,6 +152,15 @@
     font-feature-settings: "ss01", "cv11";
   }
 
+  select {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
   h1, h2, h4 {
     font-family: var(--font-display);
     font-weight: 300;

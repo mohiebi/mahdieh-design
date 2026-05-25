@@ -4,6 +4,7 @@ use App\Models\BriefQuestion;
 use App\Models\BriefSubmission;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 it('blocks non-admin users from admin routes', function (): void {
     $user = User::factory()->create();
@@ -28,7 +29,17 @@ it('allows admins to create and update projects', function (): void {
         'sections' => ['First paragraph.'],
         'services' => ['Identity'],
         'media' => [
-            ['type' => 'image', 'url' => '/project-media/test/cover.webp', 'alt_text' => 'Cover', 'is_cover' => true],
+            [
+                'type' => 'image',
+                'url' => '',
+                'upload' => [
+                    'name' => 'cover.gif',
+                    'type' => 'image/gif',
+                    'data' => 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+                ],
+                'alt_text' => 'Cover',
+                'is_cover' => true,
+            ],
         ],
     ];
 
@@ -37,16 +48,24 @@ it('allows admins to create and update projects', function (): void {
     $project = Project::where('slug', 'test-project')->firstOrFail();
     expect($project->sections)->toHaveCount(1)
         ->and($project->services)->toHaveCount(1)
-        ->and($project->media)->toHaveCount(1);
+        ->and($project->media)->toHaveCount(1)
+        ->and(File::exists(public_path(ltrim($project->media->first()->url, '/'))))->toBeTrue();
 
     $this->actingAs($admin)->put("/admin/projects/{$project->slug}", [
         ...$payload,
         'title' => 'Updated Project',
         'is_published' => false,
+        'media' => [
+            ['type' => 'image', 'url' => $project->media->first()->url, 'alt_text' => 'Cover', 'is_cover' => true],
+        ],
     ])->assertRedirect('/admin/projects');
 
     expect($project->refresh()->title)->toBe('Updated Project')
         ->and($project->is_published)->toBeFalse();
+
+    expect($project->media->first()->url)->toStartWith('/img/project-media/test-project/');
+
+    File::deleteDirectory(public_path('img/project-media/test-project'));
 });
 
 it('allows admins to manage brief questions', function (): void {
