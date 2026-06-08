@@ -1,8 +1,16 @@
 import { useMemo, useState } from "react";
 import { router, usePage } from "@inertiajs/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import type { SharedPageProps } from "@/types/global";
+
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" />
+    </svg>
+  );
+}
 
 type Question = {
   id: string;
@@ -32,6 +40,7 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
   const [submitted, setSubmitted] = useState(false);
   const [processing, setProcessing] = useState(false);
   const { flash } = usePage<SharedPageProps>().props;
+  const reduceMotion = useReducedMotion();
 
   const total = questions.length;
   const current = questions[step];
@@ -140,8 +149,9 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="text-xs font-mono uppercase tracking-[0.25em] text-accent mb-4">
-                  ✦ Brief received
+                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-accent mb-4">
+                  <SparkleIcon className="h-3 w-3" />
+                  Brief received
                 </div>
                 <h2 className="font-display text-4xl lg:text-6xl leading-[1.05] tracking-tight">
                   Thank you. I'll be in touch within 24 hours.
@@ -222,7 +232,7 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
               {step === total - 1 ? (processing ? "Submitting" : "Submit brief") : "Next question"}
               <motion.span
                 aria-hidden
-                animate={{ x: [0, 4, 0] }}
+                animate={reduceMotion ? {} : { x: [0, 4, 0] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               >
                 →

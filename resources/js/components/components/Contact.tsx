@@ -1,8 +1,17 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import contactBg from "@/assets/contact-bg.png";
 
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" />
+    </svg>
+  );
+}
+
 export function Contact() {
+  const reduceMotion = useReducedMotion();
   const links = [
     ["LinkedIn", "mahdiehdesign", "https://linkedin.com/in/mahdiehdesign"],
     ["Behance", "mahdiehdesign", "https://behance.net/mahdiehdesign"],
@@ -28,8 +37,9 @@ export function Contact() {
 
       <div className="relative max-w-[1400px] mx-auto">
         <Reveal>
-          <div className="text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6">
-            ✦ Let's collaborate
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6">
+            <SparkleIcon className="h-3 w-3" />
+            Let's collaborate
           </div>
         </Reveal>
         <h2 className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.9] tracking-tight overflow-hidden">
@@ -63,7 +73,7 @@ export function Contact() {
             hello@nexainc.co
             <motion.span
               aria-hidden
-              animate={{ x: [0, 4, 0] }}
+              animate={reduceMotion ? {} : { x: [0, 4, 0] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             >
               →
@@ -81,6 +91,7 @@ export function Contact() {
               href={href}
               target="_blank"
               rel="noreferrer"
+              aria-label={`${label}: @${handle} (opens in a new tab)`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
