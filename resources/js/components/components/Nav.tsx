@@ -13,13 +13,27 @@ const NAV_LINKS: { to?: string; href?: string; label: string }[] = [
   { href: "/#contact", label: "Contact" },
 ];
 
-export function Nav() {
+const NAV_LINKS_FA: { to?: string; href?: string; label: string }[] = [
+  { to: "/projects", label: "نمونه‌کارها" },
+  { href: "/#about", label: "درباره" },
+  { href: "/#services", label: "خدمات" },
+  { href: "/#contact", label: "تماس" },
+];
+
+type NavProps = {
+  locale?: "en" | "fa";
+};
+
+export function Nav({ locale = "en" }: NavProps) {
   const { auth } = usePage<SharedPageProps>().props;
   const session = auth.user;
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const isFa = locale === "fa";
+  const links = isFa ? NAV_LINKS_FA : NAV_LINKS;
+  const briefRedirect = isFa ? "/brief/fa" : "/brief";
 
-  const renderLink = (link: (typeof NAV_LINKS)[number], className: string) =>
+  const renderLink = (link: (typeof NAV_LINKS)[number] | (typeof NAV_LINKS_FA)[number], className: string) =>
     link.to ? (
       <Link
         key={link.label}
@@ -48,7 +62,7 @@ export function Nav() {
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-          {NAV_LINKS.map((link) => renderLink(link, "hover:text-foreground transition-colors"))}
+          {links.map((link) => renderLink(link, "hover:text-foreground transition-colors"))}
         </nav>
         <div className="flex items-center gap-3">
           {session ? (
@@ -58,27 +72,27 @@ export function Nav() {
                   to="/admin"
                   className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Hi, {session.name}
+                  {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
                 </Link>
               ) : (
                 <span className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-                  Hi, {session.name}
+                  {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
                 </span>
               )}
               <button
                 onClick={() => router.post("/logout")}
                 className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all cursor-pointer"
               >
-                Sign out
+                {isFa ? "خروج" : "Sign out"}
               </button>
             </>
           ) : (
             <Link
               to="/register"
-              search={{ redirect: "/brief" }}
+              search={{ redirect: briefRedirect }}
               className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all"
             >
-              Start a brief
+              {isFa ? "شروع بریف" : "Start a brief"}
             </Link>
           )}
 
@@ -118,15 +132,15 @@ export function Nav() {
             className="md:hidden overflow-hidden border-t border-border/50 bg-background/95"
           >
             <div className="px-6 py-6 flex flex-col gap-6 text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">
-              {NAV_LINKS.map((link) => renderLink(link, "hover:text-foreground transition-colors py-1"))}
+              {links.map((link) => renderLink(link, "hover:text-foreground transition-colors py-1"))}
               {session ? (
                 <>
                   {session.is_admin ? (
                     <Link to="/admin" onClick={() => setOpen(false)} className="text-foreground hover:text-accent transition-colors">
-                      Hi, {session.name}
+                      {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
                     </Link>
                   ) : (
-                    <span className="text-foreground">Hi, {session.name}</span>
+                    <span className="text-foreground">{isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}</span>
                   )}
                   <button
                     onClick={() => {
@@ -135,17 +149,17 @@ export function Nav() {
                     }}
                     className="text-left text-foreground cursor-pointer"
                   >
-                    Sign out
+                    {isFa ? "خروج" : "Sign out"}
                   </button>
                 </>
               ) : (
                 <Link
                   to="/register"
-                  search={{ redirect: "/brief" }}
+                  search={{ redirect: briefRedirect }}
                   className="text-foreground"
                   onClick={() => setOpen(false)}
                 >
-                  Start a brief
+                  {isFa ? "شروع بریف" : "Start a brief"}
                 </Link>
               )}
             </div>

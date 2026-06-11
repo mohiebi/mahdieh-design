@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BriefSubmission extends Model
 {
-    protected $fillable = ['user_id', 'status', 'submitted_at'];
+    protected $fillable = ['user_id', 'status', 'locale', 'submitted_at'];
 
     protected function casts(): array
     {

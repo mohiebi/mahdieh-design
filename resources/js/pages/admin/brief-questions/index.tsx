@@ -4,6 +4,7 @@ import { AdminButton, AdminLayout } from '../AdminLayout';
 type Question = {
   id: number;
   label: string;
+  label_fa: string | null;
   hint: string | null;
   type: 'short' | 'long' | 'email';
   placeholder: string | null;
@@ -29,11 +30,17 @@ export default function BriefQuestionsIndex({ questions }: Props) {
             <div>
               <h2 className="font-display text-3xl lg:text-4xl leading-tight">{question.label}</h2>
               {question.hint && <p className="mt-2 text-sm text-muted-foreground max-w-2xl">{question.hint}</p>}
+              {question.label_fa && (
+                <p dir="rtl" className="lang-fa mt-2 text-sm text-muted-foreground max-w-2xl text-right">
+                  {question.label_fa}
+                </p>
+              )}
             </div>
             <div className="space-y-2 text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
               <div>{question.type}</div>
               <div>{question.is_required ? 'Required' : 'Optional'}</div>
               <div>{question.is_active ? 'Active' : 'Inactive'}</div>
+              <div>{question.label_fa ? 'FA ✓' : 'FA missing'}</div>
             </div>
             <div className="flex items-center gap-4">
               <Link href={`/admin/brief-questions/${question.id}/edit`} className="text-xs font-mono uppercase tracking-[0.2em] underline">
