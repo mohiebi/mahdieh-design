@@ -291,9 +291,12 @@ class PortfolioSeeder extends Seeder
     {
         return collect(range(1, 15))->map(fn (int $number) => [
             'label' => "Question {$number}",
+            'label_fa' => "سوال {$number}",
             'hint' => 'Placeholder - replace this with the final brief question in the CMS.',
+            'hint_fa' => 'این یک متن نمونه است - آن را با سوال نهایی در پنل مدیریت جایگزین کنید.',
             'type' => $number === 2 ? 'email' : ($number <= 4 ? 'short' : 'long'),
             'placeholder' => 'Your answer...',
+            'placeholder_fa' => 'پاسخ شما...',
             'is_required' => true,
             'is_active' => true,
         ])->all();

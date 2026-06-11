@@ -8,9 +8,12 @@ class BriefQuestion extends Model
 {
     protected $fillable = [
         'label',
+        'label_fa',
         'hint',
+        'hint_fa',
         'type',
         'placeholder',
+        'placeholder_fa',
         'is_required',
         'is_active',
         'sort_order',

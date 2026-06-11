@@ -156,12 +156,25 @@ export function Contact() {
   );
 }
 
-export function Footer() {
+type FooterProps = {
+  locale?: "en" | "fa";
+};
+
+export function Footer({ locale = "en" }: FooterProps) {
   return (
     <footer className="px-6 lg:px-12 py-10 border-t border-border">
       <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-        <div>© {new Date().getFullYear()} Mahdieh Baghoolizadeh — All rights reserved</div>
-        <div>Nexa Studio · Create · Be · Inspire</div>
+        {locale === "fa" ? (
+          <>
+            <div>© {new Date().getFullYear()} مهدیه باغولی‌زاده — تمامی حقوق محفوظ است</div>
+            <div>نکسا استودیو · خلق · باش · الهام بگیر</div>
+          </>
+        ) : (
+          <>
+            <div>© {new Date().getFullYear()} Mahdieh Baghoolizadeh — All rights reserved</div>
+            <div>Nexa Studio · Create · Be · Inspire</div>
+          </>
+        )}
       </div>
     </footer>
   );

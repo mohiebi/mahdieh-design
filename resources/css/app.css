@@ -66,6 +66,7 @@
   --font-display: "Marcellus", "Optima", "Palatino", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-fa: "Vazirmatn", "Tahoma", sans-serif;
 }
 
 :root {
@@ -171,6 +172,18 @@
     font-family: "Optima", "Optima Nova", "Palatino", "Palatino Linotype", "Georgia", serif;
     font-weight: 400;
     letter-spacing: -0.01em;
+  }
+
+  .lang-fa,
+  .lang-fa h1,
+  .lang-fa h2,
+  .lang-fa h3,
+  .lang-fa h4 {
+    --font-display: "Vazirmatn", "Tahoma", sans-serif;
+    --font-sans: "Vazirmatn", "Tahoma", sans-serif;
+    --font-mono: "Vazirmatn", "Tahoma", sans-serif;
+    font-family: var(--font-fa);
+    letter-spacing: normal;
   }
 }
 

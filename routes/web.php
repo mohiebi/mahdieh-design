@@ -24,8 +24,10 @@ Route::post('/logout', [AuthController::class, 'destroy'])->middleware('auth')->
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/brief', [BriefController::class, 'show'])->name('brief.show');
+    Route::get('/brief/fa', [BriefController::class, 'showFa'])->name('brief.show.fa');
     Route::post('/brief', [BriefController::class, 'store'])->name('brief.store');
     Route::get('/brief/thanks', [BriefController::class, 'thanks'])->name('brief.thanks');
+    Route::get('/brief/fa/thanks', [BriefController::class, 'thanksFa'])->name('brief.thanks.fa');
 });
 
 Route::middleware(['auth', 'admin'])

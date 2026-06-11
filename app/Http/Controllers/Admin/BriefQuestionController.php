@@ -61,9 +61,12 @@ class BriefQuestionController extends Controller
     {
         $data = $request->validate([
             'label' => ['required', 'string', 'max:255'],
+            'label_fa' => ['nullable', 'string', 'max:255'],
             'hint' => ['nullable', 'string'],
+            'hint_fa' => ['nullable', 'string'],
             'type' => ['required', Rule::in(['short', 'long', 'email'])],
             'placeholder' => ['nullable', 'string', 'max:255'],
+            'placeholder_fa' => ['nullable', 'string', 'max:255'],
             'is_required' => ['boolean'],
             'is_active' => ['boolean'],
             'sort_order' => ['required', 'integer', 'min:0'],
