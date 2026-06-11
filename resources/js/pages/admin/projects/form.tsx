@@ -134,11 +134,12 @@ export default function ProjectForm({ project }: Props) {
               className={adminInputClass}
             />
           </label>
-          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground pt-8">
+          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground pt-8 cursor-pointer min-h-[44px]">
             <input
               type="checkbox"
               checked={form.data.is_published}
               onChange={(event) => form.setData('is_published', event.target.checked)}
+              className="h-5 w-5 cursor-pointer"
             />
             Published
           </label>
@@ -186,7 +187,7 @@ export default function ProjectForm({ project }: Props) {
           </div>
           <div className="space-y-5">
             {form.data.media.map((media, index) => (
-              <div key={index} className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_110px] gap-4 border border-border p-4">
+              <div key={index} className="grid grid-cols-1 lg:grid-cols-[120px_1fr_1fr_110px_44px] gap-4 border border-border p-4">
                 <select
                   value={media.type}
                   onChange={(event) => {
@@ -219,7 +220,7 @@ export default function ProjectForm({ project }: Props) {
                   placeholder="Alt text"
                   className={adminSmallInputClass}
                 />
-                <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
+                <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground cursor-pointer min-h-[44px]">
                   <input
                     type="checkbox"
                     checked={media.is_cover}
@@ -230,21 +231,32 @@ export default function ProjectForm({ project }: Props) {
                       }));
                       form.setData('media', next);
                     }}
+                    className="h-5 w-5 cursor-pointer"
                   />
                   Cover
                 </label>
+                <button
+                  type="button"
+                  onClick={() => form.setData('media', form.data.media.filter((_, itemIndex) => itemIndex !== index))}
+                  aria-label={`Remove media row ${index + 1}`}
+                  className="h-11 w-11 flex items-center justify-center border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors cursor-pointer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4" aria-hidden>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </button>
                 {form.errors[`media.${index}.upload.data` as keyof typeof form.errors] && (
-                  <p className="lg:col-span-4 text-sm text-accent">
+                  <p className="lg:col-span-5 text-sm text-accent">
                     {form.errors[`media.${index}.upload.data` as keyof typeof form.errors]}
                   </p>
                 )}
                 {form.errors[`media.${index}.url` as keyof typeof form.errors] && (
-                  <p className="lg:col-span-4 text-sm text-accent">
+                  <p className="lg:col-span-5 text-sm text-accent">
                     {form.errors[`media.${index}.url` as keyof typeof form.errors]}
                   </p>
                 )}
                 {media.upload?.name && (
-                  <p className="lg:col-span-4 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
+                  <p className="lg:col-span-5 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
                     Queued upload: {media.upload.name}
                   </p>
                 )}
@@ -254,8 +266,17 @@ export default function ProjectForm({ project }: Props) {
         </section>
 
         <div className="flex justify-end border-t border-border pt-8">
-          <button disabled={form.processing} className="bg-foreground text-background rounded-full px-7 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors">
-            Save project
+          <button
+            disabled={form.processing}
+            className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-7 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          >
+            {form.processing && (
+              <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 animate-spin" aria-hidden>
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.25" />
+                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+            )}
+            {form.processing ? 'Saving…' : 'Save project'}
           </button>
         </div>
       </form>

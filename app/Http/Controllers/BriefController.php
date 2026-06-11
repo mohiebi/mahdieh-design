@@ -78,6 +78,13 @@ class BriefController extends Controller
             }
         });
 
-        return back()->with('success', 'Brief received.');
+        return redirect()->route('brief.thanks');
+    }
+
+    public function thanks(): Response
+    {
+        return Inertia::render('brief/thanks', [
+            'calendlyUrl' => config('services.calendly_url'),
+        ]);
     }
 }

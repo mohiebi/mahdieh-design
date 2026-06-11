@@ -57,19 +57,26 @@ export default function Login({ redirect = '' }: Props) {
             </label>
 
             <div className="flex flex-wrap items-center justify-between gap-5">
-              <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+              <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground cursor-pointer min-h-[44px]">
                 <input
                   type="checkbox"
                   checked={data.remember}
                   onChange={(event) => setData('remember', event.target.checked)}
+                  className="h-5 w-5 cursor-pointer"
                 />
                 Remember me
               </label>
               <button
                 disabled={processing}
-                className="bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
               >
-                Log in
+                {processing && (
+                  <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 animate-spin" aria-hidden>
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2.5" strokeOpacity="0.25" />
+                    <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                )}
+                {processing ? 'Logging in…' : 'Log in'}
               </button>
             </div>
 
