@@ -52,12 +52,26 @@ export function Nav() {
         </nav>
         <div className="flex items-center gap-3">
           {session ? (
-            <button
-              onClick={() => router.post("/logout")}
-              className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all cursor-pointer"
-            >
-              Sign out
-            </button>
+            <>
+              {session.is_admin ? (
+                <Link
+                  to="/admin"
+                  className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Hi, {session.name}
+                </Link>
+              ) : (
+                <span className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                  Hi, {session.name}
+                </span>
+              )}
+              <button
+                onClick={() => router.post("/logout")}
+                className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all cursor-pointer"
+              >
+                Sign out
+              </button>
+            </>
           ) : (
             <Link
               to="/register"
@@ -106,15 +120,24 @@ export function Nav() {
             <div className="px-6 py-6 flex flex-col gap-6 text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">
               {NAV_LINKS.map((link) => renderLink(link, "hover:text-foreground transition-colors py-1"))}
               {session ? (
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    router.post("/logout");
-                  }}
-                  className="text-left text-foreground cursor-pointer"
-                >
-                  Sign out
-                </button>
+                <>
+                  {session.is_admin ? (
+                    <Link to="/admin" onClick={() => setOpen(false)} className="text-foreground hover:text-accent transition-colors">
+                      Hi, {session.name}
+                    </Link>
+                  ) : (
+                    <span className="text-foreground">Hi, {session.name}</span>
+                  )}
+                  <button
+                    onClick={() => {
+                      setOpen(false);
+                      router.post("/logout");
+                    }}
+                    className="text-left text-foreground cursor-pointer"
+                  >
+                    Sign out
+                  </button>
+                </>
               ) : (
                 <Link
                   to="/register"

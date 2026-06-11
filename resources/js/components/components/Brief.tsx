@@ -4,14 +4,6 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import type { SharedPageProps } from "@/types/global";
 
-function SparkleIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z" />
-    </svg>
-  );
-}
-
 type Question = {
   id: string;
   label: string;
@@ -37,41 +29,54 @@ type BriefProps = {
 export function Brief({ questions = QUESTIONS }: BriefProps) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const { flash } = usePage<SharedPageProps>().props;
+  const { errors } = usePage<SharedPageProps>().props;
   const reduceMotion = useReducedMotion();
 
   const total = questions.length;
+  const isReviewStep = step === total;
   const current = questions[step];
-  const progress = useMemo(() => Math.round(((step + 1) / total) * 100), [step, total]);
-  const value = answers[current?.id] ?? "";
+  const progress = useMemo(
+    () => (isReviewStep ? 100 : Math.round(((step + 1) / total) * 100)),
+    [step, total, isReviewStep],
+  );
+  const value = answers[current?.id ?? ""] ?? "";
 
-  const isShort = current?.type === "short" || current?.type === "email";
   const isAnswered = value.trim().length > 0;
-  const canProceed = !current?.required || !isShort || isAnswered;
+  const canProceed = !current?.required || isAnswered;
+  const currentError = current ? errors[`answers.${current.id}`] : undefined;
 
   const next = () => {
-    if (!canProceed || processing) return;
-    if (step < total - 1) {
-      setStep((s) => s + 1);
+    if (processing) return;
+
+    if (isReviewStep) {
+      setProcessing(true);
+      router.post(
+        "/brief",
+        { answers },
+        {
+          preserveScroll: true,
+          preserveState: true,
+          onError: (formErrors) => {
+            const erroredKey = Object.keys(formErrors).find((key) => key.startsWith("answers."));
+            if (erroredKey) {
+              const questionId = erroredKey.slice("answers.".length);
+              const index = questions.findIndex((q) => q.id === questionId);
+              if (index !== -1) setStep(index);
+            }
+          },
+          onFinish: () => setProcessing(false),
+        },
+      );
       return;
     }
 
-    setProcessing(true);
-    router.post(
-      "/brief",
-      { answers },
-      {
-        preserveScroll: true,
-        onSuccess: () => setSubmitted(true),
-        onFinish: () => setProcessing(false),
-      },
-    );
+    if (!canProceed) return;
+    setStep((s) => s + 1);
   };
   const prev = () => step > 0 && setStep((s) => s - 1);
 
-  if (!current) {
+  if (total === 0) {
     return (
       <section className="relative pt-32 pb-24 lg:pt-44 lg:pb-40 px-6 lg:px-12 grain overflow-hidden">
         <div className="relative max-w-[1100px] mx-auto">
@@ -124,7 +129,7 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
 
         <div className="mt-16 flex items-center gap-6">
           <div className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
-            {String(step + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            {isReviewStep ? "Review" : `${String(step + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`}
           </div>
           <div className="relative flex-1 h-px bg-border overflow-hidden">
             <motion.div
@@ -139,27 +144,58 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-border pt-12 min-h-[360px]">
+        <div className="mt-10 border-t border-border pt-12 min-h-[420px]">
           <AnimatePresence mode="wait">
-            {submitted ? (
+            {isReviewStep ? (
               <motion.div
-                key="done"
-                initial={{ opacity: 0, y: 20 }}
+                key="review"
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                exit={{ opacity: 0, y: -24 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-accent mb-4">
-                  <SparkleIcon className="h-3 w-3" />
-                  Brief received
+                <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                  Final check
                 </div>
-                <h2 className="font-display text-4xl lg:text-6xl leading-[1.05] tracking-tight">
-                  Thank you. I'll be in touch within 24 hours.
+                <h2 className="font-display text-3xl lg:text-5xl leading-[1.1] tracking-tight">
+                  Review your answers.
                 </h2>
-                <p className="mt-6 text-muted-foreground max-w-xl">
-                  Your answers help me understand the shape of the project before we talk. I
-                  read every brief personally.
+                <p className="mt-3 text-sm text-muted-foreground max-w-xl">
+                  Make sure everything looks right before sending. You can edit any answer
+                  below.
                 </p>
+
+                <div className="mt-10 space-y-6">
+                  {questions.map((q, i) => {
+                    const answerValue = (answers[q.id] ?? "").trim();
+                    const fieldError = errors[`answers.${q.id}`];
+
+                    return (
+                      <div key={q.id} className="flex items-start justify-between gap-6 border-b border-border pb-5">
+                        <div className="min-w-0">
+                          <div className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                            {String(i + 1).padStart(2, "0")} · {q.label}
+                          </div>
+                          <div className={`text-lg leading-relaxed break-words ${answerValue ? "text-foreground" : "text-muted-foreground italic"}`}>
+                            {answerValue || "No answer provided"}
+                          </div>
+                          {fieldError && (
+                            <p className="mt-2 text-sm text-accent" role="alert">
+                              {fieldError}
+                            </p>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setStep(i)}
+                          className="shrink-0 text-[11px] font-mono uppercase tracking-[0.25em] underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -207,46 +243,52 @@ export function Brief({ questions = QUESTIONS }: BriefProps) {
                     />
                   )}
                 </div>
+                {currentError && (
+                  <p className="mt-3 text-sm text-accent" role="alert">
+                    {currentError}
+                  </p>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {!submitted && (
-          <div className="mt-14 flex flex-wrap items-center justify-between gap-6">
-            <button
-              onClick={prev}
-              disabled={step === 0}
-              className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              ← Previous
-            </button>
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-6">
+          <button
+            onClick={prev}
+            disabled={step === 0}
+            className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            ← Previous
+          </button>
 
-            <motion.button
-              onClick={next}
-              disabled={!canProceed || processing}
-              whileHover={canProceed ? { scale: 1.04 } : {}}
-              whileTap={canProceed ? { scale: 0.97 } : {}}
-              className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          <motion.button
+            onClick={next}
+            disabled={(!isReviewStep && !canProceed) || processing}
+            whileHover={canProceed || isReviewStep ? { scale: 1.04 } : {}}
+            whileTap={canProceed || isReviewStep ? { scale: 0.97 } : {}}
+            className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {isReviewStep
+              ? processing
+                ? "Submitting"
+                : "Submit brief"
+              : step === total - 1
+                ? "Review answers"
+                : "Next question"}
+            <motion.span
+              aria-hidden
+              animate={reduceMotion ? {} : { x: [0, 4, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             >
-              {step === total - 1 ? (processing ? "Submitting" : "Submit brief") : "Next question"}
-              <motion.span
-                aria-hidden
-                animate={reduceMotion ? {} : { x: [0, 4, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              >
-                →
-              </motion.span>
-            </motion.button>
-          </div>
-        )}
-        {!submitted && !canProceed && (
+              →
+            </motion.span>
+          </motion.button>
+        </div>
+        {!isReviewStep && !canProceed && (
           <p className="mt-3 text-xs text-muted-foreground font-mono">
             This question is required.
           </p>
-        )}
-        {!submitted && flash.success && (
-          <p className="mt-3 text-xs text-accent font-mono">{flash.success}</p>
         )}
       </div>
     </section>
