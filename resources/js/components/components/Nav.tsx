@@ -5,15 +5,9 @@ import { useState } from "react";
 import logo from "@/assets/logo.svg";
 import type { SharedPageProps } from "@/types/global";
 
-const NAV_LINKS: { to?: string; href?: string; label: string }[] = [
-  { to: "/projects", label: "Projects" },
-  { href: "/#about", label: "About" },
-  { href: "/#services", label: "Services" },
-  { to: "/brief", label: "Brief" },
-  { href: "/#contact", label: "Contact" },
-];
+type NavLink = { to?: string; href?: string; label: string; search?: Record<string, string> };
 
-const NAV_LINKS_FA: { to?: string; href?: string; label: string }[] = [
+const NAV_LINKS_FA: NavLink[] = [
   { to: "/projects", label: "نمونه‌کارها" },
   { href: "/#about", label: "درباره" },
   { href: "/#services", label: "خدمات" },
@@ -30,10 +24,23 @@ export function Nav({ locale = "en" }: NavProps) {
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const isFa = locale === "fa";
-  const links = isFa ? NAV_LINKS_FA : NAV_LINKS;
   const briefRedirect = isFa ? "/brief/fa" : "/brief";
 
-  const renderLink = (link: (typeof NAV_LINKS)[number] | (typeof NAV_LINKS_FA)[number], className: string) =>
+  const briefLink: NavLink = session
+    ? { to: briefRedirect, label: "Brief" }
+    : { to: "/register", label: "Brief", search: { redirect: briefRedirect } };
+
+  const links: NavLink[] = isFa
+    ? NAV_LINKS_FA
+    : [
+        { to: "/projects", label: "Projects" },
+        { href: "/#about", label: "About" },
+        { href: "/#services", label: "Services" },
+        briefLink,
+        { href: "/#contact", label: "Contact" },
+      ];
+
+  const renderLink = (link: NavLink, className: string) =>
     link.to ? (
       <Link
         key={link.label}

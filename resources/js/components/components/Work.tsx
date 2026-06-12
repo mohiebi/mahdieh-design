@@ -88,7 +88,7 @@ export function Work({ projects: projectItems = projects, limit, showMoreLink = 
                   }`}
                 >
                   <Link to="/projects/$slug" params={{ slug: p.slug }} className="block">
-                    <div className="overflow-hidden bg-muted aspect-[16/10]">
+                    <div className="overflow-hidden aspect-[16/10]">
                       <motion.img
                         src={p.image}
                         alt={`${p.title} - ${p.category}`}
@@ -98,7 +98,7 @@ export function Work({ projects: projectItems = projects, limit, showMoreLink = 
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
                         whileHover={{ scale: 1.04 }}
-                        className="w-full h-full object-cover transition-transform duration-[1200ms]"
+                        className="w-full h-full object-contain transition-transform duration-[1200ms]"
                       />
                     </div>
                   </Link>
