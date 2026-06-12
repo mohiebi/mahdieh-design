@@ -45,6 +45,7 @@ export function Nav({ locale = "en" }: NavProps) {
       <Link
         key={link.label}
         to={link.to}
+        search={link.search}
         className={className}
         activeProps={{ className: "text-foreground" }}
         onClick={() => setOpen(false)}

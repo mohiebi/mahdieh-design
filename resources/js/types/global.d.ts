@@ -15,4 +15,5 @@ export type SharedPageProps = InertiaPageProps & {
     success?: string | null;
   };
   calendlyUrl?: string | null;
+  contactEmail?: string | null;
 };

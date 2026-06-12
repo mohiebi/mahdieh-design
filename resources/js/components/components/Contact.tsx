@@ -38,7 +38,7 @@ const links = [
 
 export function Contact() {
   const reduceMotion = useReducedMotion();
-  const { calendlyUrl } = usePage<SharedPageProps>().props;
+  const { calendlyUrl, contactEmail } = usePage<SharedPageProps>().props;
 
   return (
     <section
@@ -92,12 +92,12 @@ export function Contact() {
 
         <Reveal delay={0.2} className="mt-12 lg:mt-16 flex flex-wrap items-center gap-4 sm:gap-6">
           <motion.a
-            href="mailto:hello@nexainc.co"
+            href={`mailto:${contactEmail}`}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 bg-white text-black rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
-            hello@nexainc.co
+            {contactEmail}
             <motion.span
               aria-hidden
               animate={reduceMotion ? {} : { x: [0, 4, 0] }}

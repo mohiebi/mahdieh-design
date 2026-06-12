@@ -30,6 +30,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
             ],
             'calendlyUrl' => config('services.calendly_url'),
+            'contactEmail' => config('services.contact_email'),
         ];
     }
 }
