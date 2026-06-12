@@ -15,8 +15,11 @@ class AuthController extends Controller
 {
     public function login(Request $request): Response
     {
+        $redirect = $this->resolveRedirect($request);
+
         return Inertia::render('auth/login', [
-            'redirect' => $request->string('redirect')->toString(),
+            'redirect' => $redirect,
+            'locale' => $this->resolveLocale($redirect),
         ]);
     }
 
@@ -28,7 +31,12 @@ class AuthController extends Controller
         ]);
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'These credentials do not match our records.'])->onlyInput('email');
+            $locale = $this->resolveLocale($this->resolveRedirect($request));
+            $message = $locale === 'fa'
+                ? 'ایمیل یا رمز عبور وارد شده صحیح نیست.'
+                : 'These credentials do not match our records.';
+
+            return back()->withErrors(['email' => $message])->onlyInput('email');
         }
 
         $request->session()->regenerate();
@@ -38,18 +46,32 @@ class AuthController extends Controller
 
     public function register(Request $request): Response
     {
+        $redirect = $this->resolveRedirect($request);
+
         return Inertia::render('auth/register', [
-            'redirect' => $request->string('redirect')->toString(),
+            'redirect' => $redirect,
+            'locale' => $this->resolveLocale($redirect),
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
+        $locale = $this->resolveLocale($this->resolveRedirect($request));
+
+        $messages = $locale === 'fa' ? [
+            'name.required' => 'وارد کردن نام الزامی است.',
+            'email.required' => 'وارد کردن ایمیل الزامی است.',
+            'email.email' => 'لطفاً یک ایمیل معتبر وارد کنید.',
+            'email.unique' => 'این ایمیل قبلاً ثبت شده است.',
+            'password.required' => 'وارد کردن رمز عبور الزامی است.',
+            'password.confirmed' => 'تکرار رمز عبور مطابقت ندارد.',
+        ] : [];
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
+        ], $messages);
 
         $user = User::create([
             'name' => $data['name'],
@@ -61,6 +83,29 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended($request->input('redirect') ?: route('brief.show'));
+    }
+
+    /**
+     * Resolve the post-login destination from the query string, falling back
+     * to the path Laravel stashed when redirecting a guest away from a
+     * protected route (e.g. a direct visit to /brief/fa while logged out).
+     */
+    private function resolveRedirect(Request $request): string
+    {
+        $redirect = $request->string('redirect')->toString();
+
+        if ($redirect !== '') {
+            return $redirect;
+        }
+
+        $intended = $request->session()->get('url.intended');
+
+        return $intended ? (string) parse_url($intended, PHP_URL_PATH) : '';
+    }
+
+    private function resolveLocale(string $redirect): string
+    {
+        return str_starts_with($redirect, '/brief/fa') ? 'fa' : 'en';
     }
 
     public function destroy(Request $request): RedirectResponse

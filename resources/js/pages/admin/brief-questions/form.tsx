@@ -130,12 +130,12 @@ export default function BriefQuestionForm({ question }: Props) {
         </div>
 
         <div className="flex flex-wrap gap-8">
-          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-            <input type="checkbox" checked={form.data.is_required} onChange={(event) => form.setData('is_required', event.target.checked)} />
+          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground cursor-pointer min-h-[44px]">
+            <input type="checkbox" checked={form.data.is_required} onChange={(event) => form.setData('is_required', event.target.checked)} className="h-5 w-5 cursor-pointer" />
             Required
           </label>
-          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-            <input type="checkbox" checked={form.data.is_active} onChange={(event) => form.setData('is_active', event.target.checked)} />
+          <label className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground cursor-pointer min-h-[44px]">
+            <input type="checkbox" checked={form.data.is_active} onChange={(event) => form.setData('is_active', event.target.checked)} className="h-5 w-5 cursor-pointer" />
             Active
           </label>
         </div>

@@ -110,7 +110,7 @@ class ProjectController extends Controller
     private function validated(Request $request, ?Project $project = null): array
     {
         $validated = $request->validate([
-            'slug' => ['required', 'string', 'max:255', Rule::unique('projects', 'slug')->ignore($project?->id)],
+            'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique('projects', 'slug')->ignore($project?->id)],
             'title' => ['required', 'string', 'max:255'],
             'client' => ['required', 'string', 'max:255'],
             'year' => ['required', 'string', 'max:20'],

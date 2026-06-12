@@ -10,14 +10,15 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
+        $admin = User::updateOrCreate(
             ['email' => env('ADMIN_EMAIL', 'admin@example.com')],
             [
                 'name' => env('ADMIN_NAME', 'Mahdieh Admin'),
                 'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
-                'is_admin' => true,
             ],
         );
+
+        $admin->forceFill(['is_admin' => true])->save();
 
         $this->call(PortfolioSeeder::class);
     }

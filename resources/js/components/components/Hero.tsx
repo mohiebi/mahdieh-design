@@ -33,7 +33,7 @@ export function Hero() {
             style={{ transformOrigin: "left" }}
             className="h-px w-10 bg-foreground inline-block"
           />
-          Available for select projects · 2026
+          Available for select projects · {new Date().getFullYear()}
         </motion.div>
 
         <h1 className="font-display text-[clamp(2.5rem,9vw,9rem)] leading-[0.95] tracking-tight">

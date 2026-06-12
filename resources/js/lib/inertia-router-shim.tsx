@@ -1,4 +1,4 @@
-import { Link as InertiaLink, router, usePage } from '@inertiajs/react';
+import { Link as InertiaLink, usePage } from '@inertiajs/react';
 import type { ComponentProps, ReactNode } from 'react';
 
 type LinkProps = Omit<ComponentProps<typeof InertiaLink>, 'href'> & {
@@ -37,39 +37,4 @@ export function Link({ to, params, search, activeProps, className = '', ...props
       {...props}
     />
   );
-}
-
-export function useNavigate() {
-  return ({ to, params, search }: { to: string; params?: LinkProps['params']; search?: LinkProps['search'] }) => {
-    router.visit(hrefFrom(to, params, search));
-  };
-}
-
-export function useRouterState<T>({ select }: { select: (state: { location: { pathname: string } }) => T }) {
-  const { url } = usePage();
-  return select({ location: { pathname: url.split('?')[0] } });
-}
-
-export function Outlet() {
-  return null;
-}
-
-export function createFileRoute() {
-  return (definition: unknown) => definition;
-}
-
-export function createRootRoute(definition: unknown) {
-  return definition;
-}
-
-export function HeadContent() {
-  return null;
-}
-
-export function Scripts() {
-  return null;
-}
-
-export function notFound() {
-  return new Error('Not found');
 }

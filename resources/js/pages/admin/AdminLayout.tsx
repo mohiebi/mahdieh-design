@@ -19,7 +19,7 @@ const navItems = [
 ];
 
 export function AdminLayout({ eyebrow, title, action, children }: Props) {
-  const { auth, flash } = usePage<SharedPageProps>().props;
+  const { flash } = usePage<SharedPageProps>().props;
   const pageUrl = usePage().url;
 
   return (
@@ -45,9 +45,9 @@ export function AdminLayout({ eyebrow, title, action, children }: Props) {
           </nav>
           <button
             onClick={() => router.post('/logout')}
-            className="text-[11px] font-mono uppercase tracking-[0.2em] border border-border rounded-full px-4 py-2 hover:bg-foreground hover:text-background transition-colors"
+            className="text-[11px] font-mono uppercase tracking-[0.2em] border border-border rounded-full px-4 py-2 hover:bg-foreground hover:text-background transition-colors cursor-pointer"
           >
-            {auth.user?.name ?? 'Sign out'}
+            Sign out
           </button>
         </div>
       </header>

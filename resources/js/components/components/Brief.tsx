@@ -251,7 +251,7 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
                         <button
                           type="button"
                           onClick={() => setStep(i)}
-                          className="shrink-0 text-[11px] font-mono uppercase tracking-[0.25em] underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
+                          className="shrink-0 min-h-[44px] px-3 -mx-3 flex items-center text-[11px] font-mono uppercase tracking-[0.25em] underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
                         >
                           {t.edit}
                         </button>
