@@ -19,8 +19,8 @@ export default function Home({ projects }: Props) {
       <main>
         <Hero />
         <Services />
-        <About />
         <Work projects={projects} limit={3} showMoreLink />
+        <About />
         <Contact />
       </main>
       <Footer />
