@@ -89,7 +89,7 @@ export function Nav({ locale = "en" }: NavProps) {
               )}
               <button
                 onClick={() => router.post("/logout")}
-                className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all cursor-pointer"
+                className="site-button site-button-outline site-button-compact hidden sm:inline-flex cursor-pointer"
               >
                 {isFa ? "خروج" : "Sign out"}
               </button>
@@ -98,7 +98,7 @@ export function Nav({ locale = "en" }: NavProps) {
             <Link
               to="/register"
               search={{ redirect: briefRedirect }}
-              className="hidden sm:inline-flex text-xs font-mono uppercase tracking-[0.2em] border border-foreground rounded-full px-4 py-2 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.85)] hover:shadow-[0_12px_30px_-6px_rgba(0,0,0,0.95)] hover:bg-foreground hover:text-background transition-all"
+              className="site-button site-button-outline site-button-compact hidden sm:inline-flex"
             >
               {isFa ? "شروع بریف" : "Start a brief"}
             </Link>
@@ -110,7 +110,7 @@ export function Nav({ locale = "en" }: NavProps) {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="md:hidden flex items-center justify-center h-11 w-11 -mr-2 cursor-pointer"
+            className="site-icon-button -mr-2 flex h-11 w-11 cursor-pointer hover:bg-foreground/10 md:hidden"
           >
             <span className="relative block h-4 w-6" aria-hidden>
               <motion.span
@@ -155,7 +155,7 @@ export function Nav({ locale = "en" }: NavProps) {
                       setOpen(false);
                       router.post("/logout");
                     }}
-                    className="text-left text-foreground cursor-pointer"
+                    className="site-button site-button-outline site-button-compact justify-start text-left text-foreground cursor-pointer"
                   >
                     {isFa ? "خروج" : "Sign out"}
                   </button>
@@ -164,7 +164,7 @@ export function Nav({ locale = "en" }: NavProps) {
                 <Link
                   to="/register"
                   search={{ redirect: briefRedirect }}
-                  className="text-foreground"
+                  className="site-button site-button-outline site-button-compact justify-start text-foreground"
                   onClick={() => setOpen(false)}
                 >
                   {isFa ? "شروع بریف" : "Start a brief"}

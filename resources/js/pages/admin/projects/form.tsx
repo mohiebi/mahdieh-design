@@ -163,7 +163,7 @@ export default function ProjectForm({ project }: Props) {
           <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
             <h2 className="font-display text-4xl">Media</h2>
             <div className="flex flex-wrap items-center gap-5">
-              <label className="cursor-pointer text-[11px] font-mono uppercase tracking-[0.22em] underline">
+              <label className="site-button site-button-outline site-button-compact cursor-pointer">
                 <input
                   type="file"
                   multiple
@@ -179,7 +179,7 @@ export default function ProjectForm({ project }: Props) {
               <button
                 type="button"
                 onClick={() => form.setData('media', [...form.data.media, { type: 'image', url: '', upload: null, alt_text: '', is_cover: false }])}
-                className="text-[11px] font-mono uppercase tracking-[0.22em] underline"
+                className="site-button site-button-outline site-button-compact"
               >
                 Add URL row
               </button>
@@ -239,7 +239,7 @@ export default function ProjectForm({ project }: Props) {
                   type="button"
                   onClick={() => form.setData('media', form.data.media.filter((_, itemIndex) => itemIndex !== index))}
                   aria-label={`Remove media row ${index + 1}`}
-                  className="h-11 w-11 flex items-center justify-center border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors cursor-pointer"
+                  className="site-icon-button h-11 w-11 border border-border text-muted-foreground hover:border-accent hover:text-accent cursor-pointer"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4" aria-hidden>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
@@ -268,7 +268,7 @@ export default function ProjectForm({ project }: Props) {
         <div className="flex justify-end border-t border-border pt-8">
           <button
             disabled={form.processing}
-            className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-7 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+            className="site-button site-button-primary cursor-pointer"
           >
             {form.processing && (
               <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 animate-spin" aria-hidden>
@@ -299,7 +299,7 @@ function EditorList({
     <section className="border-t border-border pt-10">
       <div className="flex items-center justify-between gap-5 mb-6">
         <h2 className="font-display text-4xl">{title}</h2>
-        <button type="button" onClick={onAdd} className="text-[11px] font-mono uppercase tracking-[0.22em] underline">
+        <button type="button" onClick={onAdd} className="site-button site-button-outline site-button-compact">
           Add row
         </button>
       </div>

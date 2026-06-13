@@ -45,7 +45,7 @@ export function AdminLayout({ eyebrow, title, action, children }: Props) {
           </nav>
           <button
             onClick={() => router.post('/logout')}
-            className="text-[11px] font-mono uppercase tracking-[0.2em] border border-border rounded-full px-4 py-2 hover:bg-foreground hover:text-background transition-colors cursor-pointer"
+            className="site-button site-button-outline site-button-compact cursor-pointer"
           >
             Sign out
           </button>
@@ -83,7 +83,7 @@ export function AdminButton({ href, children }: { href: string; children: ReactN
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center border border-foreground rounded-full px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.22em] hover:bg-foreground hover:text-background transition-colors"
+      className="site-button site-button-outline site-button-compact"
     >
       {children}
     </Link>

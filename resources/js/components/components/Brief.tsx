@@ -251,7 +251,7 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
                         <button
                           type="button"
                           onClick={() => setStep(i)}
-                          className="shrink-0 min-h-[44px] px-3 -mx-3 flex items-center text-[11px] font-mono uppercase tracking-[0.25em] underline underline-offset-4 hover:text-accent transition-colors cursor-pointer"
+                          className="site-button site-button-outline site-button-compact shrink-0 cursor-pointer"
                         >
                           {t.edit}
                         </button>
@@ -320,7 +320,7 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
           <button
             onClick={prev}
             disabled={step === 0}
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="site-button site-button-outline site-button-compact"
           >
             <bdi dir="ltr">{arrow.prev}</bdi> {t.previous}
           </button>
@@ -330,7 +330,7 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
             disabled={(!isReviewStep && !canProceed) || processing}
             whileHover={canProceed || isReviewStep ? { scale: 1.04 } : {}}
             whileTap={canProceed || isReviewStep ? { scale: 0.97 } : {}}
-            className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="site-button site-button-primary"
           >
             {isReviewStep
               ? processing

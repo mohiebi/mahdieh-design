@@ -80,7 +80,7 @@ export default function Login({ redirect = '', locale = 'en' }: Props) {
                 </label>
                 <button
                   disabled={processing}
-                  className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  className="site-button site-button-primary cursor-pointer"
                 >
                   {processing && (
                     <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 animate-spin" aria-hidden>
@@ -154,7 +154,7 @@ export default function Login({ redirect = '', locale = 'en' }: Props) {
               </label>
               <button
                 disabled={processing}
-                className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                className="site-button site-button-primary cursor-pointer"
               >
                 {processing && (
                   <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4 animate-spin" aria-hidden>

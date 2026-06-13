@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Marcellus&display=swap");
 @import "tailwindcss" source(none);
 @source "../js";
 @source "../views";
@@ -70,7 +71,7 @@
 }
 
 :root {
-  --radius: 0.25rem;
+  --radius: 0.75rem;
   /* #212121 base — darkened theme */
   --background: oklch(0.262 0 0);
   --foreground: oklch(0.95 0.005 85);
@@ -164,14 +165,14 @@
 
   h1, h2, h4 {
     font-family: var(--font-display);
-    font-weight: 300;
-    letter-spacing: -0.02em;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   h3 {
-    font-family: "Optima", "Optima Nova", "Palatino", "Palatino Linotype", "Georgia", serif;
+    font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   .lang-fa,
@@ -192,6 +193,97 @@
 }
 @utility font-mono {
   font-family: var(--font-mono);
+}
+
+@layer components {
+  .site-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-lg);
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background-color 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease,
+      box-shadow 220ms ease,
+      transform 220ms ease;
+  }
+
+  .site-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .site-button:disabled,
+  .site-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+  }
+
+  .site-button-primary {
+    border: 1px solid var(--foreground);
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  .site-button-primary:hover {
+    border-color: var(--accent);
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    box-shadow: 0 16px 32px -18px rgb(0 0 0 / 0.65);
+  }
+
+  .site-button-outline {
+    border: 1px solid color-mix(in oklch, var(--foreground) 35%, transparent);
+    background-color: transparent;
+    color: var(--foreground);
+    backdrop-filter: blur(10px);
+  }
+
+  .site-button-outline:hover {
+    border-color: var(--foreground);
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  .site-button-danger:hover {
+    border-color: var(--accent);
+    background-color: transparent;
+    color: var(--accent);
+  }
+
+  .site-button-compact {
+    min-height: 2.5rem;
+    padding: 0.625rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .site-icon-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    transition:
+      background-color 220ms ease,
+      color 220ms ease,
+      transform 220ms ease;
+  }
+
+  .site-icon-button:hover {
+    transform: translateY(-1px);
+  }
 }
 
 @layer utilities {

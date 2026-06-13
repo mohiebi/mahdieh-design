@@ -54,7 +54,7 @@ export default function BriefSubmissionShow({ submission }: Props) {
                   <option value="archived">Archived</option>
                 </select>
               </label>
-              <button className="mt-5 border border-foreground rounded-full px-5 py-2.5 text-[11px] font-mono uppercase tracking-[0.22em] hover:bg-foreground hover:text-background transition-colors">
+              <button className="site-button site-button-outline site-button-compact mt-5">
                 Update status
               </button>
             </form>

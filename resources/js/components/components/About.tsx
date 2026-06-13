@@ -21,7 +21,6 @@ export function About() {
     "Visual Identity",
     "Art Direction",
     "Editorial Design",
-    "UI / UX",
     "Design Systems",
     "Packaging",
     "Creative Leadership",
@@ -76,9 +75,8 @@ export function About() {
                   className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-700"
                 />
               </div>
-              <figcaption className="mt-4 flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.25em] opacity-60">
-                <span>✦ Mahdieh B.</span>
-                <span>Nexa Studio</span>
+              <figcaption className="mt-4 flex items-start text-[10px] font-mono uppercase tracking-[0.25em] opacity-60">
+                <span>✦ Mahdieh Baghoolizadeh</span>
               </figcaption>
             </motion.figure>
           </div>
@@ -140,25 +138,12 @@ export function About() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.4, delay: i * 0.04 }}
-                      className="text-xs font-mono uppercase tracking-[0.2em] border border-background/30 rounded-full px-3 py-1.5 hover:bg-background hover:text-foreground transition-colors"
+                      className="text-xs font-mono uppercase tracking-[0.2em] border border-background/30 rounded-lg px-3 py-1.5 hover:bg-background hover:text-foreground transition-colors"
                     >
                       {c}
                     </motion.li>
                   ))}
                 </ul>
-                <div className="mt-8 grid grid-cols-2 gap-6">
-                  {[
-                    ["EN", "Fluent"],
-                    ["FA", "Native"],
-                  ].map(([k, v]) => (
-                    <div key={k}>
-                      <div className="font-display text-3xl">{k}</div>
-                      <div className="text-xs font-mono uppercase tracking-[0.2em] opacity-60 mt-1">
-                        {v}
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </Reveal>
           </div>

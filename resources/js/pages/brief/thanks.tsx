@@ -86,7 +86,7 @@ export default function BriefThanks({ calendlyUrl, locale = 'en' }: Props) {
                     href={calendlyUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                    className="site-button site-button-primary"
                   >
                     رزرو جلسه
                     <bdi dir="ltr" aria-hidden>←</bdi>
@@ -174,7 +174,7 @@ export default function BriefThanks({ calendlyUrl, locale = 'en' }: Props) {
                   href={calendlyUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                  className="site-button site-button-primary"
                 >
                   Book a meeting
                   <span aria-hidden>→</span>

@@ -141,7 +141,7 @@ export default function BriefQuestionForm({ question }: Props) {
         </div>
 
         <div className="flex justify-end border-t border-border pt-8">
-          <button disabled={form.processing} className="bg-foreground text-background rounded-full px-7 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+          <button disabled={form.processing} className="site-button site-button-primary">
             Save question
           </button>
         </div>

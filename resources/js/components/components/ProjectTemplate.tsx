@@ -67,9 +67,9 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
           </motion.header>
 
           <motion.div
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden bg-muted mb-16 lg:mb-24"
           >
             <img

@@ -47,18 +47,18 @@ export default function ProjectIndex({ projects }: Props) {
                 {project.sections_count} paragraphs · {project.services_count} services · {project.media_count} media
               </p>
             </div>
-            <Link href={`/projects/${project.slug}`} className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground">
+            <Link href={`/projects/${project.slug}`} className="site-button site-button-outline site-button-compact self-start">
               View
             </Link>
             <div className="flex items-center gap-4">
-              <Link href={`/admin/projects/${project.slug}/edit`} className="text-xs font-mono uppercase tracking-[0.2em] underline">
+              <Link href={`/admin/projects/${project.slug}/edit`} className="site-button site-button-outline site-button-compact">
                 Edit
               </Link>
               <button
                 onClick={() => {
                   if (confirm(`Delete ${project.title}?`)) router.delete(`/admin/projects/${project.slug}`);
                 }}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-accent"
+                className="site-button site-button-outline site-button-danger site-button-compact"
               >
                 Delete
               </button>

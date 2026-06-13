@@ -43,14 +43,14 @@ export default function BriefQuestionsIndex({ questions }: Props) {
               <div>{question.label_fa ? 'FA ✓' : 'FA missing'}</div>
             </div>
             <div className="flex items-center gap-4">
-              <Link href={`/admin/brief-questions/${question.id}/edit`} className="text-xs font-mono uppercase tracking-[0.2em] underline">
+              <Link href={`/admin/brief-questions/${question.id}/edit`} className="site-button site-button-outline site-button-compact">
                 Edit
               </Link>
               <button
                 onClick={() => {
                   if (confirm('Delete this question?')) router.delete(`/admin/brief-questions/${question.id}`);
                 }}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-accent"
+                className="site-button site-button-outline site-button-danger site-button-compact"
               >
                 Delete
               </button>

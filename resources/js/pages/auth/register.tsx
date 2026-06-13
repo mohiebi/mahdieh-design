@@ -77,7 +77,7 @@ export default function Register({ redirect = '', locale = 'en' }: Props) {
                 </p>
                 <button
                   disabled={processing}
-                  className="bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                  className="site-button site-button-primary cursor-pointer"
                 >
                   ادامه
                 </button>
@@ -133,7 +133,7 @@ export default function Register({ redirect = '', locale = 'en' }: Props) {
               </p>
               <button
                 disabled={processing}
-                className="bg-foreground text-background rounded-full px-6 py-3 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                className="site-button site-button-primary cursor-pointer"
               >
                 Continue
               </button>

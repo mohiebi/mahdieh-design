@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { usePage } from "@inertiajs/react";
-import { Calendar, Instagram, Linkedin, Send } from "lucide-react";
+import { Calendar, Dribbble, Instagram, Linkedin, Send } from "lucide-react";
 import { Reveal } from "./Reveal";
 import contactBg from "@/assets/contact-bg.png";
 import type { SharedPageProps } from "@/types/global";
@@ -13,17 +13,6 @@ function SparkleIcon({ className }: { className?: string }) {
   );
 }
 
-function BehanceIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className={className} aria-hidden>
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <text x="12" y="15.5" textAnchor="middle" fontSize="9" fontFamily="Georgia, serif" fill="currentColor" stroke="none">
-        Be
-      </text>
-    </svg>
-  );
-}
-
 const headingLine = {
   hidden: { y: "110%" },
   visible: { y: 0 },
@@ -31,7 +20,7 @@ const headingLine = {
 
 const links = [
   { label: "LinkedIn", handle: "mahdiehdesign", href: "https://linkedin.com/in/mahdiehdesign", icon: Linkedin },
-  { label: "Behance", handle: "mahdiehdesign", href: "https://behance.net/mahdiehdesign", icon: BehanceIcon },
+  { label: "Behance", handle: "mahdiehdesign", href: "https://behance.net/mahdiehdesign", icon: Dribbble },
   { label: "Instagram", handle: "mahhdiehh", href: "https://instagram.com/mahhdiehh", icon: Instagram },
   { label: "Telegram", handle: "artdirector_mah", href: "https://t.me/artdirector_mah", icon: Send },
 ];
@@ -68,7 +57,7 @@ export function Contact() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="font-display text-[clamp(3rem,11vw,11rem)] leading-[0.9] tracking-tight"
+          className="font-display text-[clamp(2rem,7vw,7rem)] leading-[0.9] tracking-tight"
         >
           <span className="block overflow-hidden">
             <motion.span
@@ -85,7 +74,7 @@ export function Contact() {
               variants={headingLine}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              worth <em className="text-accent not-italic">building?</em>
+              worth building?
             </motion.span>
           </span>
         </motion.h2>
@@ -95,7 +84,7 @@ export function Contact() {
             href={`mailto:${contactEmail}`}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 bg-white text-black rounded-full px-5 py-2.5 font-display text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+            className="site-button site-button-primary"
           >
             {contactEmail}
             <motion.span
@@ -112,7 +101,7 @@ export function Contact() {
               href={calendlyUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 border border-white/30 rounded-full px-5 py-2.5 font-display text-sm text-white hover:bg-white hover:text-black transition-colors backdrop-blur-sm"
+              className="site-button site-button-outline"
             >
               <Calendar className="h-4 w-4" aria-hidden />
               Book a call
@@ -124,7 +113,12 @@ export function Contact() {
           </span>
         </Reveal>
 
-        <div className="mt-20 lg:mt-28 grid sm:grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-white/15 bg-white/15">
+        <div className="mt-20 lg:mt-28">
+          <div className="flex items-center justify-between border-b border-white/15 pb-4 text-[10px] font-mono uppercase tracking-[0.28em] text-white/55">
+            <span>Elsewhere</span>
+            <span>04 - Channels</span>
+          </div>
+
           {links.map(({ label, handle, href, icon: Icon }, i) => (
             <motion.a
               key={label}
@@ -136,18 +130,17 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex items-center justify-between gap-4 bg-black/40 hover:bg-black/20 px-6 py-6 transition-colors"
+              className="group grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-4 border-b border-white/15 py-7 text-white transition-colors hover:bg-white/[0.055] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/45 md:grid-cols-[3.5rem_minmax(0,1fr)_auto_3.5rem] md:px-0 lg:py-8"
             >
-              <div className="min-w-0">
-                <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-white/60">{label}</div>
-                <div className="font-display text-xl mt-2 text-white truncate group-hover:text-accent transition-colors">
-                  @{handle}
-                </div>
-              </div>
-              <Icon
-                className="h-5 w-5 shrink-0 text-white/40 group-hover:text-accent group-hover:translate-x-0.5 transition-all"
-                aria-hidden
-              />
+              <span className="min-w-0 font-display text-[clamp(1rem,3vw,4rem)] leading-[0.88] text-white transition-all duration-300 group-hover:translate-x-2 group-hover:text-accent">
+                {label}
+              </span>
+              <span className="col-start-2 text-sm font-semibold text-white/62 transition-colors group-hover:text-white md:col-start-auto md:justify-self-end md:pr-6">
+                @{handle}
+              </span>
+              <span className="col-start-2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/70 transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-[-8deg] md:col-start-auto md:h-12 md:w-12">
+                <Icon className="h-4 w-4" aria-hidden />
+              </span>
             </motion.a>
           ))}
         </div>
@@ -163,7 +156,7 @@ type FooterProps = {
 export function Footer({ locale = "en" }: FooterProps) {
   return (
     <footer className="px-6 lg:px-12 py-10 border-t border-border">
-      <div className="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+      <div className="max-w-[1400px] mx-auto flex flex-wrap items-center text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
         {locale === "fa" ? (
           <>
             <div>© {new Date().getFullYear()} مهدیه باغولی‌زاده — تمامی حقوق محفوظ است</div>
@@ -172,7 +165,6 @@ export function Footer({ locale = "en" }: FooterProps) {
         ) : (
           <>
             <div>© {new Date().getFullYear()} Mahdieh Baghoolizadeh — All rights reserved</div>
-            <div>Nexa Studio · Create · Be · Inspire</div>
           </>
         )}
       </div>

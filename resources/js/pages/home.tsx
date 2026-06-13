@@ -2,7 +2,6 @@ import { Head } from '@inertiajs/react';
 import { About } from '@/components/components/About';
 import { Contact, Footer } from '@/components/components/Contact';
 import { Hero } from '@/components/components/Hero';
-import { Marquee } from '@/components/components/Marquee';
 import { Nav } from '@/components/components/Nav';
 import { Services } from '@/components/components/Services';
 import { Work } from '@/components/components/Work';
@@ -19,10 +18,9 @@ export default function Home({ projects }: Props) {
       <Nav />
       <main>
         <Hero />
-        <Marquee />
+        <Services />
         <About />
         <Work projects={projects} limit={3} showMoreLink />
-        <Services />
         <Contact />
       </main>
       <Footer />

@@ -1,7 +1,11 @@
 export function Marquee() {
   const items = [
-    "Brand Strategy", "Visual Identity", "UI / UX Design",
-    "Art Direction", "Logo Design", "Design Systems", "Creative Leadership"
+    "Brand Strategy",
+    "Visual Identity",
+    "Art Direction",
+    "Logo Design",
+    "Design Systems",
+    "Creative Leadership"
   ];
   const row = [...items, ...items];
   return (
