@@ -294,6 +294,32 @@
     letter-spacing: normal;
   }
 
+  .lang-fa h1,
+  .lang-fa .font-display {
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 1.08;
+  }
+
+  .lang-fa h2 {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.12;
+  }
+
+  .lang-fa h3 {
+    font-size: clamp(2rem, 4vw, 3.75rem);
+    line-height: 1.15;
+  }
+
+  .lang-fa header nav,
+  .lang-fa header nav a,
+
+  .lang-fa header .font-mono,
+  .lang-fa header .site-button-compact {
+    font-size: 0.875rem !important;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
   .site-button {
     display: inline-flex;
     min-height: 2.75rem;
