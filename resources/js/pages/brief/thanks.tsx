@@ -24,12 +24,6 @@ export default function BriefThanks({ calendlyUrl, locale = 'en' }: Props) {
     return (
       <div dir="rtl" lang="fa" className="lang-fa min-h-screen bg-background text-foreground">
         <Head title="بریف دریافت شد">
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap"
-            rel="stylesheet"
-          />
           <meta name="description" content="از بریف شما متشکریم. ظرف ۲۴ ساعت آینده با شما تماس خواهیم گرفت." />
         </Head>
         <Nav locale="fa" />

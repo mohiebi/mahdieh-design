@@ -6,6 +6,70 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Damoon";
+  src: url("../fonts/fa/Damoon-Old-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Damoon";
+  src: url("../fonts/fa/Damoon-Old-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Damoon";
+  src: url("../fonts/fa/Damoon-Old-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/fa/PeydaWeb-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/fa/PeydaWeb-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/fa/PeydaWeb-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/fa/PeydaWeb-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/fa/PeydaWeb-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /*
  * Design system definition.
  *
@@ -67,10 +131,13 @@
   --font-display: "Marcellus", "Optima", "Palatino", "Georgia", serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  --font-fa: "Vazirmatn", "Tahoma", sans-serif;
+  --font-fa-display: "Damoon", "Tahoma", sans-serif;
+  --font-fa: "Peyda", "Tahoma", sans-serif;
 }
 
 :root {
+  --font-fa-display: "Damoon", "Tahoma", sans-serif;
+  --font-fa: "Peyda", "Tahoma", sans-serif;
   --radius: 0.75rem;
   /* #212121 base — darkened theme */
   --background: oklch(0.262 0 0);
@@ -180,9 +247,9 @@
   .lang-fa h2,
   .lang-fa h3,
   .lang-fa h4 {
-    --font-display: "Vazirmatn", "Tahoma", sans-serif;
-    --font-sans: "Vazirmatn", "Tahoma", sans-serif;
-    --font-mono: "Vazirmatn", "Tahoma", sans-serif;
+    --font-display: var(--font-fa-display);
+    --font-sans: var(--font-fa);
+    --font-mono: var(--font-fa);
     font-family: var(--font-fa);
     letter-spacing: normal;
   }
@@ -196,6 +263,37 @@
 }
 
 @layer components {
+  .lang-fa,
+  .lang-fa body,
+  .lang-fa p,
+  .lang-fa span,
+  .lang-fa div,
+  .lang-fa label,
+  .lang-fa input,
+  .lang-fa textarea,
+  .lang-fa select,
+  .lang-fa button,
+  .lang-fa a,
+  .lang-fa .font-sans,
+  .lang-fa .font-mono {
+    font-family: var(--font-fa) !important;
+    letter-spacing: normal;
+  }
+
+  .lang-fa h1,
+  .lang-fa h2,
+  .lang-fa h3,
+  .lang-fa h4,
+  .lang-fa h1 *,
+  .lang-fa h2 *,
+  .lang-fa h3 *,
+  .lang-fa h4 *,
+  .lang-fa .font-display,
+  .lang-fa .font-display * {
+    font-family: var(--font-fa-display) !important;
+    letter-spacing: normal;
+  }
+
   .site-button {
     display: inline-flex;
     min-height: 2.75rem;

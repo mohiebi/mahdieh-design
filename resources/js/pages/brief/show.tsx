@@ -24,12 +24,6 @@ export default function BriefShow({ questions, locale = 'en' }: Props) {
     return (
       <div dir="rtl" lang="fa" className="lang-fa min-h-screen bg-background text-foreground">
         <Head title="بریف پروژه">
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap"
-            rel="stylesheet"
-          />
           <meta
             name="description"
             content="درباره پروژه‌تان به ما بگویید. برای شروع همکاری برندینگ به ۱۵ سوال کوتاه پاسخ دهید."

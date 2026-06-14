@@ -26,12 +26,6 @@ export default function Login({ redirect = '', locale = 'en' }: Props) {
     return (
       <div dir="rtl" lang="fa" className="lang-fa min-h-screen bg-background text-foreground">
         <Head title="ورود">
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600&display=swap"
-            rel="stylesheet"
-          />
         </Head>
         <Nav locale="fa" />
         <main className="px-6 lg:px-12 pt-32 pb-24 lg:pt-44">
