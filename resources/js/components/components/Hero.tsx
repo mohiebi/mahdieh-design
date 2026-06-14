@@ -36,7 +36,7 @@ export function Hero() {
           Available for select projects · {new Date().getFullYear()}
         </motion.div>
 
-        <h1 className="font-display text-[clamp(2.5rem,9vw,9rem)] leading-[0.95] tracking-tight">
+        <h1 className="font-display text-[clamp(3rem,10vw,11rem)] leading-[0.95] tracking-tight">
           <motion.span className="block overflow-hidden">
             <motion.span
               className="block"

@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { usePage } from "@inertiajs/react";
-import { Calendar, Dribbble, Instagram, Linkedin, Send } from "lucide-react";
+import { Calendar, Instagram, Linkedin, Send } from "lucide-react";
 import { Reveal } from "./Reveal";
 import contactBg from "@/assets/contact-bg.png";
 import type { SharedPageProps } from "@/types/global";
@@ -13,6 +13,14 @@ function SparkleIcon({ className }: { className?: string }) {
   );
 }
 
+function BehanceIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M8.37 11.08c.95-.27 1.62-1.12 1.62-2.16 0-1.74-1.34-2.7-3.28-2.7H2.5v11.56h4.39c2.23 0 3.69-1.09 3.69-3.05 0-1.43-.86-2.46-2.21-2.79v-.86ZM4.76 8.11h1.62c.86 0 1.34.4 1.34 1.14 0 .78-.53 1.2-1.42 1.2H4.76V8.11Zm0 4.12h1.87c1.03 0 1.62.48 1.62 1.35 0 .88-.59 1.36-1.64 1.36H4.76v-2.71ZM13.25 7.07h5.2V5.78h-5.2v1.29Zm2.75 2.28c-2.61 0-4.32 1.84-4.32 4.36 0 2.61 1.68 4.29 4.39 4.29 2.07 0 3.47-.94 4.03-2.62h-2.12c-.31.59-.91.88-1.85.88-1.24 0-2.02-.7-2.15-1.94h6.28c.03-.2.05-.47.05-.73 0-2.56-1.66-4.24-4.31-4.24Zm-.03 1.72c1.1 0 1.84.65 1.98 1.79h-3.94c.18-1.12.91-1.79 1.96-1.79Z" />
+    </svg>
+  );
+}
+
 const headingLine = {
   hidden: { y: "110%" },
   visible: { y: 0 },
@@ -20,7 +28,7 @@ const headingLine = {
 
 const links = [
   { label: "LinkedIn", handle: "mahdiehdesign", href: "https://linkedin.com/in/mahdiehdesign", icon: Linkedin },
-  { label: "Behance", handle: "mahdiehdesign", href: "https://behance.net/mahdiehdesign", icon: Dribbble },
+  { label: "Behance", handle: "mahdiehdesign", href: "https://behance.net/mahdiehdesign", icon: BehanceIcon },
   { label: "Instagram", handle: "mahhdiehh", href: "https://instagram.com/mahhdiehh", icon: Instagram },
   { label: "Telegram", handle: "artdirector_mah", href: "https://t.me/artdirector_mah", icon: Send },
 ];
@@ -57,9 +65,9 @@ export function Contact() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="font-display text-[clamp(2rem,7vw,7rem)] leading-[0.9] tracking-tight"
+          className="font-display text-[clamp(2rem,7vw,7rem)] leading-[1.02] tracking-tight"
         >
-          <span className="block overflow-hidden">
+          <span className="block overflow-hidden pb-[0.08em]">
             <motion.span
               className="block"
               variants={headingLine}
@@ -68,7 +76,7 @@ export function Contact() {
               Have a brand
             </motion.span>
           </span>
-          <span className="block overflow-hidden">
+          <span className="block overflow-hidden pb-[0.08em]">
             <motion.span
               className="block"
               variants={headingLine}

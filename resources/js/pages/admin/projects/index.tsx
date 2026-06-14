@@ -28,7 +28,7 @@ export default function ProjectIndex({ projects }: Props) {
         {projects.map((project) => (
           <article
             key={project.id}
-            className="grid grid-cols-1 lg:grid-cols-[90px_1fr_180px_220px] gap-6 border-b border-border py-7"
+            className="grid grid-cols-1 gap-6 border-b border-border py-7 lg:grid-cols-[90px_1fr_auto] lg:items-center"
           >
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
               {String(project.sort_order).padStart(2, '0')}
@@ -47,10 +47,10 @@ export default function ProjectIndex({ projects }: Props) {
                 {project.sections_count} paragraphs · {project.services_count} services · {project.media_count} media
               </p>
             </div>
-            <Link href={`/projects/${project.slug}`} className="site-button site-button-outline site-button-compact self-start">
-              View
-            </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+              <Link href={`/projects/${project.slug}`} className="site-button site-button-outline site-button-compact min-w-28">
+                View
+              </Link>
               <Link href={`/admin/projects/${project.slug}/edit`} className="site-button site-button-outline site-button-compact">
                 Edit
               </Link>
