@@ -36,6 +36,7 @@ export function Nav({ locale = "en" }: NavProps) {
         { to: "/projects", label: "Projects" },
         { href: "/#about", label: "About" },
         { href: "/#services", label: "Services" },
+        { to: "/process", label: "Process" },
         briefLink,
         { href: "/#contact", label: "Contact" },
       ];

@@ -23,6 +23,11 @@ class PortfolioController extends Controller
         ]);
     }
 
+    public function process(): Response
+    {
+        return Inertia::render('process');
+    }
+
     public function service(string $service): Response
     {
         $definition = $this->serviceDefinitions()[$service] ?? null;
