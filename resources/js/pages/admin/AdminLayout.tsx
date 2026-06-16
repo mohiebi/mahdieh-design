@@ -28,11 +28,11 @@ export function AdminLayout({ eyebrow, title, action, children }: Props) {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between gap-8">
           <Link href="/admin" className="flex items-center gap-4">
             <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
-            <span className="hidden sm:inline text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
+            <span className="hidden sm:inline text-sm font-display text-muted-foreground">
               Admin
             </span>
           </Link>
-          <nav className="hidden lg:flex items-center gap-7 text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground">
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-display text-muted-foreground">
             {navItems.map(([label, href]) => (
               <Link
                 key={href}
@@ -45,7 +45,7 @@ export function AdminLayout({ eyebrow, title, action, children }: Props) {
           </nav>
           <button
             onClick={() => router.post('/logout')}
-            className="site-button site-button-outline site-button-compact cursor-pointer"
+            className="site-button site-button-outline cursor-pointer"
           >
             Sign out
           </button>
@@ -83,7 +83,7 @@ export function AdminButton({ href, children }: { href: string; children: ReactN
   return (
     <Link
       href={href}
-      className="site-button site-button-outline site-button-compact"
+      className="site-button site-button-outline"
     >
       {children}
     </Link>

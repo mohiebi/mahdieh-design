@@ -70,7 +70,7 @@ export function Nav({ locale = "en" }: NavProps) {
         <Link to="/" aria-label="Mahdieh — Home" className="flex items-center">
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
-        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-display text-muted-foreground">
           {links.map((link) => renderLink(link, "hover:text-foreground transition-colors"))}
         </nav>
         <div className="flex items-center gap-3">
@@ -79,18 +79,18 @@ export function Nav({ locale = "en" }: NavProps) {
               {session.is_admin ? (
                 <Link
                   to="/admin"
-                  className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
+                  className="hidden sm:inline-flex whitespace-nowrap text-sm font-display text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
                 </Link>
               ) : (
-                <span className="hidden sm:inline-flex whitespace-nowrap text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="hidden sm:inline-flex whitespace-nowrap text-sm font-display text-muted-foreground">
                   {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
                 </span>
               )}
               <button
                 onClick={() => router.post("/logout")}
-                className="site-button site-button-outline site-button-compact hidden sm:inline-flex cursor-pointer"
+                className="site-button site-button-outline hidden sm:inline-flex cursor-pointer"
               >
                 {isFa ? "خروج" : "Sign out"}
               </button>
@@ -99,7 +99,7 @@ export function Nav({ locale = "en" }: NavProps) {
             <Link
               to="/register"
               search={{ redirect: briefRedirect }}
-              className="site-button site-button-outline site-button-compact hidden sm:inline-flex"
+              className="site-button site-button-outline hidden sm:inline-flex"
             >
               {isFa ? "شروع بریف" : "Start a brief"}
             </Link>
@@ -140,7 +140,7 @@ export function Nav({ locale = "en" }: NavProps) {
             transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden overflow-hidden border-t border-border/50 bg-background/95"
           >
-            <div className="px-6 py-6 flex flex-col gap-6 text-sm font-mono uppercase tracking-[0.2em] text-muted-foreground">
+            <div className="px-6 py-6 flex flex-col gap-6 text-sm font-display text-muted-foreground">
               {links.map((link) => renderLink(link, "hover:text-foreground transition-colors py-1"))}
               {session ? (
                 <>
@@ -156,7 +156,7 @@ export function Nav({ locale = "en" }: NavProps) {
                       setOpen(false);
                       router.post("/logout");
                     }}
-                    className="site-button site-button-outline site-button-compact justify-start text-left text-foreground cursor-pointer"
+                    className="site-button site-button-outline justify-start text-left text-foreground cursor-pointer"
                   >
                     {isFa ? "خروج" : "Sign out"}
                   </button>
@@ -165,7 +165,7 @@ export function Nav({ locale = "en" }: NavProps) {
                 <Link
                   to="/register"
                   search={{ redirect: briefRedirect }}
-                  className="site-button site-button-outline site-button-compact justify-start text-foreground"
+                  className="site-button site-button-outline justify-start text-foreground"
                   onClick={() => setOpen(false)}
                 >
                   {isFa ? "شروع بریف" : "Start a brief"}

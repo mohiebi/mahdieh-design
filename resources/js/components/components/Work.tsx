@@ -112,7 +112,7 @@ export function Work({ projects: projectItems = projects, limit, showMoreLink = 
           <div className="mt-20 flex justify-center">
             <Link
               to="/projects"
-              className="site-button site-button-outline site-button-compact"
+              className="site-button site-button-outline"
             >
               More projects
               <span aria-hidden>-&gt;</span>
