@@ -4,11 +4,11 @@ import portrait from "@/assets/portrait.png";
 
 export function About() {
   const experience = [
-    ["2024 — 2026", "Founder · Brand Strategy", "Nexa Studio"],
-    ["2023", "Brand Designer", "Milanco Studio · Toronto"],
-    ["2023", "Art Director", "Wilma Studio"],
-    ["2022 — 2023", "Senior Designer", "Freelance"],
-    ["2019 — 2022", "Head Designer", "Narvan Agency"],
+    ["2024 — 2026", "Founder · Brand Strategy", "Nexa · Turkey, Istanbul"],
+    ["2023", "Brand Designer", "Milan · Canada, North York, Ontario"],
+    ["2023", "Art Director", "Wilma · Iran, Tehran"],
+    ["2022 — 2023", "Senior Designer", "Freelance · International"],
+    ["2019 — 2022", "Head Designer", "Narvan · Iran, Isfahan"],
   ];
   const education = [
     ["2026", "UI/UX Product Design", "Zero to Mastery"],

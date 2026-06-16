@@ -16,6 +16,7 @@ type Props = { recommendations: Recommendation[] };
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 const avatarStyle = { height: "3.5rem", width: "3.5rem", minWidth: "3.5rem" };
+const quoteLimit = 250;
 
 const slideVariants = {
   initial: (d: 1 | -1) => ({ opacity: 0, y: d > 0 ? 60 : -60 }),
@@ -52,19 +53,47 @@ function Avatar({ name, avatarPath }: { name: string; avatarPath: string | null 
   );
 }
 
+function truncateQuote(quote: string) {
+  if (quote.length <= quoteLimit) {
+    return quote;
+  }
+
+  const cut = quote.slice(0, quoteLimit);
+  const lastSpace = cut.lastIndexOf(" ");
+
+  return cut.slice(0, lastSpace > 160 ? lastSpace : quoteLimit).trim();
+}
+
 function Card({ r }: { r: Recommendation }) {
+  const [expanded, setExpanded] = useState(false);
+  const shouldTruncate = r.quote.length > quoteLimit;
+  const quote = shouldTruncate && !expanded ? truncateQuote(r.quote) : r.quote;
+
   return (
-    <blockquote className="border border-border p-10 lg:p-16">
+    <blockquote
+      className={`mx-auto flex w-full flex-col border border-border p-8 transition-[height] duration-300 sm:p-10 lg:w-3/4 lg:p-16 ${
+        expanded ? "min-h-[30rem]" : "h-[30rem] sm:h-[31rem] lg:h-[35rem]"
+      }`}
+    >
       <div
         aria-hidden
         className="font-display text-7xl text-accent leading-none mb-8 select-none"
       >
         &ldquo;
       </div>
-      <p className="font-display text-2xl lg:text-3xl leading-relaxed break-words">
-        {r.quote}
+      <p className="font-display text-2xl leading-relaxed break-words">
+        {quote}
+        {shouldTruncate && !expanded && (
+          <button
+            type="button"
+            onClick={() => setExpanded(true)}
+            className="inline cursor-pointer font-display text-accent transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          >
+            ...(read more)
+          </button>
+        )}
       </p>
-      <footer className="mt-10 pt-8 border-t border-border flex items-center gap-5">
+      <footer className="mt-auto pt-8 border-t border-border flex items-center gap-5">
         <Avatar name={r.name} avatarPath={r.avatar_path} />
         <div className="flex-1 min-w-0">
           <div className="font-display text-xl">{r.name}</div>
