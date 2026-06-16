@@ -1,17 +1,49 @@
+import { router } from "@inertiajs/react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 import { Reveal } from "./Reveal";
 
+export type ProjectScope = "popular" | "recent";
+
 type WorkProps = {
   projects?: Project[];
   limit?: number;
   showMoreLink?: boolean;
+  showScopeFilter?: boolean;
+  scope?: ProjectScope;
 };
 
-export function Work({ projects: projectItems = projects, limit, showMoreLink = false }: WorkProps) {
+const projectScopes: { value: ProjectScope; label: string }[] = [
+  { value: "popular", label: "Popular" },
+  { value: "recent", label: "Recent" },
+];
+
+export function Work({
+  projects: projectItems = projects,
+  limit,
+  showMoreLink = false,
+  showScopeFilter = false,
+  scope = "popular",
+}: WorkProps) {
   const visibleProjects = typeof limit === "number" ? projectItems.slice(0, limit) : projectItems;
+
+  const handleScopeChange = (nextScope: ProjectScope) => {
+    if (nextScope === scope) {
+      return;
+    }
+
+    router.get(
+      "/projects",
+      nextScope === "popular" ? {} : { scope: nextScope },
+      {
+        preserveScroll: true,
+        preserveState: true,
+        replace: true,
+      },
+    );
+  };
 
   return (
     <section id="projects" className="px-6 lg:px-12 py-24 lg:py-32">
@@ -21,12 +53,36 @@ export function Work({ projects: projectItems = projects, limit, showMoreLink = 
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
               Selected Projects - 2022 / 2026
             </div>
-            <h2 className="font-display text-5xl md:text-7xl">Recent projects.</h2>
+            <h2 className="font-display text-5xl md:text-7xl">Case Studies.</h2>
           </div>
           <p className="max-w-md text-muted-foreground">
             A curated archive of identities, campaigns and product work. From early concept and
             naming through to systems and rollout.
           </p>
+          {showScopeFilter && (
+            <div
+              className="flex w-full flex-wrap items-center gap-2 border-t border-border/60 pt-6 sm:w-auto sm:border-t-0 sm:pt-0"
+              aria-label="Project scope"
+            >
+              {projectScopes.map((item) => {
+                const isActive = item.value === scope;
+
+                return (
+                  <button
+                    key={item.value}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => handleScopeChange(item.value)}
+                    className={`site-button site-button-compact ${
+                      isActive ? "site-button-primary" : "site-button-outline"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </Reveal>
 
         <div className="flex flex-col gap-24 lg:gap-32">
