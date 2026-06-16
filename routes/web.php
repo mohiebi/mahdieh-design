@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BriefQuestionController as AdminBriefQuestionCont
 use App\Http\Controllers\Admin\BriefSubmissionController as AdminBriefSubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\RecommendationController as AdminRecommendationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BriefController;
 use App\Http\Controllers\PortfolioController;
@@ -42,4 +43,6 @@ Route::middleware(['auth', 'admin'])
         Route::get('brief-submissions', [AdminBriefSubmissionController::class, 'index'])->name('brief-submissions.index');
         Route::get('brief-submissions/{briefSubmission}', [AdminBriefSubmissionController::class, 'show'])->name('brief-submissions.show');
         Route::patch('brief-submissions/{briefSubmission}', [AdminBriefSubmissionController::class, 'update'])->name('brief-submissions.update');
+        Route::resource('recommendations', AdminRecommendationController::class)->except('show');
+        Route::patch('recommendations/{recommendation}/move', [AdminRecommendationController::class, 'move'])->name('recommendations.move');
     });

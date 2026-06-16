@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
@@ -31,6 +32,21 @@ class Project extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->where('is_published', true);
+    }
+
+    public function scopePopularOrder(Builder $query): Builder
+    {
+        return $query->orderBy('sort_order')->orderBy('id');
+    }
+
+    public function scopeRecentOrder(Builder $query): Builder
+    {
+        return $query->orderByDesc('created_at')->orderByDesc('id');
     }
 
     public function sections(): HasMany

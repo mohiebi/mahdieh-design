@@ -3,23 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Recommendation;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PortfolioController extends Controller
 {
+    private const PROJECT_SCOPES = ['popular', 'recent'];
+
     public function home(): Response
     {
         return Inertia::render('home', [
             'projects' => fn () => $this->publishedProjects()->map(fn (Project $project) => $this->projectPayload($project)),
+            'recommendations' => fn () => Recommendation::active()
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+                ->map(fn (Recommendation $r) => [
+                    'id' => $r->id,
+                    'name' => $r->name,
+                    'role' => $r->role,
+                    'company' => $r->company,
+                    'quote' => $r->quote,
+                    'linkedin_url' => $r->linkedin_url,
+                    'avatar_path' => $r->avatar_path,
+                ]),
         ]);
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $scope = $this->projectScope($request->query('scope'));
+
         return Inertia::render('projects/index', [
-            'projects' => fn () => $this->publishedProjects()->map(fn (Project $project) => $this->projectPayload($project)),
+            'projects' => fn () => $this->publishedProjects($scope)->map(fn (Project $project) => $this->projectPayload($project)),
+            'scope' => $scope,
         ]);
     }
 
@@ -67,14 +87,24 @@ class PortfolioController extends Controller
         ]);
     }
 
-    private function publishedProjects(): Collection
+    private function publishedProjects(string $scope = 'popular'): Collection
     {
-        return Project::query()
+        $query = Project::query()
             ->with(['sections', 'services', 'media'])
-            ->where('is_published', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+            ->published();
+
+        if ($scope === 'recent') {
+            $query->recentOrder();
+        } else {
+            $query->popularOrder();
+        }
+
+        return $query->get();
+    }
+
+    private function projectScope(mixed $scope): string
+    {
+        return in_array($scope, self::PROJECT_SCOPES, true) ? $scope : 'popular';
     }
 
     private function projectPayload(Project $project): array
