@@ -13,6 +13,7 @@ type Props = {
 const navItems = [
   ['Dashboard', '/admin'],
   ['Projects', '/admin/projects'],
+  ['Recommendations', '/admin/recommendations'],
   ['Brief Questions', '/admin/brief-questions'],
   ['Submissions', '/admin/brief-submissions'],
   ['View Site', '/'],

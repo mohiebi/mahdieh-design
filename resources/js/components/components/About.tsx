@@ -118,7 +118,7 @@ export function About() {
                 </div>
                 <blockquote className="font-display text-2xl md:text-3xl leading-[1.15]">
                   “Design is the quiet structure
-                  <span className="text-accent not-italic"> behind every brand</span>
+                  <span className="text-accent not-italic"> behind every brand </span>
                   that lasts.”
                 </blockquote>
               </div>

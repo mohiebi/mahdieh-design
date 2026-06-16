@@ -138,15 +138,15 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group grid grid-cols-[2.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-4 border-b border-white/15 py-7 text-white transition-colors hover:bg-white/[0.055] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/45 md:grid-cols-[3.5rem_minmax(0,1fr)_auto_3.5rem] md:px-0 lg:py-8"
+              className="group grid grid-cols-[minmax(0,1fr)_3rem] items-center gap-x-4 gap-y-3 border-b border-white/15 py-7 text-white transition-colors hover:bg-white/[0.055] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/45 md:grid-cols-[minmax(0,1fr)_auto_3.5rem] md:px-0 lg:py-8"
             >
-              <span className="min-w-0 font-display text-[clamp(1rem,3vw,4rem)] leading-[0.88] text-white transition-all duration-300 group-hover:translate-x-2 group-hover:text-accent">
+              <span className="min-w-0 font-display text-2xl leading-none text-white transition-all duration-300 group-hover:text-accent sm:text-3xl md:text-[clamp(2.5rem,5vw,4rem)] md:group-hover:translate-x-2">
                 {label}
               </span>
-              <span className="col-start-2 text-sm font-semibold text-white/62 transition-colors group-hover:text-white md:col-start-auto md:justify-self-end md:pr-6">
+              <span className="col-start-1 text-sm font-semibold text-white/62 transition-colors group-hover:text-white md:col-start-auto md:justify-self-end md:pr-6">
                 @{handle}
               </span>
-              <span className="col-start-2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/70 transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-[-8deg] md:col-start-auto md:h-12 md:w-12">
+              <span className="col-start-2 row-span-2 row-start-1 flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-white/20 text-white/70 transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-accent-foreground group-hover:rotate-[-8deg] md:col-start-auto md:row-auto md:h-12 md:w-12">
                 <Icon className="h-4 w-4" aria-hidden />
               </span>
             </motion.a>
