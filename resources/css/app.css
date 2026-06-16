@@ -326,6 +326,7 @@
     justify-content: center;
     gap: 0.5rem;
     border-radius: var(--radius-lg);
+    cursor: pointer;
     padding: 0.75rem 1.25rem;
     font-family: var(--font-display);
     font-size: 0.95rem;
@@ -398,6 +399,7 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-lg);
+    cursor: pointer;
     transition:
       background-color 220ms ease,
       color 220ms ease,
