@@ -30,7 +30,7 @@ const links = [
   { label: "LinkedIn", handle: "mahdiehdesign", href: "https://linkedin.com/in/mahdiehdesign", icon: Linkedin },
   { label: "Behance", handle: "mahdiehdesign", href: "https://behance.net/mahdiehdesign", icon: BehanceIcon },
   { label: "Instagram", handle: "mahhdiehh", href: "https://instagram.com/mahhdiehh", icon: Instagram },
-  { label: "Telegram", handle: "artdirector_mah", href: "https://t.me/artdirector_mah", icon: Send },
+  { label: "Telegram", handle: "mahdiehdesign", href: "https://t.me/mahdiehdesign", icon: Send },
 ];
 
 export function Contact() {
