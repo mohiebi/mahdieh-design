@@ -2,6 +2,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Contact, Footer } from '@/components/components/Contact';
 import { Nav } from '@/components/components/Nav';
 import type { Project } from '@/data/projects';
+import { localizedPath, pageClass, pageDir, siteCopy, type Locale } from '@/lib/i18n';
 
 type Service = {
   slug: string;
@@ -15,30 +16,33 @@ type Service = {
 type Props = {
   service: Service;
   projects: Project[];
+  locale?: Locale;
 };
 
-export default function ServiceShow({ service, projects }: Props) {
+export default function ServiceShow({ service, projects, locale = 'en' }: Props) {
+  const t = siteCopy[locale].servicePage;
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div dir={pageDir(locale)} lang={locale} className={pageClass(locale)}>
       <Head title={service.title}>
         <meta name="description" content={service.summary} />
       </Head>
-      <Nav />
+      <Nav locale={locale} />
 
       <main>
         <section className="px-6 pb-20 pt-32 lg:px-12 lg:pb-28 lg:pt-44">
           <div className="mx-auto max-w-[1400px]">
             <Link
-              href="/#services"
+              href={localizedPath('/#services', locale)}
               className="mb-12 inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-foreground"
             >
-              &lt;- Services
+              {t.back}
             </Link>
 
             <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-7">
                 <div className="mb-6 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
-                  {service.number} / Service
+                  {service.number} / {t.label}
                 </div>
                 <h1 className="font-display text-6xl leading-[0.9] md:text-8xl lg:text-9xl">
                   {service.title}
@@ -60,7 +64,7 @@ export default function ServiceShow({ service, projects }: Props) {
 
             <div className="mt-16 border-y border-border py-8">
               <div className="mb-5 text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
-                Focus
+                {t.focus}
               </div>
               <div className="flex flex-wrap gap-3">
                 {service.focus.map((item) => (
@@ -81,14 +85,14 @@ export default function ServiceShow({ service, projects }: Props) {
             <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
               <div>
                 <div className="mb-4 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground">
-                  Related projects
+                  {t.related}
                 </div>
                 <h2 className="font-display text-5xl md:text-7xl">
-                  Work with this service.
+                  {t.title}
                 </h2>
               </div>
               <div className="text-sm text-muted-foreground">
-                {projects.length} {projects.length === 1 ? 'project' : 'projects'}
+                {t.projectCount(projects.length)}
               </div>
             </div>
 
@@ -97,7 +101,7 @@ export default function ServiceShow({ service, projects }: Props) {
                 {projects.map((project) => (
                   <Link
                     key={project.slug}
-                    href={`/projects/${project.slug}`}
+                    href={localizedPath(`/projects/${project.slug}`, locale)}
                     className="group block border-t border-border pt-6"
                   >
                     <div className="aspect-[16/10] overflow-hidden">
@@ -119,7 +123,7 @@ export default function ServiceShow({ service, projects }: Props) {
                         </h3>
                       </div>
                       <span className="shrink-0 pt-2 text-[11px] font-mono uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground">
-                        View
+                        {t.view}
                       </span>
                     </div>
                     <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
@@ -130,16 +134,16 @@ export default function ServiceShow({ service, projects }: Props) {
               </div>
             ) : (
               <p className="max-w-xl text-muted-foreground">
-                Related work for this service will be added soon.
+                {t.empty}
               </p>
             )}
           </div>
         </section>
 
-        <Contact />
+        <Contact locale={locale} />
       </main>
 
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }

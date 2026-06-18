@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePage } from "@inertiajs/react";
 import { useRef } from "react";
+import { localizedPath, siteCopy, type Locale } from "@/lib/i18n";
 import { Reveal } from "./Reveal";
 import type { SharedPageProps } from "@/types/global";
 
@@ -12,123 +13,17 @@ type Step = {
   phase?: string;
 };
 
-const steps: Step[] = [
-  {
-    n: "01",
-    phase: "Phase 01 — Discovery",
-    title: "Kickoff meeting",
-    items: [
-      "Brand introduction and project walkthrough",
-      "Client explains goals and expectations",
-      "Initial brand identity diagnosis",
-      "Needs assessment and prioritization",
-      "Budget and timeline alignment",
-    ],
-  },
-  {
-    n: "02",
-    title: "Order registration",
-    items: ["Contract signed", "Deposit payment"],
-  },
-  {
-    n: "03",
-    title: "Briefing",
-    items: ["Client completes the visual identity questionnaire to build initial familiarity with the brand"],
-  },
-  {
-    n: "04",
-    title: "Brand discovery workshop",
-    items: [
-      "Two 3-hour sessions with key brand stakeholders",
-      "Exercises to surface brand self-awareness",
-    ],
-  },
-  {
-    n: "05",
-    phase: "Phase 02 — Strategy",
-    title: "Brand identity & personality",
-    items: [
-      "Finalize core values and competitor list",
-      "Define brand personality",
-      "Map similarities and differences vs. competitors",
-      "Define brand touchpoints",
-    ],
-  },
-  {
-    n: "06",
-    title: "Visual identity kickoff",
-    items: [
-      "Think-tank sessions translating strategy into design direction",
-      "Early logo concepts and mood boards",
-      "Assess expansion possibilities across the system",
-    ],
-  },
-  {
-    n: "07",
-    title: "Strategy presentation",
-    items: [
-      "Review summary of workshops and exercises",
-      "Present the finalized brand identity",
-      "Summarize the brand strategy",
-    ],
-  },
-  {
-    n: "08",
-    phase: "Phase 03 — Design",
-    title: "Logo presentation",
-    items: [
-      "Present the core visual identity concept",
-      "Preview logo mood boards",
-      "Show the logo applied across media",
-    ],
-  },
-  {
-    n: "09",
-    title: "Logo review",
-    items: ["Revisions and redesign based on feedback from the presentation"],
-  },
-  {
-    n: "10",
-    title: "Pattern review",
-    items: ["Revisions and redesign of supporting patterns based on feedback"],
-  },
-  {
-    n: "11",
-    title: "Pattern design",
-    items: ["Expand the visual language", "Design supporting patterns and graphic elements"],
-  },
-  {
-    n: "12",
-    title: "Visual identity components",
-    items: [
-      "Complete remaining identity assets per contract",
-      "Stationery and administrative items",
-      "Launch page design",
-      "Environmental graphics",
-    ],
-  },
-  {
-    n: "13",
-    phase: "Phase 04 — Delivery",
-    title: "Wrap-up session",
-    items: ["Present and summarize all delivered work"],
-  },
-  {
-    n: "14",
-    title: "Final delivery",
-    items: [
-      "Settle the remaining balance",
-      "Deliver all contracted assets",
-      "Hand off the brand book",
-    ],
-  },
-];
+type ProcessProps = {
+  locale?: Locale;
+};
 
 const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-export function Process() {
+export function Process({ locale = "en" }: ProcessProps) {
   const { auth } = usePage<SharedPageProps>().props;
   const session = auth.user;
+  const t = siteCopy[locale].process;
+  const steps: Step[] = t.steps.map(([n, phase, title, items]) => ({ n, phase, title, items }));
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -141,15 +36,13 @@ export function Process() {
       <div className="max-w-[1400px] mx-auto">
         <Reveal>
           <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-            ✦ Process
+            {t.eyebrow}
           </div>
           <h1 className="font-display text-[clamp(3rem,9vw,9rem)] leading-[0.95] max-w-5xl">
-            Fourteen steps to a brand that lasts<span className="text-accent">.</span>
+            {t.title}<span className="text-accent">.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Every identity we build follows the same disciplined path — from a first
-            conversation about your goals to a fully realized brand system, ready to launch.
-            Here is exactly how that journey unfolds.
+            {t.intro}
           </p>
         </Reveal>
 
@@ -221,19 +114,18 @@ export function Process() {
 
         <Reveal className="mt-24 lg:mt-32 border-t border-border pt-16 text-center">
           <h2 className="font-display text-4xl md:text-6xl mb-6">
-            Ready to begin<span className="text-accent">?</span>
+            {t.readyTitle}<span className="text-accent">?</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-10">
-            Every project starts with a conversation. Tell us about your brand and we will take
-            it from there.
+            {t.readyText}
           </p>
           {session ? (
-            <Link to="/brief" className="site-button site-button-primary">
-              Start a brief
+            <Link to={localizedPath("/brief", locale)} className="site-button site-button-primary">
+              {t.startBrief}
             </Link>
           ) : (
-            <Link to="/register" search={{ redirect: "/brief" }} className="site-button site-button-primary">
-              Start a brief
+            <Link to="/register" search={{ redirect: localizedPath("/brief", locale) }} className="site-button site-button-primary">
+              {t.startBrief}
             </Link>
           )}
         </Reveal>

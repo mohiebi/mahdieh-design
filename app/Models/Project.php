@@ -11,12 +11,17 @@ class Project extends Model
     protected $fillable = [
         'slug',
         'title',
+        'title_de',
         'client',
         'year',
         'category',
+        'category_de',
         'description',
+        'description_de',
         'location',
+        'location_de',
         'credit',
+        'credit_de',
         'sort_order',
         'is_published',
     ];

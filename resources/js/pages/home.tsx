@@ -8,26 +8,28 @@ import type { Recommendation } from '@/components/components/Testimonials';
 import { Testimonials } from '@/components/components/Testimonials';
 import { Work } from '@/components/components/Work';
 import type { Project } from '@/data/projects';
+import { pageClass, pageDir, type Locale } from '@/lib/i18n';
 
 type Props = {
   projects: Project[];
   recommendations: Recommendation[];
+  locale?: Locale;
 };
 
-export default function Home({ projects, recommendations }: Props) {
+export default function Home({ projects, recommendations, locale = 'en' }: Props) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div dir={pageDir(locale)} lang={locale} className={pageClass(locale)}>
       <Head title="Mahdieh Baghoolizadeh" />
-      <Nav />
+      <Nav locale={locale} />
       <main>
-        <Hero />
-        <Work projects={projects} limit={3} showMoreLink />
-        <Services />
-        <Testimonials recommendations={recommendations} />
-        <About />
-        <Contact />
+        <Hero locale={locale} />
+        <Work projects={projects} limit={3} showMoreLink locale={locale} />
+        <Services locale={locale} />
+        <Testimonials recommendations={recommendations} locale={locale} />
+        <About locale={locale} />
+        <Contact locale={locale} />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }

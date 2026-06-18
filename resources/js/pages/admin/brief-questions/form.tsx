@@ -5,11 +5,14 @@ import { AdminLayout, adminInputClass } from '../AdminLayout';
 type QuestionFormData = {
   label: string;
   label_fa: string;
+  label_de: string;
   hint: string;
   hint_fa: string;
+  hint_de: string;
   type: 'short' | 'long' | 'email';
   placeholder: string;
   placeholder_fa: string;
+  placeholder_de: string;
   is_required: boolean;
   is_active: boolean;
   sort_order: number;
@@ -19,11 +22,14 @@ type QuestionRecord = {
   id: number;
   label: string;
   label_fa: string | null;
+  label_de: string | null;
   hint: string | null;
   hint_fa: string | null;
+  hint_de: string | null;
   type: 'short' | 'long' | 'email';
   placeholder: string | null;
   placeholder_fa: string | null;
+  placeholder_de: string | null;
   is_required: boolean;
   is_active: boolean;
   sort_order: number;
@@ -36,11 +42,14 @@ type Props = {
 const blank: QuestionFormData = {
   label: '',
   label_fa: '',
+  label_de: '',
   hint: '',
   hint_fa: '',
+  hint_de: '',
   type: 'long',
   placeholder: 'Your answer...',
   placeholder_fa: '',
+  placeholder_de: '',
   is_required: true,
   is_active: true,
   sort_order: 0,
@@ -51,11 +60,14 @@ const toFormData = (question: QuestionRecord | null): QuestionFormData =>
     ? {
         label: question.label,
         label_fa: question.label_fa ?? '',
+        label_de: question.label_de ?? '',
         hint: question.hint ?? '',
         hint_fa: question.hint_fa ?? '',
+        hint_de: question.hint_de ?? '',
         type: question.type,
         placeholder: question.placeholder ?? '',
         placeholder_fa: question.placeholder_fa ?? '',
+        placeholder_de: question.placeholder_de ?? '',
         is_required: question.is_required,
         is_active: question.is_active,
         sort_order: question.sort_order,
@@ -98,6 +110,17 @@ export default function BriefQuestionForm({ question }: Props) {
           {form.errors.label_fa && <span className="mt-2 block text-sm text-accent">{form.errors.label_fa}</span>}
         </label>
 
+        <label className="block">
+          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Question label (German)</span>
+          <textarea
+            value={form.data.label_de}
+            onChange={(event) => form.setData('label_de', event.target.value)}
+            rows={3}
+            className={`${adminInputClass} resize-none`}
+          />
+          {form.errors.label_de && <span className="mt-2 block text-sm text-accent">{form.errors.label_de}</span>}
+        </label>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <label className="block">
             <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Hint (English)</span>
@@ -108,12 +131,20 @@ export default function BriefQuestionForm({ question }: Props) {
             <input value={form.data.hint_fa} onChange={(event) => form.setData('hint_fa', event.target.value)} className={`${adminInputClass} lang-fa text-right`} />
           </label>
           <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Hint (German)</span>
+            <input value={form.data.hint_de} onChange={(event) => form.setData('hint_de', event.target.value)} className={adminInputClass} />
+          </label>
+          <label className="block">
             <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Placeholder (English)</span>
             <input value={form.data.placeholder} onChange={(event) => form.setData('placeholder', event.target.value)} className={adminInputClass} />
           </label>
           <label className="block" dir="rtl">
             <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">جای‌نگه‌دار (فارسی)</span>
             <input value={form.data.placeholder_fa} onChange={(event) => form.setData('placeholder_fa', event.target.value)} className={`${adminInputClass} lang-fa text-right`} />
+          </label>
+          <label className="block">
+            <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Placeholder (German)</span>
+            <input value={form.data.placeholder_de} onChange={(event) => form.setData('placeholder_de', event.target.value)} className={adminInputClass} />
           </label>
           <label className="block">
             <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Type</span>

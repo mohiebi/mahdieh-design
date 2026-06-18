@@ -67,16 +67,27 @@ class ProjectController extends Controller
                 'id' => $project->id,
                 'slug' => $project->slug,
                 'title' => $project->title,
+                'title_de' => $project->title_de,
                 'client' => $project->client,
                 'year' => $project->year,
                 'category' => $project->category,
+                'category_de' => $project->category_de,
                 'description' => $project->description,
+                'description_de' => $project->description_de,
                 'location' => $project->location,
+                'location_de' => $project->location_de,
                 'credit' => $project->credit,
+                'credit_de' => $project->credit_de,
                 'sort_order' => $project->sort_order,
                 'is_published' => $project->is_published,
-                'sections' => $project->sections->map(fn ($section) => $section->body)->values(),
-                'services' => $project->services->map(fn ($service) => $service->label)->values(),
+                'sections' => $project->sections->map(fn ($section) => [
+                    'body' => $section->body,
+                    'body_de' => $section->body_de,
+                ])->values(),
+                'services' => $project->services->map(fn ($service) => [
+                    'label' => $service->label,
+                    'label_de' => $service->label_de,
+                ])->values(),
                 'media' => $project->media->sortBy('sort_order')->values()->map(fn ($media) => [
                     'type' => $media->type,
                     'url' => $media->url,
@@ -112,18 +123,25 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', Rule::unique('projects', 'slug')->ignore($project?->id)],
             'title' => ['required', 'string', 'max:255'],
+            'title_de' => ['nullable', 'string', 'max:255'],
             'client' => ['required', 'string', 'max:255'],
             'year' => ['required', 'string', 'max:20'],
             'category' => ['required', 'string', 'max:255'],
+            'category_de' => ['nullable', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'description_de' => ['nullable', 'string'],
             'location' => ['nullable', 'string', 'max:255'],
+            'location_de' => ['nullable', 'string', 'max:255'],
             'credit' => ['nullable', 'string', 'max:255'],
+            'credit_de' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['required', 'integer', 'min:0'],
             'is_published' => ['boolean'],
             'sections' => ['array'],
-            'sections.*' => ['nullable', 'string'],
+            'sections.*.body' => ['nullable', 'string'],
+            'sections.*.body_de' => ['nullable', 'string'],
             'services' => ['array'],
-            'services.*' => ['nullable', 'string', 'max:255'],
+            'services.*.label' => ['nullable', 'string', 'max:255'],
+            'services.*.label_de' => ['nullable', 'string', 'max:255'],
             'media' => ['array'],
             'media.*.type' => ['nullable', Rule::in(['image', 'video'])],
             'media.*.url' => ['nullable', 'string', 'max:2048'],
@@ -147,17 +165,32 @@ class ProjectController extends Controller
             'project' => [
                 'slug' => $validated['slug'],
                 'title' => $validated['title'],
+                'title_de' => $validated['title_de'] ?? null,
                 'client' => $validated['client'],
                 'year' => $validated['year'],
                 'category' => $validated['category'],
+                'category_de' => $validated['category_de'] ?? null,
                 'description' => $validated['description'],
+                'description_de' => $validated['description_de'] ?? null,
                 'location' => $validated['location'] ?? null,
+                'location_de' => $validated['location_de'] ?? null,
                 'credit' => $validated['credit'] ?? null,
+                'credit_de' => $validated['credit_de'] ?? null,
                 'sort_order' => $validated['sort_order'],
                 'is_published' => $request->boolean('is_published'),
             ],
-            'sections' => collect($validated['sections'] ?? [])->filter(fn ($value) => trim((string) $value) !== '')->values(),
-            'services' => collect($validated['services'] ?? [])->filter(fn ($value) => trim((string) $value) !== '')->values(),
+            'sections' => collect($request->input('sections', []))
+                ->map(fn ($value) => is_array($value)
+                    ? ['body' => $value['body'] ?? '', 'body_de' => $value['body_de'] ?? null]
+                    : ['body' => (string) $value, 'body_de' => null])
+                ->filter(fn ($value) => collect($value)->filter(fn ($item) => trim((string) $item) !== '')->isNotEmpty())
+                ->values(),
+            'services' => collect($request->input('services', []))
+                ->map(fn ($value) => is_array($value)
+                    ? ['label' => $value['label'] ?? '', 'label_de' => $value['label_de'] ?? null]
+                    : ['label' => (string) $value, 'label_de' => null])
+                ->filter(fn ($value) => collect($value)->filter(fn ($item) => trim((string) $item) !== '')->isNotEmpty())
+                ->values(),
             'media' => collect($validated['media'] ?? [])
                 ->filter(fn ($value) => filled($value['url'] ?? null) || isset($value['file']) || isset($value['upload']))
                 ->map(function ($value) {
@@ -172,13 +205,21 @@ class ProjectController extends Controller
     private function syncRelations(Project $project, array $data): void
     {
         $project->sections()->delete();
-        foreach ($data['sections'] as $index => $body) {
-            $project->sections()->create(['body' => $body, 'sort_order' => $index]);
+        foreach ($data['sections'] as $index => $section) {
+            $project->sections()->create([
+                'body' => $section['body'] ?? '',
+                'body_de' => $section['body_de'] ?? null,
+                'sort_order' => $index,
+            ]);
         }
 
         $project->services()->delete();
-        foreach ($data['services'] as $index => $label) {
-            $project->services()->create(['label' => $label, 'sort_order' => $index]);
+        foreach ($data['services'] as $index => $service) {
+            $project->services()->create([
+                'label' => $service['label'] ?? '',
+                'label_de' => $service['label_de'] ?? null,
+                'sort_order' => $index,
+            ]);
         }
 
         $project->media()->delete();

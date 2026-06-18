@@ -13,6 +13,7 @@ export type SharedPageProps = InertiaPageProps & {
   };
   flash: {
     success?: string | null;
+    error?: string | null;
   };
   calendlyUrl?: string | null;
   contactEmail?: string | null;

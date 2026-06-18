@@ -6,39 +6,11 @@
       0 => 'Inertia\\ServiceProvider',
     ),
   ),
-  'laravel/fortify' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Fortify\\FortifyServiceProvider',
-    ),
-  ),
-  'laravel/pail' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Pail\\PailServiceProvider',
-    ),
-  ),
-  'laravel/sail' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Sail\\SailServiceProvider',
-    ),
-  ),
   'laravel/tinker' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'laravel/wayfinder' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Wayfinder\\WayfinderServiceProvider',
     ),
   ),
   'nesbot/carbon' => 
