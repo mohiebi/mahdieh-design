@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProjectService extends Model
 {
-    protected $fillable = ['label', 'sort_order'];
+    protected $fillable = ['label', 'label_de', 'sort_order'];
 
     public function project(): BelongsTo
     {

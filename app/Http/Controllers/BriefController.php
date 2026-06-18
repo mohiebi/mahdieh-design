@@ -13,25 +13,34 @@ use Inertia\Response;
 
 class BriefController extends Controller
 {
+    private const LOCALES = ['en', 'fa', 'de'];
+
     public function show(): Response
     {
-        return Inertia::render('brief/show', [
-            'locale' => 'en',
-            'questions' => fn () => $this->questionsFor('en'),
-        ]);
+        return $this->showFor('en');
     }
 
     public function showFa(): Response
     {
+        return $this->showFor('fa');
+    }
+
+    public function showDe(): Response
+    {
+        return $this->showFor('de');
+    }
+
+    private function showFor(string $locale): Response
+    {
         return Inertia::render('brief/show', [
-            'locale' => 'fa',
-            'questions' => fn () => $this->questionsFor('fa'),
+            'locale' => $locale,
+            'questions' => fn () => $this->questionsFor($locale),
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
-        $locale = $request->input('locale') === 'fa' ? 'fa' : 'en';
+        $locale = $this->locale((string) $request->input('locale', 'en'));
 
         $questions = BriefQuestion::query()
             ->where('is_active', true)
@@ -41,8 +50,16 @@ class BriefController extends Controller
 
         $answers = collect($request->input('answers', []));
 
-        $requiredMessage = $locale === 'fa' ? 'پاسخ به این سوال الزامی است.' : 'This question is required.';
-        $emailMessage = $locale === 'fa' ? 'لطفاً یک ایمیل معتبر وارد کنید.' : 'Please enter a valid email address.';
+        $requiredMessage = match ($locale) {
+            'fa' => 'پاسخ به این سوال الزامی است.',
+            'de' => 'Diese Frage ist erforderlich.',
+            default => 'This question is required.',
+        };
+        $emailMessage = match ($locale) {
+            'fa' => 'لطفاً یک ایمیل معتبر وارد کنید.',
+            'de' => 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+            default => 'Please enter a valid email address.',
+        };
 
         foreach ($questions as $question) {
             $answer = trim((string) $answers->get((string) $question->id, ''));
@@ -71,8 +88,8 @@ class BriefController extends Controller
             foreach ($questions as $question) {
                 $submission->answers()->create([
                     'brief_question_id' => $question->id,
-                    'question_label' => $locale === 'fa' ? ($question->label_fa ?? $question->label) : $question->label,
-                    'question_hint' => $locale === 'fa' ? ($question->hint_fa ?? $question->hint) : $question->hint,
+                    'question_label' => $this->localized($question, 'label', $locale),
+                    'question_hint' => $this->localized($question, 'hint', $locale),
                     'question_type' => $question->type,
                     'question_required' => $question->is_required,
                     'answer' => trim((string) $answers->get((string) $question->id, '')),
@@ -81,21 +98,32 @@ class BriefController extends Controller
             }
         });
 
-        return $locale === 'fa' ? redirect()->route('brief.thanks.fa') : redirect()->route('brief.thanks');
+        return match ($locale) {
+            'fa' => redirect()->route('brief.thanks.fa'),
+            'de' => redirect()->route('localized.brief.thanks.de'),
+            default => redirect()->route('brief.thanks'),
+        };
     }
 
     public function thanks(): Response
     {
-        return Inertia::render('brief/thanks', [
-            'locale' => 'en',
-            'calendlyUrl' => config('services.calendly_url'),
-        ]);
+        return $this->thanksFor('en');
     }
 
     public function thanksFa(): Response
     {
+        return $this->thanksFor('fa');
+    }
+
+    public function thanksDe(): Response
+    {
+        return $this->thanksFor('de');
+    }
+
+    private function thanksFor(string $locale): Response
+    {
         return Inertia::render('brief/thanks', [
-            'locale' => 'fa',
+            'locale' => $locale,
             'calendlyUrl' => config('services.calendly_url'),
         ]);
     }
@@ -109,11 +137,28 @@ class BriefController extends Controller
             ->get()
             ->map(fn (BriefQuestion $question) => [
                 'id' => (string) $question->id,
-                'label' => $locale === 'fa' ? ($question->label_fa ?? $question->label) : $question->label,
-                'hint' => $locale === 'fa' ? ($question->hint_fa ?? $question->hint) : $question->hint,
+                'label' => $this->localized($question, 'label', $locale),
+                'hint' => $this->localized($question, 'hint', $locale),
                 'type' => $question->type,
-                'placeholder' => $locale === 'fa' ? ($question->placeholder_fa ?? $question->placeholder) : $question->placeholder,
+                'placeholder' => $this->localized($question, 'placeholder', $locale),
                 'required' => $question->is_required,
             ]);
+    }
+
+    private function locale(string $locale): string
+    {
+        return in_array($locale, self::LOCALES, true) ? $locale : 'en';
+    }
+
+    private function localized(BriefQuestion $question, string $field, string $locale): ?string
+    {
+        if ($locale === 'en') {
+            return $question->{$field};
+        }
+
+        $localizedField = "{$field}_{$locale}";
+        $value = $question->{$localizedField} ?? null;
+
+        return filled($value) ? $value : $question->{$field};
     }
 }

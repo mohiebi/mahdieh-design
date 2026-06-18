@@ -10,8 +10,11 @@ class Recommendation extends Model
     protected $fillable = [
         'name',
         'role',
+        'role_de',
         'company',
+        'company_de',
         'quote',
+        'quote_de',
         'linkedin_url',
         'avatar_path',
         'sort_order',

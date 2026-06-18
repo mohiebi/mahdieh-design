@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\BriefQuestion;
 use App\Models\BriefSubmission;
 use App\Models\Project;
+use App\Services\Translation\MachineTranslator;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function __invoke(): Response
+    public function __invoke(MachineTranslator $translator): Response
     {
         return Inertia::render('admin/dashboard', [
             'stats' => [
@@ -19,6 +20,10 @@ class DashboardController extends Controller
                 'publishedProjects' => Project::where('is_published', true)->count(),
                 'briefQuestions' => BriefQuestion::count(),
                 'newSubmissions' => BriefSubmission::where('status', 'new')->count(),
+            ],
+            'translations' => [
+                'provider' => $translator->providerName(),
+                'configured' => $translator->isConfigured(),
             ],
             'recentSubmissions' => BriefSubmission::query()
                 ->with('user:id,name,email')

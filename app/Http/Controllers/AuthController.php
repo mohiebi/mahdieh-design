@@ -32,9 +32,11 @@ class AuthController extends Controller
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             $locale = $this->resolveLocale($this->resolveRedirect($request));
-            $message = $locale === 'fa'
-                ? 'ایمیل یا رمز عبور وارد شده صحیح نیست.'
-                : 'These credentials do not match our records.';
+            $message = match ($locale) {
+                'fa' => 'ایمیل یا رمز عبور وارد شده صحیح نیست.',
+                'de' => 'Diese Zugangsdaten stimmen nicht mit unseren Einträgen überein.',
+                default => 'These credentials do not match our records.',
+            };
 
             return back()->withErrors(['email' => $message])->onlyInput('email');
         }
@@ -58,14 +60,25 @@ class AuthController extends Controller
     {
         $locale = $this->resolveLocale($this->resolveRedirect($request));
 
-        $messages = $locale === 'fa' ? [
-            'name.required' => 'وارد کردن نام الزامی است.',
-            'email.required' => 'وارد کردن ایمیل الزامی است.',
-            'email.email' => 'لطفاً یک ایمیل معتبر وارد کنید.',
-            'email.unique' => 'این ایمیل قبلاً ثبت شده است.',
-            'password.required' => 'وارد کردن رمز عبور الزامی است.',
-            'password.confirmed' => 'تکرار رمز عبور مطابقت ندارد.',
-        ] : [];
+        $messages = match ($locale) {
+            'fa' => [
+                'name.required' => 'وارد کردن نام الزامی است.',
+                'email.required' => 'وارد کردن ایمیل الزامی است.',
+                'email.email' => 'لطفاً یک ایمیل معتبر وارد کنید.',
+                'email.unique' => 'این ایمیل قبلاً ثبت شده است.',
+                'password.required' => 'وارد کردن رمز عبور الزامی است.',
+                'password.confirmed' => 'تکرار رمز عبور مطابقت ندارد.',
+            ],
+            'de' => [
+                'name.required' => 'Bitte geben Sie Ihren Namen ein.',
+                'email.required' => 'Bitte geben Sie Ihre E-Mail-Adresse ein.',
+                'email.email' => 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+                'email.unique' => 'Diese E-Mail-Adresse ist bereits registriert.',
+                'password.required' => 'Bitte geben Sie ein Passwort ein.',
+                'password.confirmed' => 'Die Passwortbestätigung stimmt nicht überein.',
+            ],
+            default => [],
+        };
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -105,7 +118,15 @@ class AuthController extends Controller
 
     private function resolveLocale(string $redirect): string
     {
-        return str_starts_with($redirect, '/brief/fa') ? 'fa' : 'en';
+        if (str_starts_with($redirect, '/brief/fa')) {
+            return 'fa';
+        }
+
+        if (str_starts_with($redirect, '/brief/de') || str_starts_with($redirect, '/de/')) {
+            return 'de';
+        }
+
+        return 'en';
     }
 
     public function destroy(Request $request): RedirectResponse
