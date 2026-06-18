@@ -11,7 +11,7 @@ const fadeUp = {
 
 export function Hero() {
   const stats: [string, string][] = [
-    ["7+", "Years of practice"],
+    ["8+", "Years of practice"],
     ["80+", "Brands shaped"],
     ["3", "Continents"],
     ["7", "Studio collaborations"],
