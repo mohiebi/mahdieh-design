@@ -3,43 +3,50 @@ import { router, usePage } from "@inertiajs/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import logo from "@/assets/logo.svg";
+import {
+  localeLabels,
+  localeNames,
+  localizedPath,
+  publicLocales,
+  siteCopy,
+  switchLocalePath,
+  type Locale,
+} from "@/lib/i18n";
 import type { SharedPageProps } from "@/types/global";
 
 type NavLink = { to?: string; href?: string; label: string; search?: Record<string, string> };
 
-const NAV_LINKS_FA: NavLink[] = [
-  { to: "/projects", label: "نمونه‌کارها" },
-  { href: "/#about", label: "درباره" },
-  { href: "/#services", label: "خدمات" },
-  { href: "/#contact", label: "تماس" },
-];
-
 type NavProps = {
-  locale?: "en" | "fa";
+  locale?: Locale;
 };
 
 export function Nav({ locale = "en" }: NavProps) {
-  const { auth } = usePage<SharedPageProps>().props;
+  const page = usePage<SharedPageProps>();
+  const { auth } = page.props;
   const session = auth.user;
   const [open, setOpen] = useState(false);
   const reduceMotion = useReducedMotion();
-  const isFa = locale === "fa";
-  const briefRedirect = isFa ? "/brief/fa" : "/brief";
+  const t = siteCopy[locale].nav;
+  const briefRedirect = localizedPath("/brief", locale);
 
   const briefLink: NavLink = session
-    ? { to: briefRedirect, label: "Brief" }
-    : { to: "/register", label: "Brief", search: { redirect: briefRedirect } };
+    ? { to: briefRedirect, label: t.brief }
+    : { to: "/register", label: t.brief, search: { redirect: briefRedirect } };
 
-  const links: NavLink[] = isFa
-    ? NAV_LINKS_FA
-    : [
-        { to: "/projects", label: "Projects" },
-        { href: "/#about", label: "About" },
-        { href: "/#services", label: "Services" },
-        { to: "/process", label: "Process" },
-        briefLink,
-        { href: "/#contact", label: "Contact" },
-      ];
+  const links: NavLink[] = [
+    { to: localizedPath("/projects", locale), label: t.projects },
+    { href: localizedPath("/#about", locale), label: t.about },
+    { href: localizedPath("/#services", locale), label: t.services },
+    { to: localizedPath("/process", locale), label: t.process },
+    briefLink,
+    { href: localizedPath("/#contact", locale), label: t.contact },
+  ];
+
+  const showLanguageSwitcher = locale !== "fa";
+  const languageLinks = publicLocales.map((item) => ({
+    locale: item,
+    href: switchLocalePath(page.url, item),
+  }));
 
   const renderLink = (link: NavLink, className: string) =>
     link.to ? (
@@ -67,13 +74,32 @@ export function Nav({ locale = "en" }: NavProps) {
       className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/50"
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
-        <Link to="/" aria-label="Mahdieh — Home" className="flex items-center">
+        <Link to={localizedPath("/", locale)} aria-label={t.homeLabel} className="flex items-center">
           <img src={logo} alt="Mahdieh" className="h-6 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm font-display text-muted-foreground">
           {links.map((link) => renderLink(link, "hover:text-foreground transition-colors"))}
         </nav>
         <div className="flex items-center gap-3">
+          {showLanguageSwitcher && (
+            <div className="hidden items-center gap-1 rounded-lg border border-border/70 px-1 py-1 text-[10px] font-mono uppercase tracking-[0.16em] text-muted-foreground sm:flex">
+              <span className="sr-only">{t.language}</span>
+              {languageLinks.map((item) => (
+                <a
+                  key={item.locale}
+                  href={item.href}
+                  hrefLang={item.locale}
+                  aria-label={localeNames[item.locale]}
+                  className={`rounded-md px-2 py-1 transition-colors ${
+                    item.locale === locale ? "bg-foreground text-background" : "hover:bg-foreground/10 hover:text-foreground"
+                  }`}
+                >
+                  {localeLabels[item.locale]}
+                </a>
+              ))}
+            </div>
+          )}
+
           {session ? (
             <>
               {session.is_admin ? (
@@ -81,18 +107,18 @@ export function Nav({ locale = "en" }: NavProps) {
                   to="/admin"
                   className="hidden sm:inline-flex whitespace-nowrap text-sm font-display text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
+                  {t.hi(session.name)}
                 </Link>
               ) : (
                 <span className="hidden sm:inline-flex whitespace-nowrap text-sm font-display text-muted-foreground">
-                  {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
+                  {t.hi(session.name)}
                 </span>
               )}
               <button
                 onClick={() => router.post("/logout")}
                 className="site-button site-button-outline hidden sm:inline-flex cursor-pointer"
               >
-                {isFa ? "خروج" : "Sign out"}
+                {t.signOut}
               </button>
             </>
           ) : (
@@ -101,7 +127,7 @@ export function Nav({ locale = "en" }: NavProps) {
               search={{ redirect: briefRedirect }}
               className="site-button site-button-outline hidden sm:inline-flex"
             >
-              {isFa ? "شروع بریف" : "Start a brief"}
+              {t.startBrief}
             </Link>
           )}
 
@@ -110,7 +136,7 @@ export function Nav({ locale = "en" }: NavProps) {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t.closeMenu : t.openMenu}
             className="site-icon-button -mr-2 flex h-11 w-11 cursor-pointer hover:bg-foreground/10 md:hidden"
           >
             <span className="relative block h-4 w-6" aria-hidden>
@@ -142,14 +168,33 @@ export function Nav({ locale = "en" }: NavProps) {
           >
             <div className="px-6 py-6 flex flex-col gap-6 text-sm font-display text-muted-foreground">
               {links.map((link) => renderLink(link, "hover:text-foreground transition-colors py-1"))}
+              {showLanguageSwitcher && (
+                <div className="flex items-center gap-2 border-y border-border/60 py-4 text-[11px] font-mono uppercase tracking-[0.16em]">
+                  {languageLinks.map((item) => (
+                    <a
+                      key={item.locale}
+                      href={item.href}
+                      hrefLang={item.locale}
+                      aria-label={localeNames[item.locale]}
+                      onClick={() => setOpen(false)}
+                      className={`rounded-md px-2 py-1 transition-colors ${
+                        item.locale === locale ? "bg-foreground text-background" : "hover:bg-foreground/10 hover:text-foreground"
+                      }`}
+                    >
+                      {localeLabels[item.locale]}
+                    </a>
+                  ))}
+                </div>
+              )}
+
               {session ? (
                 <>
                   {session.is_admin ? (
                     <Link to="/admin" onClick={() => setOpen(false)} className="text-foreground hover:text-accent transition-colors">
-                      {isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}
+                      {t.hi(session.name)}
                     </Link>
                   ) : (
-                    <span className="text-foreground">{isFa ? `سلام، ${session.name}` : `Hi, ${session.name}`}</span>
+                    <span className="text-foreground">{t.hi(session.name)}</span>
                   )}
                   <button
                     onClick={() => {
@@ -158,7 +203,7 @@ export function Nav({ locale = "en" }: NavProps) {
                     }}
                     className="site-button site-button-outline justify-start text-left text-foreground cursor-pointer"
                   >
-                    {isFa ? "خروج" : "Sign out"}
+                    {t.signOut}
                   </button>
                 </>
               ) : (
@@ -168,7 +213,7 @@ export function Nav({ locale = "en" }: NavProps) {
                   className="site-button site-button-outline justify-start text-foreground"
                   onClick={() => setOpen(false)}
                 >
-                  {isFa ? "شروع بریف" : "Start a brief"}
+                  {t.startBrief}
                 </Link>
               )}
             </div>

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { router, usePage } from "@inertiajs/react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
+import { localizedPath, siteCopy, type Locale } from "@/lib/i18n";
 import type { SharedPageProps } from "@/types/global";
 
 type Question = {
@@ -13,8 +14,6 @@ type Question = {
   required?: boolean;
 };
 
-type Locale = "en" | "fa";
-
 const QUESTIONS: Question[] = Array.from({ length: 15 }).map((_, i) => ({
   id: `q${i + 1}`,
   label: `Question ${i + 1}`,
@@ -23,66 +22,6 @@ const QUESTIONS: Question[] = Array.from({ length: 15 }).map((_, i) => ({
   placeholder: "Your answer...",
   required: true,
 }));
-
-const arrows: Record<Locale, { prev: string; next: string }> = {
-  en: { prev: "←", next: "→" },
-  fa: { prev: "→", next: "←" },
-};
-
-const i18n = {
-  en: {
-    eyebrow: (total: number) => `The Brief · ${total} questions`,
-    titleLine1: "Tell me about",
-    titleLine2: (
-      <>
-        your <em className="text-accent not-italic font-normal">project</em>.
-      </>
-    ),
-    intro:
-      "A short, considered brief helps us shape ideas into clear, memorable, and quietly powerful visual systems. Take your time — there are no wrong answers.",
-    review: "Review",
-    finalCheck: "Final check",
-    reviewTitle: "Review your answers.",
-    reviewSubtitle:
-      "Make sure everything looks right before sending. You can edit any answer below.",
-    noAnswer: "No answer provided",
-    edit: "Edit",
-    question: (step: number) => `Question ${step}`,
-    previous: "Previous",
-    nextQuestion: "Next question",
-    reviewAnswers: "Review answers",
-    submitBrief: "Submit brief",
-    submitting: "Submitting",
-    required: "This question is required.",
-    comingSoon: "Brief questions are coming soon.",
-  },
-  fa: {
-    eyebrow: (total: number) => `بریف · ${total} سوال`,
-    titleLine1: "بیایید درباره‌ی",
-    titleLine2: (
-      <>
-        <em className="text-accent not-italic font-normal">پروژه‌ی شما</em> صحبت کنیم.
-      </>
-    ),
-    intro:
-      "یک بریف کوتاه و دقیق به ما کمک می‌کند ایده‌ها را به سیستم‌های بصری شفاف، به‌یادماندنی و قدرتمند تبدیل کنیم. وقت بگذارید — پاسخ اشتباهی وجود ندارد.",
-    review: "بازبینی",
-    finalCheck: "بررسی نهایی",
-    reviewTitle: "پاسخ‌های خود را بازبینی کنید.",
-    reviewSubtitle:
-      "قبل از ارسال، از درستی همه‌ی موارد مطمئن شوید. می‌توانید هر پاسخ را ویرایش کنید.",
-    noAnswer: "پاسخی ثبت نشده",
-    edit: "ویرایش",
-    question: (step: number) => `سوال ${step}`,
-    previous: "قبلی",
-    nextQuestion: "سوال بعدی",
-    reviewAnswers: "بازبینی پاسخ‌ها",
-    submitBrief: "ارسال بریف",
-    submitting: "در حال ارسال",
-    required: "پاسخ به این سوال الزامی است.",
-    comingSoon: "سوالات بریف به‌زودی اضافه می‌شوند.",
-  },
-} as const;
 
 type BriefProps = {
   questions?: Question[];
@@ -95,8 +34,8 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
   const [processing, setProcessing] = useState(false);
   const { errors } = usePage<SharedPageProps>().props;
   const reduceMotion = useReducedMotion();
-  const t = i18n[locale];
-  const arrow = arrows[locale];
+  const t = siteCopy[locale].brief;
+  const arrow = t.arrows;
 
   const total = questions.length;
   const isReviewStep = step === total;
@@ -117,7 +56,7 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
     if (isReviewStep) {
       setProcessing(true);
       router.post(
-        "/brief",
+        locale === "fa" ? "/brief" : localizedPath("/brief", locale),
         { answers, locale },
         {
           preserveScroll: true,
@@ -178,7 +117,8 @@ export function Brief({ questions = QUESTIONS, locale = "en" }: BriefProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
-            {t.titleLine2}
+            <em className="text-accent not-italic font-normal">{t.titleAccent}</em>
+            {t.titleLine2 ? ` ${t.titleLine2}` : "."}
           </motion.span>
         </h1>
 

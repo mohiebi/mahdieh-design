@@ -14,19 +14,34 @@ type MediaInput = {
   is_cover: boolean;
 };
 
+type LocalizedSectionInput = {
+  body: string;
+  body_de: string;
+};
+
+type LocalizedServiceInput = {
+  label: string;
+  label_de: string;
+};
+
 type ProjectFormData = {
   slug: string;
   title: string;
+  title_de: string;
   client: string;
   year: string;
   category: string;
+  category_de: string;
   description: string;
+  description_de: string;
   location: string;
+  location_de: string;
   credit: string;
+  credit_de: string;
   sort_order: number;
   is_published: boolean;
-  sections: string[];
-  services: string[];
+  sections: LocalizedSectionInput[];
+  services: LocalizedServiceInput[];
   media: MediaInput[];
 };
 
@@ -37,18 +52,30 @@ type Props = {
 const blank: ProjectFormData = {
   slug: '',
   title: '',
+  title_de: '',
   client: '',
   year: '2026',
   category: '',
+  category_de: '',
   description: '',
+  description_de: '',
   location: '',
+  location_de: '',
   credit: '',
+  credit_de: '',
   sort_order: 0,
   is_published: true,
-  sections: [''],
-  services: [''],
+  sections: [{ body: '', body_de: '' }],
+  services: [{ label: '', label_de: '' }],
   media: [{ type: 'image', url: '', upload: null, alt_text: '', is_cover: true }],
 };
+
+const localizedProjectFields = [
+  { key: 'title', label: 'Title' },
+  { key: 'category', label: 'Category' },
+  { key: 'location', label: 'Location' },
+  { key: 'credit', label: 'Credit' },
+] as const;
 
 export default function ProjectForm({ project }: Props) {
   const form = useForm<ProjectFormData>(project ?? blank);
@@ -99,14 +126,28 @@ export default function ProjectForm({ project }: Props) {
     }));
   };
 
-  const setListItem = <K extends 'sections' | 'services'>(key: K, index: number, value: string) => {
-    const next = [...form.data[key]];
-    next[index] = value;
-    form.setData((data) => ({ ...data, [key]: next }));
+  const setSectionItem = (index: number, key: keyof LocalizedSectionInput, value: string) => {
+    const next = [...form.data.sections];
+    next[index] = { ...next[index], [key]: value };
+    form.setData('sections', next);
+  };
+
+  const setServiceItem = (index: number, key: keyof LocalizedServiceInput, value: string) => {
+    const next = [...form.data.services];
+    next[index] = { ...next[index], [key]: value };
+    form.setData('services', next);
   };
 
   const addListItem = (key: 'sections' | 'services') => {
-    form.setData((data) => ({ ...data, [key]: [...data[key], ''] }));
+    form.setData((data) => ({
+      ...data,
+      [key]: [
+        ...data[key],
+        key === 'sections'
+          ? { body: '', body_de: '' }
+          : { label: '', label_de: '' },
+      ],
+    }));
   };
 
   return (
@@ -114,7 +155,7 @@ export default function ProjectForm({ project }: Props) {
       <Head title={title} />
       <form onSubmit={submit} className="space-y-14">
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-border pt-10">
-          {(['title', 'slug', 'client', 'year', 'category', 'location', 'credit'] as const).map((key) => (
+          {(['slug', 'client', 'year'] as const).map((key) => (
             <label key={key} className="block">
               <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">{key.replace('_', ' ')}</span>
               <input
@@ -124,6 +165,24 @@ export default function ProjectForm({ project }: Props) {
               />
               {form.errors[key] && <span className="mt-2 block text-sm text-accent">{form.errors[key]}</span>}
             </label>
+          ))}
+          {localizedProjectFields.map(({ key, label }) => (
+            <fieldset key={key} className="grid grid-cols-1 gap-4 rounded-lg border border-border/70 p-4 lg:col-span-2 lg:grid-cols-2">
+              <legend className="px-2 text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">{label}</legend>
+              <input
+                value={String(form.data[key] ?? '')}
+                onChange={(event) => form.setData(key, event.target.value)}
+                placeholder={`${label} (English)`}
+                className={adminSmallInputClass}
+              />
+              <input
+                value={String(form.data[`${key}_de`] ?? '')}
+                onChange={(event) => form.setData(`${key}_de` as keyof ProjectFormData, event.target.value)}
+                placeholder={`${label} (German)`}
+                className={adminSmallInputClass}
+              />
+              {form.errors[key] && <span className="text-sm text-accent lg:col-span-2">{form.errors[key]}</span>}
+            </fieldset>
           ))}
           <label className="block">
             <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Sort order</span>
@@ -145,7 +204,7 @@ export default function ProjectForm({ project }: Props) {
           </label>
         </section>
 
-        <label className="block border-t border-border pt-10">
+        <section className="grid grid-cols-1 gap-6 border-t border-border pt-10">
           <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">Description</span>
           <textarea
             value={form.data.description}
@@ -154,10 +213,33 @@ export default function ProjectForm({ project }: Props) {
             className={`${adminInputClass} resize-none`}
           />
           {form.errors.description && <span className="mt-2 block text-sm text-accent">{form.errors.description}</span>}
-        </label>
+          <textarea
+            value={form.data.description_de}
+            onChange={(event) => form.setData('description_de', event.target.value)}
+            rows={4}
+            placeholder="Description (German)"
+            className={`${adminInputClass} resize-none`}
+          />
+        </section>
 
-        <EditorList title="Body paragraphs" items={form.data.sections} onChange={(index, value) => setListItem('sections', index, value)} onAdd={() => addListItem('sections')} />
-        <EditorList title="Services" items={form.data.services} onChange={(index, value) => setListItem('services', index, value)} onAdd={() => addListItem('services')} />
+        <LocalizedEditorList
+          title="Body paragraphs"
+          items={form.data.sections}
+          fieldNames={['body', 'body_de']}
+          rows={3}
+          onChange={setSectionItem}
+          onAdd={() => addListItem('sections')}
+          onRemove={(index) => form.setData('sections', form.data.sections.filter((_, itemIndex) => itemIndex !== index))}
+        />
+        <LocalizedEditorList
+          title="Services"
+          items={form.data.services}
+          fieldNames={['label', 'label_de']}
+          rows={1}
+          onChange={setServiceItem}
+          onAdd={() => addListItem('services')}
+          onRemove={(index) => form.setData('services', form.data.services.filter((_, itemIndex) => itemIndex !== index))}
+        />
 
         <section className="border-t border-border pt-10">
           <div className="flex flex-wrap items-center justify-between gap-5 mb-6">
@@ -284,16 +366,22 @@ export default function ProjectForm({ project }: Props) {
   );
 }
 
-function EditorList({
+function LocalizedEditorList<T extends LocalizedSectionInput | LocalizedServiceInput>({
   title,
   items,
+  fieldNames,
+  rows,
   onChange,
   onAdd,
+  onRemove,
 }: {
   title: string;
-  items: string[];
-  onChange: (index: number, value: string) => void;
+  items: T[];
+  fieldNames: (keyof T)[];
+  rows: number;
+  onChange: (index: number, key: keyof T, value: string) => void;
   onAdd: () => void;
+  onRemove: (index: number) => void;
 }) {
   return (
     <section className="border-t border-border pt-10">
@@ -305,13 +393,32 @@ function EditorList({
       </div>
       <div className="space-y-4">
         {items.map((item, index) => (
-          <textarea
-            key={index}
-            value={item}
-            onChange={(event) => onChange(index, event.target.value)}
-            rows={title === 'Services' ? 1 : 3}
-            className={`${adminSmallInputClass} resize-none`}
-          />
+          <div key={index} className="grid grid-cols-1 gap-3 rounded-lg border border-border/70 p-4 lg:grid-cols-[1fr_1fr_44px]">
+            {fieldNames.map((fieldName) => {
+              const label = String(fieldName).replace('body', 'English').replace('label', 'English').replace('_de', ' German');
+
+              return (
+                <textarea
+                  key={String(fieldName)}
+                  value={String(item[fieldName] ?? '')}
+                  onChange={(event) => onChange(index, fieldName, event.target.value)}
+                  rows={rows}
+                  placeholder={label}
+                  className={`${adminSmallInputClass} resize-none`}
+                />
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => onRemove(index)}
+              aria-label={`Remove ${title.toLowerCase()} row ${index + 1}`}
+              className="site-icon-button h-11 w-11 border border-border text-muted-foreground hover:border-accent hover:text-accent cursor-pointer"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
         ))}
       </div>
     </section>

@@ -73,6 +73,12 @@ export function AdminLayout({ eyebrow, title, action, children }: Props) {
             </div>
           )}
 
+          {flash.error && (
+            <div className="mb-8 border border-accent px-5 py-4 text-sm text-accent">
+              {flash.error}
+            </div>
+          )}
+
           {children}
         </section>
       </main>

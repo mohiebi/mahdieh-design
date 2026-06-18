@@ -1,4 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+import { Languages } from 'lucide-react';
+import { useState } from 'react';
 import { AdminButton, AdminLayout } from './AdminLayout';
 
 type Submission = {
@@ -15,13 +17,52 @@ type Props = {
     briefQuestions: number;
     newSubmissions: number;
   };
+  translations: {
+    provider: string;
+    configured: boolean;
+  };
   recentSubmissions: Submission[];
 };
 
-export default function Dashboard({ stats, recentSubmissions }: Props) {
+export default function Dashboard({ stats, translations, recentSubmissions }: Props) {
+  const [isTranslating, setIsTranslating] = useState(false);
+
+  const runAutoTranslation = () => {
+    if (!translations.configured || isTranslating) {
+      return;
+    }
+
+    setIsTranslating(true);
+    router.post('/admin/translations/autofill', {}, {
+      preserveScroll: true,
+      onFinish: () => setIsTranslating(false),
+    });
+  };
+
   return (
     <AdminLayout eyebrow="Portfolio CMS" title="Control room" action={<AdminButton href="/admin/projects/create">New project</AdminButton>}>
       <Head title="Admin" />
+
+      <section className="mb-12 border-y border-border py-6 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 className="font-display text-3xl">CMS translations</h2>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+            Fill missing German public content and missing Persian/German brief question fields from the English source fields.
+          </p>
+          {!translations.configured && (
+            <p className="mt-3 text-sm text-accent">Add the {translations.provider} API key on the server to enable auto-translation.</p>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={runAutoTranslation}
+          disabled={!translations.configured || isTranslating}
+          className="site-button site-button-outline inline-flex items-center justify-center gap-3 disabled:cursor-not-allowed disabled:opacity-45"
+        >
+          <Languages className="size-4" aria-hidden="true" />
+          {isTranslating ? 'Translating...' : 'Auto-translate missing content'}
+        </button>
+      </section>
 
       <div className="grid grid-cols-1 md:grid-cols-4 border-y border-border">
         {[

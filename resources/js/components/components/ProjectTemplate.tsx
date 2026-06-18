@@ -1,22 +1,25 @@
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import type { Project } from "@/data/projects";
+import { localizedPath, siteCopy, type Locale } from "@/lib/i18n";
 
 type ProjectTemplateProps = {
   project: Project;
   previousProject: Project;
   nextProject: Project;
+  locale?: Locale;
 };
 
-export function ProjectTemplate({ project, previousProject, nextProject }: ProjectTemplateProps) {
+export function ProjectTemplate({ project, previousProject, nextProject, locale = "en" }: ProjectTemplateProps) {
+  const t = siteCopy[locale].project;
   const videos = [...(project.videoUrl ? [project.videoUrl] : []), ...(project.videos ?? [])];
   const galleryImages = project.galleryImages ?? [];
   const details = [
-    ["Client", project.client],
-    ["Year", project.year],
-    ["Category", project.category],
-    ["Location", project.location],
-    ["Credit", project.credit],
+    [t.client, project.client],
+    [t.year, project.year],
+    [t.category, project.category],
+    [t.location, project.location],
+    [t.credit, project.credit],
   ].filter((detail): detail is [string, string] => Boolean(detail[1]));
 
   return (
@@ -24,10 +27,10 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
       <article className="px-6 lg:px-12">
         <div className="max-w-[1400px] mx-auto">
           <Link
-            to="/projects"
+            to={localizedPath("/projects", locale)}
             className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground hover:text-foreground transition-colors mb-12"
           >
-            &lt;- All projects
+            {t.allProjects}
           </Link>
 
           <motion.header
@@ -74,7 +77,7 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
           >
             <img
               src={project.image}
-              alt={`${project.title} - ${project.category}`}
+              alt={t.imageAlt(project.title, project.category)}
               className="w-full h-auto block"
             />
           </motion.div>
@@ -82,7 +85,7 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 lg:mb-24">
             <div className="lg:col-span-3">
               <div className="lg:sticky lg:top-28 text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground">
-                About the project
+                {t.about}
               </div>
             </div>
             <div className="lg:col-span-8 lg:col-start-5">
@@ -94,7 +97,7 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
 
               <div className="mt-12 border-t border-border pt-8">
                 <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-5">
-                  Services
+                  {t.services}
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {project.services.map((service) => (
@@ -113,7 +116,7 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
           {(videos.length > 0 || galleryImages.length > 0) && (
             <section className="mb-16 lg:mb-24">
               <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-8">
-                Project media
+                {t.media}
               </div>
 
               {videos.length > 0 && (
@@ -138,7 +141,7 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
                     <div key={image} className="overflow-hidden bg-muted">
                       <img
                         src={image}
-                        alt={`${project.title} project image ${index + 1}`}
+                        alt={t.galleryAlt(project.title, index + 1)}
                         className="w-full h-auto block"
                       />
                     </div>
@@ -150,16 +153,16 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
         </div>
       </article>
 
-      <nav aria-label="Project navigation" className="border-t border-border/50 mt-16 lg:mt-24">
+      <nav aria-label={`${t.previous} / ${t.next}`} className="border-t border-border/50 mt-16 lg:mt-24">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <Link
-            to="/projects/$slug"
+            to={localizedPath(`/projects/${previousProject.slug}`, locale)}
             params={{ slug: previousProject.slug }}
             className="block px-6 lg:px-12 py-14 lg:py-20 border-b md:border-b-0 md:border-r border-border/50 hover:bg-muted/30 transition-colors"
           >
             <div className="max-w-[700px] md:ml-auto">
               <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                Previous project
+                {t.previous}
               </div>
               <h2 className="font-display text-4xl md:text-5xl">
                 {previousProject.title}
@@ -169,13 +172,13 @@ export function ProjectTemplate({ project, previousProject, nextProject }: Proje
           </Link>
 
           <Link
-            to="/projects/$slug"
+            to={localizedPath(`/projects/${nextProject.slug}`, locale)}
             params={{ slug: nextProject.slug }}
             className="block px-6 lg:px-12 py-14 lg:py-20 hover:bg-muted/30 transition-colors"
           >
             <div className="max-w-[700px]">
               <div className="text-[11px] font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-                Next project
+                {t.next}
               </div>
               <h2 className="font-display text-4xl md:text-5xl">
                 {nextProject.title}

@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
+import { localizedPath, siteCopy, type Locale } from "@/lib/i18n";
 import { Reveal } from "./Reveal";
 
 export type ProjectScope = "popular" | "recent";
@@ -13,12 +14,8 @@ type WorkProps = {
   showMoreLink?: boolean;
   showScopeFilter?: boolean;
   scope?: ProjectScope;
+  locale?: Locale;
 };
-
-const projectScopes: { value: ProjectScope; label: string }[] = [
-  { value: "popular", label: "Popular" },
-  { value: "recent", label: "Recent" },
-];
 
 export function Work({
   projects: projectItems = projects,
@@ -26,8 +23,14 @@ export function Work({
   showMoreLink = false,
   showScopeFilter = false,
   scope = "popular",
+  locale = "en",
 }: WorkProps) {
+  const t = siteCopy[locale].work;
   const visibleProjects = typeof limit === "number" ? projectItems.slice(0, limit) : projectItems;
+  const projectScopes: { value: ProjectScope; label: string }[] = [
+    { value: "popular", label: t.popular },
+    { value: "recent", label: t.recent },
+  ];
 
   const handleScopeChange = (nextScope: ProjectScope) => {
     if (nextScope === scope) {
@@ -35,7 +38,7 @@ export function Work({
     }
 
     router.get(
-      "/projects",
+      localizedPath("/projects", locale),
       nextScope === "popular" ? {} : { scope: nextScope },
       {
         preserveScroll: true,
@@ -51,18 +54,17 @@ export function Work({
         <Reveal className="flex items-end justify-between flex-wrap gap-6 mb-20 lg:mb-28">
           <div>
             <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-              Selected Projects - 2022 / 2026
+              {t.eyebrow}
             </div>
-            <h2 className="font-display text-5xl md:text-7xl">Case Studies.</h2>
+            <h2 className="font-display text-5xl md:text-7xl">{t.title}</h2>
           </div>
           <p className="max-w-md text-muted-foreground">
-            A curated archive of identities, campaigns and product work. From early concept and
-            naming through to systems and rollout.
+            {t.intro}
           </p>
           {showScopeFilter && (
             <div
               className="flex w-full flex-wrap items-center gap-2 border-t border-border/60 pt-6 sm:w-auto sm:border-t-0 sm:pt-0"
-              aria-label="Project scope"
+              aria-label={t.projectScope}
             >
               {projectScopes.map((item) => {
                 const isActive = item.value === scope;
@@ -109,7 +111,7 @@ export function Work({
                   </div>
 
                   <Link
-                    to="/projects/$slug"
+                    to={localizedPath(`/projects/${p.slug}`, locale)}
                     params={{ slug: p.slug }}
                     className="block group/title"
                   >
@@ -124,7 +126,7 @@ export function Work({
                   </p>
 
                   <Link
-                    to="/projects/$slug"
+                    to={localizedPath(`/projects/${p.slug}`, locale)}
                     params={{ slug: p.slug }}
                     className="inline-flex items-center gap-4 group/cta"
                   >
@@ -133,7 +135,7 @@ export function Work({
                       aria-hidden
                     />
                     <span className="text-[11px] font-mono uppercase tracking-[0.3em]">
-                      View Case Study
+                      {t.viewCaseStudy}
                     </span>
                   </Link>
                 </div>
@@ -143,7 +145,7 @@ export function Work({
                     reversed ? "lg:order-1 lg:col-start-1 lg:row-start-1" : "lg:order-2"
                   }`}
                 >
-                  <Link to="/projects/$slug" params={{ slug: p.slug }} className="block">
+                  <Link to={localizedPath(`/projects/${p.slug}`, locale)} params={{ slug: p.slug }} className="block">
                     <div className="overflow-hidden aspect-[16/10]">
                       <motion.img
                         src={p.image}
@@ -167,10 +169,10 @@ export function Work({
         {showMoreLink && (
           <div className="mt-20 flex justify-center">
             <Link
-              to="/projects"
+              to={localizedPath("/projects", locale)}
               className="site-button site-button-outline"
             >
-              More projects
+              {t.moreProjects}
               <span aria-hidden>-&gt;</span>
             </Link>
           </div>

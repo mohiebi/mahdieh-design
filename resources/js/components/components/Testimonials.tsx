@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import { siteCopy, type Locale } from "@/lib/i18n";
 import { Reveal } from "./Reveal";
 
 export type Recommendation = {
@@ -12,7 +13,7 @@ export type Recommendation = {
   avatar_path: string | null;
 };
 
-type Props = { recommendations: Recommendation[] };
+type Props = { recommendations: Recommendation[]; locale?: Locale };
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
 const avatarStyle = { height: "3.5rem", width: "3.5rem", minWidth: "3.5rem" };
@@ -64,8 +65,9 @@ function truncateQuote(quote: string) {
   return cut.slice(0, lastSpace > 160 ? lastSpace : quoteLimit).trim();
 }
 
-function Card({ r }: { r: Recommendation }) {
+function Card({ r, locale }: { r: Recommendation; locale: Locale }) {
   const [expanded, setExpanded] = useState(false);
+  const t = siteCopy[locale].testimonials;
   const shouldTruncate = r.quote.length > quoteLimit;
   const quote = shouldTruncate && !expanded ? truncateQuote(r.quote) : r.quote;
 
@@ -89,7 +91,7 @@ function Card({ r }: { r: Recommendation }) {
             onClick={() => setExpanded(true)}
             className="inline cursor-pointer font-display text-accent transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           >
-            ...(read more)
+            {t.readMore}
           </button>
         )}
       </p>
@@ -121,9 +123,10 @@ function Card({ r }: { r: Recommendation }) {
   );
 }
 
-export function Testimonials({ recommendations }: Props) {
+export function Testimonials({ recommendations, locale = "en" }: Props) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const t = siteCopy[locale].testimonials;
   const total = recommendations.length;
 
   if (!total) return null;
@@ -146,10 +149,10 @@ export function Testimonials({ recommendations }: Props) {
       <div className="max-w-[1400px] mx-auto">
         <Reveal>
           <div className="text-xs font-mono uppercase tracking-[0.25em] text-muted-foreground mb-4">
-            ✦ Recommendations
+            {t.eyebrow}
           </div>
           <h2 className="font-display text-5xl md:text-7xl mb-16 max-w-3xl">
-            What clients say<span className="text-accent">.</span>
+            {t.title.replace(/\.$/, "")}<span className="text-accent">.</span>
           </h2>
         </Reveal>
 
@@ -165,7 +168,7 @@ export function Testimonials({ recommendations }: Props) {
               exit="exit"
               transition={{ duration: 0.5, ease }}
             >
-              <Card r={recommendations[current]} />
+              <Card r={recommendations[current]} locale={locale} />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -179,7 +182,7 @@ export function Testimonials({ recommendations }: Props) {
                 key={i}
                 type="button"
                 onClick={() => goTo(i)}
-                aria-label={`Go to recommendation ${i + 1}`}
+                aria-label={t.goTo(i + 1)}
                 className="py-3 cursor-pointer group"
               >
                 <span
@@ -198,7 +201,7 @@ export function Testimonials({ recommendations }: Props) {
             <button
               type="button"
               onClick={goPrev}
-              aria-label="Previous recommendation"
+              aria-label={t.previous}
               className="site-icon-button border border-border hover:border-foreground hover:bg-foreground hover:text-background cursor-pointer transition-colors"
             >
               <svg
@@ -215,7 +218,7 @@ export function Testimonials({ recommendations }: Props) {
             <button
               type="button"
               onClick={goNext}
-              aria-label="Next recommendation"
+              aria-label={t.next}
               className="site-icon-button border border-border hover:border-foreground hover:bg-foreground hover:text-background cursor-pointer transition-colors"
             >
               <svg

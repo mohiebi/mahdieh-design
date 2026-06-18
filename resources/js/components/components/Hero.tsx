@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { siteCopy, type Locale } from "@/lib/i18n";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -9,13 +10,12 @@ const fadeUp = {
   }),
 };
 
-export function Hero() {
-  const stats: [string, string][] = [
-    ["8+", "Years of practice"],
-    ["80+", "Brands shaped"],
-    ["3", "Continents"],
-    ["7", "Studio collaborations"],
-  ];
+type HeroProps = {
+  locale?: Locale;
+};
+
+export function Hero({ locale = "en" }: HeroProps) {
+  const t = siteCopy[locale].hero;
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-44 lg:pb-32 px-6 lg:px-12 grain overflow-hidden">
@@ -33,7 +33,7 @@ export function Hero() {
             style={{ transformOrigin: "left" }}
             className="h-px w-10 bg-foreground inline-block"
           />
-          Available for select projects · {new Date().getFullYear()}
+          {t.eyebrow(new Date().getFullYear())}
         </motion.div>
 
         <h1 className="font-display text-[clamp(3rem,10vw,11rem)] leading-[0.95] tracking-tight">
@@ -44,7 +44,7 @@ export function Hero() {
               animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <em className="text-accent not-italic font-normal">Mahdieh</em>
+              <em className="text-accent not-italic font-normal">{t.headline}</em>
             </motion.span>
           </motion.span>
         </h1>
@@ -54,7 +54,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="mt-6 font-display text-2xl lg:text-4xl leading-tight max-w-3xl"
         >
-          Designing brands with clarity, character, and cultural depth
+          {t.subhead}
         </motion.p>
 
         <div className="mt-16">
@@ -64,10 +64,7 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="text-lg lg:text-xl leading-relaxed text-muted-foreground md:columns-2 md:gap-12 [&>span]:text-foreground"
           >
-            I'm <span className="text-foreground">Mahdieh Baghoolizadeh</span> — a brand strategist
-            and visual identity designer working with international studios and clients across
-            Canada, the UK and the Middle East. I help ambitious teams turn ideas into clear,
-            memorable, and quietly powerful visual systems.
+            {t.intro}
           </motion.p>
         </div>
 
@@ -77,7 +74,7 @@ export function Hero() {
           viewport={{ once: true, amount: 0.3 }}
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-border pt-10"
         >
-          {stats.map(([k, v], i) => (
+          {t.stats.map(([k, v], i) => (
             <motion.div key={v} custom={i} variants={fadeUp}>
               <div className="font-display text-4xl lg:text-5xl">{k}</div>
               <div className="mt-2 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">{v}</div>

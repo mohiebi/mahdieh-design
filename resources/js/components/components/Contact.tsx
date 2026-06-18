@@ -3,6 +3,7 @@ import { usePage } from "@inertiajs/react";
 import { Calendar, Instagram, Linkedin, Send } from "lucide-react";
 import { Reveal } from "./Reveal";
 import contactBg from "@/assets/contact-bg.png";
+import { siteCopy, type Locale } from "@/lib/i18n";
 import type { SharedPageProps } from "@/types/global";
 
 function SparkleIcon({ className }: { className?: string }) {
@@ -33,9 +34,14 @@ const links = [
   { label: "Telegram", handle: "mahdiehdesign", href: "https://t.me/mahdiehdesign", icon: Send },
 ];
 
-export function Contact() {
+type ContactProps = {
+  locale?: Locale;
+};
+
+export function Contact({ locale = "en" }: ContactProps) {
   const reduceMotion = useReducedMotion();
   const { calendlyUrl, contactEmail } = usePage<SharedPageProps>().props;
+  const t = siteCopy[locale].contact;
 
   return (
     <section
@@ -57,7 +63,7 @@ export function Contact() {
         <Reveal>
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] opacity-70 mb-6">
             <SparkleIcon className="h-3 w-3" />
-            Let's collaborate
+            {t.eyebrow}
           </div>
         </Reveal>
 
@@ -73,7 +79,7 @@ export function Contact() {
               variants={headingLine}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             >
-              Have a brand
+              {t.line1}
             </motion.span>
           </span>
           <span className="block overflow-hidden pb-[0.08em]">
@@ -82,7 +88,7 @@ export function Contact() {
               variants={headingLine}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              worth building?
+              {t.line2}
             </motion.span>
           </span>
         </motion.h2>
@@ -112,19 +118,19 @@ export function Contact() {
               className="site-button site-button-outline"
             >
               <Calendar className="h-4 w-4" aria-hidden />
-              Book a call
+              {t.bookCall}
             </a>
           )}
 
           <span className="font-mono text-xs uppercase tracking-[0.25em] opacity-70">
-            Avg. reply within 24h
+            {t.reply}
           </span>
         </Reveal>
 
         <div className="mt-20 lg:mt-28">
           <div className="flex items-center justify-between border-b border-white/15 pb-4 text-[10px] font-mono uppercase tracking-[0.28em] text-white/55">
-            <span>Elsewhere</span>
-            <span>04 - Channels</span>
+            <span>{t.elsewhere}</span>
+            <span>{t.channels}</span>
           </div>
 
           {links.map(({ label, handle, href, icon: Icon }, i) => (
@@ -133,7 +139,7 @@ export function Contact() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              aria-label={`${label}: @${handle} (opens in a new tab)`}
+              aria-label={t.ariaExternal(label, handle)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
@@ -158,23 +164,17 @@ export function Contact() {
 }
 
 type FooterProps = {
-  locale?: "en" | "fa";
+  locale?: Locale;
 };
 
 export function Footer({ locale = "en" }: FooterProps) {
+  const t = siteCopy[locale].footer;
+
   return (
     <footer className="px-6 lg:px-12 py-10 border-t border-border">
       <div className="max-w-[1400px] mx-auto flex flex-wrap items-center text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
-        {locale === "fa" ? (
-          <>
-            <div>© {new Date().getFullYear()} مهدیه باغولی‌زاده — تمامی حقوق محفوظ است</div>
-            <div>نکسا استودیو · خلق · باش · الهام بگیر</div>
-          </>
-        ) : (
-          <>
-            <div>© {new Date().getFullYear()} Mahdieh Baghoolizadeh — All rights reserved</div>
-          </>
-        )}
+        <div>{t.rights(new Date().getFullYear())}</div>
+        {locale !== "en" && <div>{t.studio}</div>}
       </div>
     </footer>
   );
