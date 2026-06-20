@@ -35,8 +35,8 @@ export function Nav({ locale = "en" }: NavProps) {
 
   const links: NavLink[] = [
     { to: localizedPath("/projects", locale), label: t.projects },
+    { to: localizedPath("/services", locale), label: t.services },
     { href: localizedPath("/#about", locale), label: t.about },
-    { href: localizedPath("/#services", locale), label: t.services },
     { to: localizedPath("/process", locale), label: t.process },
     briefLink,
     { href: localizedPath("/#contact", locale), label: t.contact },

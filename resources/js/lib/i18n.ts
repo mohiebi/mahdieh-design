@@ -58,14 +58,11 @@ export const localizedPath = (path: string, locale: Locale) => {
   const cleanPath = stripLocaleFromPath(path.startsWith('/') ? path : `/${path}`);
 
   if (locale === 'fa') {
-    if (cleanPath === '/brief') {
-      return '/brief/fa';
-    }
-
-    if (cleanPath === '/brief/thanks') {
-      return '/brief/fa/thanks';
-    }
-
+    if (cleanPath === '/brief') return '/brief/fa';
+    if (cleanPath === '/brief/thanks') return '/brief/fa/thanks';
+    if (cleanPath === '/services') return '/services/fa';
+    if (cleanPath.startsWith('/services/')) return `${cleanPath}/fa`;
+    if (cleanPath.startsWith('/packages/')) return `${cleanPath}/fa`;
     return cleanPath;
   }
 
@@ -278,6 +275,20 @@ export const siteCopy = {
       projectCount: (count: number) => `${count} ${count === 1 ? 'project' : 'projects'}`,
       view: 'View',
       empty: 'Related work for this service will be added soon.',
+    },
+    packagePage: {
+      back: '<- Packages',
+      label: 'Package',
+      deliverables: "What's included",
+      services: 'Covered services',
+      related: 'Sample projects',
+      title: 'Work in this package.',
+      projectCount: (count: number) => `${count} ${count === 1 ? 'project' : 'projects'}`,
+      view: 'View',
+      empty: 'Sample projects for this package will be added soon.',
+      startBrief: 'Start a brief',
+      duration: 'days',
+      paymentTerms: 'Payment terms',
     },
     brief: {
       headTitle: 'Project Brief',
@@ -500,6 +511,20 @@ export const siteCopy = {
       view: 'دیدن',
       empty: 'کار مرتبط با این خدمت به‌زودی اضافه می‌شود.',
     },
+    packagePage: {
+      back: 'بازگشت به پکیج‌ها',
+      label: 'پکیج',
+      deliverables: 'آنچه شامل می‌شود',
+      services: 'خدمات این پکیج',
+      related: 'نمونه پروژه‌ها',
+      title: 'کارهای مرتبط با این پکیج.',
+      projectCount: (count: number) => `${count} پروژه`,
+      view: 'دیدن',
+      empty: 'نمونه پروژه‌های این پکیج به‌زودی اضافه می‌شوند.',
+      startBrief: 'شروع بریف',
+      duration: 'روز',
+      paymentTerms: 'شرایط پرداخت',
+    },
     brief: {
       headTitle: 'بریف پروژه',
       meta: 'درباره پروژه‌تان به ما بگویید. برای شروع همکاری برندینگ به ۱۵ سوال کوتاه پاسخ دهید.',
@@ -720,6 +745,20 @@ export const siteCopy = {
       view: 'Ansehen',
       empty: 'Ähnliche Arbeiten für diese Leistung werden bald ergänzt.',
     },
+    packagePage: {
+      back: '<- Pakete',
+      label: 'Paket',
+      deliverables: 'Was enthalten ist',
+      services: 'Enthaltene Leistungen',
+      related: 'Beispielprojekte',
+      title: 'Arbeiten in diesem Paket.',
+      projectCount: (count: number) => `${count} ${count === 1 ? 'Projekt' : 'Projekte'}`,
+      view: 'Ansehen',
+      empty: 'Beispielprojekte für dieses Paket werden bald ergänzt.',
+      startBrief: 'Briefing starten',
+      duration: 'Tage',
+      paymentTerms: 'Zahlungsbedingungen',
+    },
     brief: {
       headTitle: 'Projektbriefing',
       meta: 'Erzählen Sie von Ihrem Projekt. Beantworten Sie 15 kurze Fragen, um eine Brand- oder Identity-Zusammenarbeit zu starten.',
@@ -787,3 +826,6 @@ export const siteCopy = {
 
 export const servicePathBySlug = (slug: string, locale: Locale) =>
   localizedPath(`/services/${slug}`, locale);
+
+export const packagePathBySlug = (slug: string, locale: Locale) =>
+  localizedPath(`/packages/${slug}`, locale);
