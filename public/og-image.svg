@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0f0f0e"/>
+  <!-- Logo scaled to 0.82, centred horizontally, padded top ~64px -->
+  <!-- scaled size: 813 × 382 — fits in 1200×500 viewport leaving 130px for text -->
+  <g transform="translate(193, 64) scale(0.82)">
+    <path
+      fill="#d95650"
+      d="M991.87,465.48h-493.93l-239.76-240.59v110.1c0,71.39-57.32,130.36-128.71,130.57C58,465.76,0,407.89,0,336.46c0-35.65,14.45-67.93,37.82-91.28,23.35-23.37,55.63-37.82,91.28-37.82h128.84V18.08c0-15.02,18.17-22.53,28.78-11.9l216.67,217.25V16.87c0-15.01,18.17-22.52,28.78-11.89l459.71,460.5Z"
+    />
+  </g>
+  <text
+    x="600" y="583"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="28"
+    fill="#ffffff"
+    fill-opacity="0.45"
+    text-anchor="middle"
+    letter-spacing="7"
+  >MAHDIEH BAGHOOLIZADEH</text>
+</svg>

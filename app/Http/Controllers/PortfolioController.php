@@ -188,6 +188,12 @@ class PortfolioController extends Controller
             'locale' => $locale,
             'package' => $this->packagePayload($pkg, $locale),
             'projects' => fn () => $relatedProjects->map(fn (Project $project) => $this->projectPayload($project, $locale)),
+            'og' => [
+                'title'       => $pkg->title.' — Mahdieh Baghoolizadeh',
+                'description' => $pkg->summary ?? 'Brand identity package — view what\'s included and get in touch.',
+                'image'       => url('/og-image.svg'),
+                'url'         => url()->current(),
+            ],
         ]);
     }
 
@@ -259,11 +265,21 @@ class PortfolioController extends Controller
         $previous = $projects->get(($index - 1 + $projects->count()) % $projects->count());
         $next = $projects->get(($index + 1) % $projects->count());
 
+        $cover = $project->loadMissing('media')->media->firstWhere('is_cover', true)
+            ?? $project->media->firstWhere('type', 'image');
+        $coverUrl = $cover ? url($cover->url) : url('/og-image.svg');
+
         return Inertia::render('projects/show', [
             'locale' => $locale,
             'project' => fn () => $this->projectPayload($project->loadMissing(['sections', 'services', 'media']), $locale),
             'previousProject' => fn () => $this->projectPayload($previous, $locale),
             'nextProject' => fn () => $this->projectPayload($next, $locale),
+            'og' => [
+                'title'       => $project->title.' — Mahdieh Baghoolizadeh',
+                'description' => $project->description ?? $project->category,
+                'image'       => $coverUrl,
+                'url'         => url()->current(),
+            ],
         ]);
     }
 
