@@ -122,10 +122,9 @@ function PackageCard({
   index: number;
   locale: Locale;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
-  const hasPrice = pkg.price_toman != null || pkg.price_eur != null || pkg.price_usd != null;
-  const packageHref = hasPrice ? packagePathBySlug(pkg.slug, locale) : localizedPath('/brief', locale);
+  const packageHref = packagePathBySlug(pkg.slug, locale);
   const isRtl = locale === 'fa';
   const priceData = getPriceData(pkg, locale);
   const priceFormatted = priceData.amount != null ? priceData.amount.toLocaleString() : null;
@@ -151,7 +150,7 @@ function PackageCard({
       )}
 
       {/* Header */}
-      <div className="mb-5 pt-3">
+      <div className="mb-5 min-h-[8.5rem] pt-3 md:min-h-[9.5rem] xl:min-h-[8.5rem]">
         <h3 className="font-display text-2xl lg:text-3xl mb-2 leading-tight">{pkg.title}</h3>
         {pkg.summary && (
           <p className="text-sm leading-relaxed opacity-70">{pkg.summary}</p>
@@ -232,9 +231,7 @@ function PackageCard({
           pkg.is_featured ? 'site-button-primary' : 'site-button-outline'
         }`}
       >
-        {priceFormatted == null
-          ? (isRtl ? 'تماس با ما' : 'Contact us')
-          : (isRtl ? 'مشاهده پکیج' : 'View package')}
+        {isRtl ? 'مشاهده پکیج' : 'View package'}
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"
           className="h-4 w-4 ms-2 -rotate-45" aria-hidden>
           <path strokeLinecap="round" strokeLinejoin="round" d="M2 14L14 2M2 2h12v12" />

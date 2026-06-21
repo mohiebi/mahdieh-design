@@ -57,6 +57,9 @@ export default function PackageShow({ package: pkg, projects, locale = 'en' }: P
   const priceData = getPriceData(pkg, locale);
   const priceFormatted = priceData.amount != null ? priceData.amount.toLocaleString() : null;
   const briefHref = localizedPath('/brief', locale);
+  const contactHref = '#contact';
+  const ctaHref = priceFormatted == null ? contactHref : briefHref;
+  const ctaLabel = priceFormatted == null ? (isRtl ? 'تماس با ما' : 'Contact us') : t.startBrief;
 
   return (
     <div dir={pageDir(locale)} lang={locale} className={pageClass(locale)}>
@@ -137,10 +140,8 @@ export default function PackageShow({ package: pkg, projects, locale = 'en' }: P
                   </p>
                 )}
 
-                <a href={briefHref} className="site-button site-button-primary">
-                  {priceFormatted == null
-                    ? (isRtl ? 'تماس با ما' : 'Contact us')
-                    : t.startBrief}
+                <a href={ctaHref} className="site-button site-button-primary">
+                  {ctaLabel}
                 </a>
               </div>
             </div>
@@ -269,8 +270,8 @@ export default function PackageShow({ package: pkg, projects, locale = 'en' }: P
                   </h2>
                 </div>
                 <div className="flex flex-col items-start lg:items-end gap-4">
-                  <a href={briefHref} className="site-button site-button-primary text-lg px-8 py-5">
-                    {t.startBrief}
+                  <a href={ctaHref} className="site-button site-button-primary text-lg px-8 py-5">
+                    {ctaLabel}
                   </a>
                   {priceFormatted != null && (
                     <div className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground text-start lg:text-end">
