@@ -186,7 +186,7 @@ export const siteCopy = {
       capabilitiesTitle: '✦ Capabilities',
       portraitCaption: '✦ Mahdieh Baghoolizadeh',
       experience: [
-        ['2024 - 2026', 'Founder · Brand Strategy', 'Nexa Studio · Turkey, Istanbul'],
+        ['2024 - 2026', 'Co-Founder · Brand Strategy', 'Nexa Studio · Turkey, Istanbul'],
         ['2023', 'Brand Designer', 'Milan Studio · Canada, North York, Ontario'],
         ['2023', 'Art Director', 'Wilma Studio · Iran, Tehran'],
         ['2022 - 2023', 'Senior Designer', 'Freelance · International'],
@@ -431,7 +431,7 @@ export const siteCopy = {
       capabilitiesTitle: '✦ توانایی‌ها',
       portraitCaption: '✦ مهدیه باغولی‌زاده',
       experience: [
-        ['۲۰۲۴ - ۲۰۲۶', 'بنیان‌گذار · استراتژی برند', 'نکسا استودیو · ترکیه، استانبول'],
+        ['۲۰۲۴ - ۲۰۲۶', 'هم‌بنیان‌گذار · استراتژی برند', 'نکسا استودیو · ترکیه، استانبول'],
         ['۲۰۲۳', 'طراح برند', 'میلان استودیو · کانادا، نورث‌یورک، انتاریو'],
         ['۲۰۲۳', 'آرت دایرکتور', 'ویلما استودیو · ایران، تهران'],
         ['۲۰۲۲ - ۲۰۲۳', 'طراح ارشد', 'فریلنس · بین‌المللی'],
@@ -664,7 +664,7 @@ export const siteCopy = {
       capabilitiesTitle: '✦ Fähigkeiten',
       portraitCaption: '✦ Mahdieh Baghoolizadeh',
       experience: [
-        ['2024 - 2026', 'Gründerin · Brand Strategy', 'Nexa Studio · Türkei, Istanbul'],
+        ['2024 - 2026', 'Co-Gründerin · Brand Strategy', 'Nexa Studio · Türkei, Istanbul'],
         ['2023', 'Brand Designerin', 'Milan Studio · Kanada, North York, Ontario'],
         ['2023', 'Art Director', 'Wilma Studio · Iran, Teheran'],
         ['2022 - 2023', 'Senior Designerin', 'Freelance · International'],
